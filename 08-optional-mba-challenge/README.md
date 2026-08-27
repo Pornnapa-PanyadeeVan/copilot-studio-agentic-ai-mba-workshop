@@ -1,10 +1,10 @@
-# 05 — MBA Agentic AI Challenge
+# 08 — Optional MBA Agentic AI Challenge
 
-[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Responsible AI →](../06-responsible-agentic-ai/README.md)
+[← Previous: Responsible AI](../07-responsible-agentic-ai/README.md) · [Home](../README.md)
 
 🎯 **Goal**  ออกแบบ Agentic AI use case ที่เชื่อม Business Goal, Reasoning, Decision, Action, Data, Insight และ Human Oversight
 
-⏱ **Estimated Time**  15 นาที
+⏱ **Estimated Time**  15–20 นาทีหลังชั้นเรียนหรือใช้เป็น Assignment
 
 👥 **Team**  3–4 คน (ประมาณ 13–17 ทีมสำหรับผู้เรียน 50 คน)
 
@@ -103,6 +103,7 @@ Management Insight:
 3. Action ใด reversible และ action ใด high-impact?
 4. ต้องเก็บ audit trail อะไร?
 5. ใครเป็น accountable owner?
+6. Use case นี้ควรใช้ Make Workflow, Manus Agent หรือ Hybrid เพราะอะไร?
 
 ### Risk Prompts
 
@@ -143,6 +144,7 @@ We measure value by...
 ## 💬 Discussion
 
 - Use case นี้เป็น automation, AI-assisted workflow หรือ Agentic AI ระดับใดบน autonomy spectrum?
+- ถ้าใช้ Make กับ Manus ต่างกันตรง setup, control, repeatability และ audit อย่างไร?
 - การเพิ่ม autonomy อีกหนึ่งระดับให้ value เพิ่มจริงหรือแค่เพิ่ม risk?
 - Data สะสมจะสร้าง Management Insight อะไรที่คำร้องเดี่ยวให้ไม่ได้?
 
@@ -156,4 +158,4 @@ We measure value by...
 
 ---
 
-[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Responsible AI →](../06-responsible-agentic-ai/README.md)
+[← Previous: Responsible AI](../07-responsible-agentic-ai/README.md) · [Home](../README.md)

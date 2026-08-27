@@ -4,7 +4,7 @@
 
 🎯 **Goal**  สร้าง `Business Request Assistant` ใน Google AI Studio เพื่อสรุป จัด Priority อธิบายเหตุผล และแนะนำ Next Action
 
-⏱ **Estimated Time**  35–40 นาที
+⏱ **Estimated Time**  30 นาที
 
 🧰 **Tool**  [Google AI Studio](https://aistudio.google.com/) — Lab นี้ไม่ต้องใช้ API key และไม่ต้องเปิด billing
 
@@ -169,9 +169,11 @@ Keep the response concise and suitable for a business manager.
 
 ⚠️ **Common Problem**  ถ้าไม่เห็น System Instructions อย่า paste คำสั่งถาวรรวมกับ test case โดยไม่แยก ให้ใช้ setting/panel ที่ทำหน้าที่กำหนด model behavior หรือทำตาม Instructor fallback
 
-## 📌 Step 4 — ทดสอบ 5 Cases
+## 📌 Step 4 — ทดสอบ Cases
 
 ส่งทีละคำร้องในช่อง chat โดยไม่แก้ System Instructions
+
+ทำ Test 1–3 เป็น core requirement ส่วน Test 4–5 ใช้สำหรับทีมที่ไปเร็วหรืออภิปรายรวมบนจอผู้สอน
 
 ### 🧪 Test 1 — HIGH
 
@@ -205,7 +207,7 @@ Expected: `MEDIUM` เพราะสำคัญและมี deadline แต
 
 Expected: `LOW`
 
-### 🧪 Test 4 — Ambiguous
+### 🧪 Optional Test 4 — Ambiguous
 
 ```text
 ฝ่ายขายแจ้งว่าลูกค้าต้องการให้แก้ไขใบเสนอราคา
@@ -218,7 +220,7 @@ Expected behavior: ไม่ควรเป็น HIGH จากคำว่า 
 - customer/revenue impact
 - order จะเกิดขึ้นได้หรือไม่หากยังไม่แก้
 
-### 🧪 Test 5 — Debate Case
+### 🧪 Optional Test 5 — Debate Case
 
 ```text
 CEO ต้องการข้อมูลยอดขายแยกตามสาขา
@@ -322,7 +324,7 @@ Real Action
 
 - [ ] สร้าง Business Request Assistant
 - [ ] เพิ่ม System Instructions
-- [ ] ทดสอบ 5 cases
+- [ ] ทดสอบ 3 core cases และทำ/อภิปราย 2 optional cases ตามเวลา
 - [ ] ปรับ Business Rule อย่างน้อยหนึ่งข้อ
 - [ ] ผ่าน Final Test
 

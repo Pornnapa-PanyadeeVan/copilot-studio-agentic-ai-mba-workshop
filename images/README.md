@@ -32,6 +32,9 @@ Repository นี้ไม่สร้าง screenshot ปลอม เพร�
 | `13-drive-report.png` | Google Drive | Weekly-Reports folder และไฟล์จำลอง | Lab 3 Step 6 |
 | `14-email-test.png` | Gmail | อีเมลถึงตนเอง ไม่มี address จริง | Lab 3 Step 7 |
 | `15-line-demo.png` | LINE OA + Make | Channel → Webhook → Make | Instructor demo |
+| `16-manus-agent-mode.png` | Manus | Agent Mode/credit notice โดยปิด account details | Lab 4 Step 2 |
+| `17-manus-dataset-upload.png` | Manus | `manus-lab-input.md` และจำนวน 14 records | Lab 4 Step 3 |
+| `18-manus-task-artifacts.png` | Manus | Execution plan, triage และ report โดยไม่มีข้อมูลจริง | Lab 4 validation |
 
 ## รูปแบบ Caption
 

@@ -1,6 +1,6 @@
 # Lab 3 — Management Report Prompts
 
-[← Lab 3 Guide](README.md) · [Home](../README.md) · [Next: MBA Challenge →](../05-mba-challenge/README.md)
+[← Lab 3 Guide](README.md) · [Home](../README.md) · [Next: LINE OA Demo →](../05-line-oa-demo/README.md)
 
 ## Weekly Management Report Prompt
 
@@ -148,4 +148,4 @@ Google Drive → Agentic-AI-Reports → Weekly-Reports
 
 ---
 
-[← Lab 3 Guide](README.md) · [Home](../README.md) · [Next: MBA Challenge →](../05-mba-challenge/README.md)
+[← Lab 3 Guide](README.md) · [Home](../README.md) · [Next: LINE OA Demo →](../05-line-oa-demo/README.md)

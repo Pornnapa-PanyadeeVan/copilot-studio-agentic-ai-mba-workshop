@@ -168,6 +168,51 @@
 | **Quick Fix** | หยุดใช้และ revoke/rotate key ทันที จากนั้นลบข้อมูลที่เปิดเผยตาม policy; อย่าคิดว่าการลบข้อความอย่างเดียวทำให้ key ปลอดภัย |
 | **Instructor Fallback** | ใช้ prepared output ต่อ ห้ามแจก key ใหม่แบบ shared key |
 
+## Cannot access Manus Agent Mode
+
+| | |
+|---|---|
+| **Problem** | ไม่เห็น Agent Mode, เห็นเฉพาะ Chat Mode หรือบัญชีไม่เริ่ม task |
+| **Likely Cause** | Free-plan entitlement, account rollout, region, queue หรือ mode availability เปลี่ยน |
+| **Quick Fix** | ตรวจ mode/usage notice ที่บัญชีแสดงและใช้ Agent Mode Lite หาก available; ไม่เปิด paid mode เพื่อผ่าน Lab |
+| **Instructor Fallback** | เปิด Instructor completed task หรือใช้ Chat Mode เพื่อเปรียบเทียบข้อจำกัด แล้วทำ architecture discussion ต่อ |
+
+## Manus credits or queue unavailable
+
+| | |
+|---|---|
+| **Problem** | Credits ไม่พอ, task อยู่ใน queue นาน หรือระบบเสนอ upgrade |
+| **Likely Cause** | Task complexity, daily/monthly credit rules, concurrent demand หรือ Free-plan limit |
+| **Quick Fix** | หนึ่ง task ต่อทีม ใช้ dataset 14 rows, no web research และ compact prompt; อย่า run ซ้ำโดยไม่ตรวจผลเดิม |
+| **Instructor Fallback** | ใช้ recorded/completed Instructor run แล้วให้ทีม validate triage/report ด้วย source Request IDs |
+
+## Manus cannot read the uploaded dataset
+
+| | |
+|---|---|
+| **Problem** | Agent ไม่เห็นไฟล์, อ่านจำนวน records ผิด หรือข้าม Request IDs |
+| **Likely Cause** | Upload ไม่สมบูรณ์, file context ไม่ถูกแนบ, table parsing หรือ task เริ่มก่อน upload เสร็จ |
+| **Quick Fix** | ตรวจว่า `manus-lab-input.md` ปรากฏใน task และระบุให้ preserve 14 Request IDs โดยไม่เริ่ม task ใหม่ถ้าแก้ใน session เดิมได้ |
+| **Instructor Fallback** | Paste dataset บางส่วนหรือใช้ Instructor task; ให้ทีมตรวจ row count และ missing IDs ด้วยตนเอง |
+
+## Manus proposes a workflow or external action
+
+| | |
+|---|---|
+| **Problem** | Agent เสนอสร้าง app, Workflow, schedule, integration, email หรือค้นเว็บ |
+| **Likely Cause** | Goal กว้างเกินไปหรือข้อห้ามไม่เด่นพอ |
+| **Quick Fix** | ใช้ [Boundary Correction Prompt](../06-manus-ai/prompts.md#boundary-correction-prompt) และหยุด task หากกำลังจะทำ external action |
+| **Instructor Fallback** | ใช้ prepared artifacts ที่ analysis-only แล้วอภิปรายว่าทำไม boundary เป็นส่วนหนึ่งของ Agent design |
+
+## Manus triage or report fails validation
+
+| | |
+|---|---|
+| **Problem** | Row count ไม่ใช่ 14, total ไม่ตรง, Priority ผิด schema, pattern ไม่มี Request IDs หรืออ้างว่าทำ Action แล้ว |
+| **Likely Cause** | Agent ข้าม record, dataset context หาย, hallucination หรือ validation ไม่ถูกทำ |
+| **Quick Fix** | ตรวจด้วย checklist ใน Lab 4; ใช้ Validation Prompt เฉพาะเมื่อ credits พอ หรือแก้/annotate ด้วยมือ |
+| **Instructor Fallback** | ให้ทีมทำ reviewer role ระบุ fail points และเปรียบเทียบกับ deterministic validation ใน Make |
+
 ## Escalation Rule
 
 หากแก้ไม่สำเร็จภายใน 3 นาที ให้ใช้ fallback เพื่อรักษาเวลา Workshop:

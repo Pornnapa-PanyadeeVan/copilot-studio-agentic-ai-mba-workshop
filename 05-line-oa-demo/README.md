@@ -1,12 +1,12 @@
-# 07 — Optional Instructor Demo: LINE OA → Make → Gemini
+# 05 — Instructor Demo: LINE OA → Make → Gemini
 
-[← Previous: Responsible AI](../06-responsible-agentic-ai/README.md) · [Home](../README.md)
+[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Lab 4 Manus AI →](../06-manus-ai/README.md)
 
-> **INSTRUCTOR ONLY — OPTIONAL** ผู้เรียนไม่ต้องสร้าง LINE Official Account และไม่ต้องทำ demo นี้เพื่อผ่าน Workshop
+> **INSTRUCTOR-LED DEMO** อยู่ในเส้นทางหลัก 10 นาที แต่ผู้เรียนไม่ต้องสร้าง LINE Official Account, Messaging API channel หรือ webhook เอง
 
 🎯 **Goal**  แสดงว่า Business Request มาจาก channel จริงอย่าง LINE ได้ โดย Agentic AI architecture ยังเหมือนเดิม
 
-⏱ **Estimated Demo Time**  5–10 นาที นอก core lab หรือแทนเวลาสำรอง
+⏱ **Estimated Demo Time**  10 นาที
 
 ## Architecture
 
@@ -135,4 +135,4 @@ Channel เปลี่ยนได้ แต่ Agentic AI architecture ยั�
 
 ---
 
-[← Previous: Responsible AI](../06-responsible-agentic-ai/README.md) · [Home](../README.md)
+[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Lab 4 Manus AI →](../06-manus-ai/README.md)

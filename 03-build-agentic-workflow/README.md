@@ -4,7 +4,7 @@
 
 🎯 **Goal**  เปลี่ยน AI reasoning เป็น Business Action ผ่าน Make, Gemini API และ Google Sheets
 
-⏱ **Estimated Time**  45–50 นาที
+⏱ **Estimated Time**  40 นาที
 
 🧰 **Tools**  Make + Gemini API key + Google Sheets
 
@@ -34,13 +34,13 @@ Google Sheets
 
 | นาที | งาน |
 |---:|---|
-| 0–7 | เตรียม Google Sheet |
-| 7–14 | สร้าง API key และ connection |
-| 14–23 | สร้าง Scenario และส่งคำร้องเข้า Gemini |
-| 23–32 | ตรวจ/parse JSON |
-| 32–41 | Router + Google Sheets action |
-| 41–47 | HIGH alert |
-| 47–50 | ทดสอบและสรุป |
+| 0–5 | เตรียม Google Sheet |
+| 5–10 | สร้าง API key และ connection |
+| 10–18 | สร้าง Scenario และส่งคำร้องเข้า Gemini |
+| 18–25 | ตรวจ/parse JSON |
+| 25–33 | Router + Google Sheets action |
+| 33–37 | HIGH alert |
+| 37–40 | ทดสอบและสรุป |
 
 > **UI MAY VARY:** Make และ Google AI Studio อาจเปลี่ยนชื่อ/ตำแหน่ง module, connection dialog, scenario controls และ model list ให้เลือก component ตามหน้าที่ที่อธิบาย อย่าเลือก paid-only feature หากบัญชีไม่มี และไม่ต้องอัปเกรดเพื่อทำ Lab
 

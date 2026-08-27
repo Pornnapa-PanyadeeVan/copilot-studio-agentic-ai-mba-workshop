@@ -4,7 +4,7 @@
 
 🎯 **Goal**  เข้าใจองค์ประกอบของ Agentic AI, autonomy spectrum และกรณีศึกษา Business Request Management
 
-⏱ **Estimated Time**  25 นาที
+⏱ **Estimated Time**  20 นาที
 
 ## Learning Path
 
@@ -98,9 +98,9 @@ Autonomy (ระดับความเป็นอิสระ) ควรม�
 
 “อัตโนมัติมากกว่า” ไม่ได้แปลว่า “ดีกว่า” เสมอไป ระดับที่เหมาะสมขึ้นกับ impact, reversibility, data sensitivity และ accountability
 
-### Optional Agent Comparison — Manus Free Tier
+### Preview Lab 4 — Make Workflow vs Manus Agent
 
-ทำเฉพาะเมื่อมีเวลาและ free tier ยัง available ในวันสอน ไม่ใช่ requirement ของ Workshop:
+Workshop จะให้ผู้เรียนแก้โจทย์ Business Request Management สองวิธี:
 
 | Human-designed Workflow | Goal-based Autonomous Agent |
 |---|---|
@@ -109,7 +109,7 @@ Autonomy (ระดับความเป็นอิสระ) ควรม�
 | เปลี่ยน process ต้องแก้ workflow | Agent อาจปรับแผนตาม context |
 | เหมาะกับงานซ้ำและ policy ชัด | เหมาะกับงานสำรวจ/วางแผนที่ขอบเขตชัดและตรวจสอบได้ |
 
-ให้ผู้เรียนใช้ข้อมูลจำลองและสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ผู้ใช้ต้องกำหนด boundary, approval และ evidence เพิ่มขึ้นอย่างไร หาก Manus unavailable ให้ข้ามส่วนนี้โดยไม่กระทบ Lab ใด
+ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ส่วน Lab 4 จะให้ Manus Agent รับ Goal และ dataset เดียวกันแล้ววางแผนทำ triage กับ management report โดยไม่สร้าง Workflow ผู้เรียนต้องสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด boundary, approval, evidence และ validation เพิ่มขึ้นอย่างไร
 
 ## 7. Business Request Management
 

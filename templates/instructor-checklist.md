@@ -16,6 +16,8 @@
 - [ ] ตรวจว่าบัญชีตัวอย่างสร้าง Gemini API key แบบ free tier ได้โดยไม่เปิด billing
 - [ ] ตรวจ restrictions ของบัญชีโรงเรียน/องค์กรและประเทศ
 - [ ] ไม่ใช้ instructor API key ร่วมกันทั้งห้อง
+- [ ] ทดสอบ Manus Free account และยืนยันว่าเห็น Agent Mode Lite/agent mode ที่บัญชีเปิดให้
+- [ ] ตรวจ Manus credits/queue ด้วยบัญชี Free และเตรียมหนึ่งบัญชีต่อทีม ไม่ใช่หนึ่ง task ต่อคน
 
 ### Make Connections
 
@@ -34,9 +36,11 @@
 - [ ] ตรวจ [Gemini API Pricing](https://ai.google.dev/gemini-api/docs/pricing)
 - [ ] ตรวจ [Gemini API Rate Limits](https://ai.google.dev/gemini-api/docs/rate-limits)
 - [ ] ตรวจ [Make Pricing/Credits](https://www.make.com/en/pricing)
-- [ ] ยืนยันว่าไม่มี Lab บังคับ paid model, paid Make feature หรือ Cloud Billing
+- [ ] ตรวจ [Manus Pricing](https://manus.im/pricing) และ [Credit Rules](https://help.manus.im/en/articles/11711097-what-are-the-rules-for-credits-consumption-and-how-can-i-obtain-them)
+- [ ] ยืนยันว่าไม่มี Lab บังคับ paid model, paid Make feature, Manus paid mode หรือ Cloud Billing
 - [ ] จำกัด Lab 2 คนละ 3–5 Gemini requests
 - [ ] จำกัด Lab 3 dataset 10–20 rows
+- [ ] Lab 4 ใช้ dataset 14 rows, ไม่ browse web และรันหนึ่ง Manus Agent task ต่อทีม
 - [ ] วางแผนกระจายเวลาสร้าง API keys ไม่ให้ 50 คนทำพร้อมกันวินาทีเดียว
 - [ ] เตรียม quota/rate-limit fallback
 
@@ -50,9 +54,12 @@
 - [ ] เตรียมสำเนา sample data ใน Sheet ของผู้สอน
 - [ ] เตรียม fallback JSON จาก [Lab 2 Prompts](../03-build-agentic-workflow/prompts.md#fallback-json)
 - [ ] เตรียม fallback management report จาก [Lab 3 Prompts](../04-generate-management-report/prompts.md)
+- [ ] เตรียม [Manus Lab Input](manus-lab-input.md) และ [Lab 4 Prompts](../06-manus-ai/prompts.md)
+- [ ] Run Manus task ล่วงหน้าและเก็บ Instructor fallback ที่เห็น plan, triage, report และ validation
 - [ ] เตรียม blank Google Doc และ Drive folders สำหรับ fallback
 - [ ] เตรียม PDF ตัวอย่างที่ไม่มีข้อมูลจริง
-- [ ] เตรียม worksheet สำหรับ 13–17 ทีม
+- [ ] เตรียม architecture comparison สำหรับ 13–17 ทีม
+- [ ] เตรียม Optional MBA Challenge worksheet สำหรับ Assignment หากใช้
 - [ ] เตรียม Exit Ticket
 
 ### Screenshots and Demo
@@ -64,6 +71,8 @@
 - [ ] บันทึกภาพหรือวิดีโอ fallback ของ run ที่สำเร็จ
 - [ ] หากสาธิต LINE OA ให้ใช้ demo account/channel เท่านั้น
 - [ ] เตรียม LINE architecture-only fallback
+- [ ] ถ่าย Manus Agent Mode, file upload และ artifacts โดยปิด account/credit details ที่ไม่จำเป็น
+- [ ] เตรียม Manus recorded/instructor run fallback หาก queue หรือ credits ไม่พอ
 
 ### Room and Network
 
@@ -85,7 +94,8 @@
 - [ ] เปิด PDF จาก Drive
 - [ ] ส่ง Gmail ถึงตนเองและเปิด attachment
 - [ ] ตรวจ Make credit/quota dashboard
-- [ ] เปิด browser tabs: repository, AI Studio, Make, Sheets, Drive, Gmail
+- [ ] เปิด Manus และตรวจว่า Instructor fallback task ยังเข้าถึงได้
+- [ ] เปิด browser tabs: repository, AI Studio, Make, Sheets, Drive, Gmail, Manus
 - [ ] เปิด troubleshooting และ fallback files
 - [ ] ลบผล demo เก่าที่อาจทำให้ผู้เรียนสับสน แต่ไม่ลบ audit ที่ต้องเก็บ
 
@@ -95,19 +105,22 @@
 
 - [ ] ให้ผู้เรียนทำ Lab 1 รายบุคคลหรือคู่
 - [ ] Lab 2–3 อนุญาตจับคู่เพื่อช่วยเรื่อง connection/quota
-- [ ] MBA Challenge ทีมละ 3–4 คน
 - [ ] กำหนดตัวแทนทีมเพียงหนึ่งคนกด Run ใน Make
+- [ ] Lab 4 ทีมละ 3–4 คนและมี Operator เพียงหนึ่งคน run Manus task
+- [ ] MBA Challenge เป็น Optional Assignment ไม่อยู่ใน core 3 ชั่วโมง
 
 ### Timing Guardrails
 
-- [ ] 00:25 เริ่ม Lab 1 ไม่ช้ากว่า 5 นาที
-- [ ] 01:05 หยุด Lab 1 แม้บางคนใช้ fallback
-- [ ] 01:15 เริ่ม Lab 2 พร้อมกันจาก architecture
-- [ ] 01:40 ผู้ที่ API ยังไม่ผ่านเปลี่ยนเป็น fallback JSON
-- [ ] 02:05 เริ่ม Lab 3 ด้วย sample data ทันที
-- [ ] 02:20 ผู้ที่ PDF connector ไม่ผ่านใช้ manual document fallback
-- [ ] 02:35 เริ่ม Challenge
-- [ ] 02:50 หยุด pitch และเข้าสู่ Responsible AI
+- [ ] 00:20 เริ่ม Lab 1
+- [ ] 00:50 หยุด Lab 1 และเริ่ม Lab 2
+- [ ] 01:15 ผู้ที่ API ยังไม่ผ่านเปลี่ยนเป็น fallback JSON
+- [ ] 01:30 พัก 10 นาที
+- [ ] 01:40 เริ่ม Lab 3 ด้วย sample data ทันที
+- [ ] 01:55 ผู้ที่ PDF connector ไม่ผ่านใช้ manual document fallback
+- [ ] 02:05 เริ่ม LINE OA Instructor Demo
+- [ ] 02:15 เริ่ม Lab 4 Manus พร้อมกันเป็นทีม
+- [ ] 02:20 ทีมที่ Agent Mode/credits ไม่พร้อมใช้ Instructor fallback
+- [ ] 02:45 เริ่ม Responsible AI + Architecture Comparison + Wrap-up
 
 ## Risk Register
 
@@ -125,6 +138,9 @@
 | Gmail authorization fail | OAuth denied | ใช้ email ตนเอง/ตรวจ permission | Save Drive link only |
 | PDF generation fail | ได้ text/link ไม่ใช่ PDF | ตรวจ export/binary path | Google Docs manual export |
 | 50 API keys พร้อมกัน | throttling/verification delay | stagger 5 กลุ่ม | แชร์ผลผ่าน projector ไม่แชร์ key |
+| Manus credits ไม่พอ | Task start ไม่ได้/credit warning | หนึ่ง task ต่อทีม, dataset 14 rows, no web research | Instructor completed run |
+| Manus queue ยาว | Estimated wait เกิน Lab time | ตรวจล่วงหน้าและ stagger teams | Recorded run + manual validation |
+| Manus ทำงานนอกขอบเขต | เสนอ app/workflow/external action | ใช้ boundary correction prompt และหยุด task หากจำเป็น | วิเคราะห์ artifacts ที่เตรียมไว้ |
 | Sensitive data ถูก paste | พบชื่อ/email จริง | หยุด run และลบจาก workspace/history ตาม policy | ใช้ sample dataset ใหม่ |
 
 ## Fallback Ladder
@@ -158,6 +174,20 @@ Input card → Team applies AI rules → Decision card → Action card
 
 > Workshop ต้องสำเร็จได้แม้ automation connectors fail ผู้เรียนยังต้องอธิบาย Goal, Reasoning, Decision, Action, Data และ Human Oversight
 
+### Manus Lab Fallback
+
+```text
+Student Agent task
+↓ unavailable
+Instructor completed Agent task
+↓ unavailable
+Chat Mode comparison
+↓ unavailable
+Team simulates Planner → Triage → Managerial Analyst → Reviewer
+```
+
+Learning Objective คือการเปรียบเทียบ orchestration ไม่ใช่การใช้ credits ให้หมด
+
 ## Security Checklist
 
 - [ ] ใช้ข้อมูลจำลองเท่านั้น
@@ -170,6 +200,7 @@ Input card → Team applies AI rules → Decision card → Action card
 - [ ] Rotate/revoke demo key หลัง class หากไม่ใช้ต่อ
 - [ ] ไม่บันทึกหน้าจอที่มี secret
 - [ ] ไม่สาธิต high-impact automatic action
+- [ ] Manus ใช้เฉพาะ `manus-lab-input.md`; ไม่เปิด connectors, schedule, web research หรือ external action
 
 ## หลังสอน
 
@@ -177,6 +208,7 @@ Input card → Team applies AI rules → Decision card → Action card
 - [ ] ลบหรือ anonymize test data ตาม retention plan
 - [ ] Rotate/revoke workshop API keys ที่ไม่ใช้
 - [ ] ตรวจ Make credits/quota
+- [ ] ตรวจ Manus task privacy/retention และลบ demo artifacts ตามแผนเมื่อไม่ใช้
 - [ ] เก็บ feedback ว่า issue ใดเกิดบ่อย
 - [ ] Update troubleshooting และ screenshots
 - [ ] ตรวจลิงก์ free-tier/pricing ก่อนรอบถัดไป

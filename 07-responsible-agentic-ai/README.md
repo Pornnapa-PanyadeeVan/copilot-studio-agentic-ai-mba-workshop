@@ -1,10 +1,10 @@
-# 06 — Responsible Agentic AI
+# 07 — Responsible Agentic AI + Architecture Choice
 
-[← Previous: MBA Challenge](../05-mba-challenge/README.md) · [Home](../README.md) · [Optional: LINE OA Demo →](../07-instructor-demo-line-oa/README.md)
+[← Previous: Lab 4 Manus AI](../06-manus-ai/README.md) · [Home](../README.md) · [Optional MBA Challenge →](../08-optional-mba-challenge/README.md)
 
 🎯 **Goal**  กำหนดขอบเขตที่ AI ทำเองได้ สิ่งที่ต้องให้คนอนุมัติ และ controls ที่ทำให้ระบบรับผิดชอบได้
 
-⏱ **Estimated Time**  10 นาที
+⏱ **Estimated Time**  15 นาที รวม comparison และ Wrap-up
 
 ## หลักสำคัญ
 
@@ -40,6 +40,7 @@ Human-in-the-loop (การให้มนุษย์ตรวจหรือ�
 - เก็บข้อมูลเท่าที่จำเป็นต่อ Goal
 - แยก identifier ออกจากข้อความเมื่อทำได้
 - กำหนด retention และผู้เข้าถึง Sheet/Drive/Make run history
+- ตรวจสิทธิ์และ retention ของไฟล์/task ใน Manus workspace เช่นเดียวกับระบบอื่น
 - ห้ามส่ง confidential, personal, financial, health หรือ employee-sensitive data เข้า free-tier model โดยไม่มีการประเมินนโยบายองค์กร
 - ตรวจ terms/data-use ของผู้ให้บริการก่อน production
 
@@ -107,6 +108,7 @@ Automation bias คือการเชื่อ AI มากเกินไป
 - Prompt/rule/model version
 - AI summary, priority, reason และ recommendation
 - Route และ Action ที่ทำจริง
+- สำหรับ Manus: execution plan, source Request IDs, artifact version และ validation summary
 - Error/retry
 - Human approver, override และเหตุผล
 
@@ -137,6 +139,33 @@ Audit trail ไม่ควรกลายเป็นที่เก็บข�
 - Request มี legal, compliance, finance, employment หรือ sensitive data
 - Confidence/impact อยู่นอกขอบเขตที่อนุญาต
 
+## 11. เลือก Make, Manus หรือ Hybrid
+
+| สถานการณ์ | ตัวเลือกที่เหมาะเป็นจุดเริ่ม | เหตุผล |
+|---|---|---|
+| คำร้องเข้าทุก 5 นาที ต้องบันทึกและแจ้งเตือนซ้ำได้ | Make Workflow | เส้นทางและ Action ต้องคาดการณ์/monitor ได้ |
+| วิเคราะห์ dataset one-off และสร้าง executive report | Manus Agent | Goal-based multi-step analysis ลด setup ของ Workflow |
+| งานมี financial/legal/employee decision | Assist + Human Approval | ไม่ควรให้ระบบใดตัดสินขั้นสุดท้ายเอง |
+| ต้องรับข้อมูลอัตโนมัติ แล้วให้ Agent วิเคราะห์เคสซับซ้อน | Hybrid | Workflow คุม Trigger/permissions; Agent ทำ bounded reasoning |
+
+### Hybrid Pattern ที่ปลอดภัยกว่า
+
+```text
+Make receives and validates input
+↓
+Remove sensitive data / enforce schema
+↓
+Bounded Agent analysis
+↓
+Validate allowed output
+↓
+Human approval for high-impact cases
+↓
+Make performs approved action
+```
+
+อย่าให้ Agent มี permission กว้างและลงมือภายนอกได้โดยไม่มี schema validation, allowlist, approval และ audit trail
+
 ## 💬 Discussion
 
 เลือก Action จากทีมของคุณหนึ่งข้อแล้วตอบ:
@@ -155,6 +184,7 @@ Audit trail ไม่ควรกลายเป็นที่เก็บข�
 2. “Action ที่ AI ทำอัตโนมัติได้ใน use case ของฉันคือ…”
 3. “Action ที่ต้องมี Human Approval คือ…”
 4. “Management Insight ที่จะเกิดจากข้อมูลสะสมคือ…”
+5. “โจทย์ของฉันควรใช้ Make, Manus หรือ Hybrid เพราะ…”
 
 ## 🏁 Completed
 
@@ -163,7 +193,8 @@ Audit trail ไม่ควรกลายเป็นที่เก็บข�
 - [ ] มี audit trail และ override
 - [ ] มี stop condition/fallback
 - [ ] แยก recommendation ออกจาก final high-impact decision
+- [ ] เลือก Make, Manus หรือ Hybrid พร้อมเหตุผลได้
 
 ---
 
-[← Previous: MBA Challenge](../05-mba-challenge/README.md) · [Home](../README.md) · [Optional: LINE OA Demo →](../07-instructor-demo-line-oa/README.md)
+[← Previous: Lab 4 Manus AI](../06-manus-ai/README.md) · [Home](../README.md) · [Optional MBA Challenge →](../08-optional-mba-challenge/README.md)

@@ -1,10 +1,10 @@
-# 04 — Lab 3: Generate and Deliver a Management Report
+# 04 — Lab 3: Managerial AI — Generate and Deliver a Management Report
 
-[← Previous: Lab 2](../03-build-agentic-workflow/README.md) · [Home](../README.md) · [Next: MBA Challenge →](../05-mba-challenge/README.md)
+[← Previous: Lab 2](../03-build-agentic-workflow/README.md) · [Home](../README.md) · [Next: LINE OA Demo →](../05-line-oa-demo/README.md)
 
 🎯 **Goal**  เปลี่ยน Request History ให้เป็น Management Insight สร้างเอกสาร/PDF เก็บใน Google Drive และส่ง Gmail
 
-⏱ **Estimated Time**  25–30 นาที
+⏱ **Estimated Time**  25 นาที
 
 🧰 **Tools**  Make + Google Sheets + Gemini + Google Docs/Drive + Gmail
 
@@ -34,11 +34,11 @@ Email
 
 | นาที | งาน |
 |---:|---|
-| 0–5 | เตรียม Request History |
-| 5–12 | รวมข้อมูลและให้ Gemini วิเคราะห์ |
-| 12–19 | สร้าง Document/PDF |
-| 19–25 | บันทึก Drive และส่ง Gmail |
-| 25–30 | ตรวจผลและอภิปราย |
+| 0–4 | เตรียม Request History |
+| 4–10 | รวมข้อมูลและให้ Gemini วิเคราะห์ |
+| 10–16 | สร้าง Document/PDF |
+| 16–21 | บันทึก Drive และส่ง Gmail |
+| 21–25 | ตรวจผลและอภิปราย |
 
 > **UI MAY VARY:** ชื่อ action สำหรับอ่านหลายแถว รวมข้อความ สร้าง document แปลง/export PDF อัปโหลด Drive และส่ง Gmail อาจต่างตาม Make version/connection ให้เลือก action ตาม “ผลลัพธ์ที่ต้องการ” และใช้ fallback หากบัญชีไม่แสดง function นั้น อย่าอัปเกรด plan เพื่อจบ Lab
 
@@ -320,6 +320,13 @@ Observe → Analyze → Decide → Generate → Create Artifact
 2. หากข้อมูลต้นทางไม่ครบ Insight จะน่าเชื่อถือเพียงใด?
 3. จะเก็บ feedback ว่าคำแนะนำใดถูกนำไปใช้จริงได้อย่างไร?
 
+## Bridge to LINE Demo and Lab 4
+
+- LINE Demo เปลี่ยน Channel ที่ส่ง Business Request เข้าสู่ Workflow แต่ architecture Lab 2–3 ยังเหมือนเดิม
+- Lab 4 ใช้ Business Goal และข้อมูลคล้ายกัน แต่ให้ Manus Agent วางแผนทำ triage + report ใน task เดียว โดยไม่สร้าง Workflow และไม่ทำ external action
+
+ให้จดว่า Lab 2–3 ต้องกำหนด module ใดบ้าง เพื่อนำไปเปรียบเทียบ setup effort, control และ repeatability ใน Lab 4
+
 ## 🏁 Completed
 
 - [ ] ใช้ Request History หลายรายการ
@@ -331,4 +338,4 @@ Observe → Analyze → Decide → Generate → Create Artifact
 
 ---
 
-[← Previous: Lab 2](../03-build-agentic-workflow/README.md) · [Home](../README.md) · [Next: MBA Challenge →](../05-mba-challenge/README.md)
+[← Previous: Lab 2](../03-build-agentic-workflow/README.md) · [Home](../README.md) · [Next: LINE OA Demo →](../05-line-oa-demo/README.md)

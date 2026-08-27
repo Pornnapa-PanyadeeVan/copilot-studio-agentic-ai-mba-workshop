@@ -1,14 +1,15 @@
 # Sample Business Requests — ข้อมูลจำลอง
 
-[← Home](../README.md) · [Lab 2](../03-build-agentic-workflow/README.md) · [Lab 3](../04-generate-management-report/README.md)
+[← Home](../README.md) · [Lab 2](../03-build-agentic-workflow/README.md) · [Lab 3](../04-generate-management-report/README.md) · [Lab 4 Manus Input](manus-lab-input.md)
 
 ใช้ข้อมูลจำลองนี้สำหรับทดสอบ Lab 1–3 ห้ามแทนที่ด้วยคำร้องจริงของลูกค้าหรือพนักงาน
 
 ## วิธีใช้
 
-- Lab 1: เลือก 5 cases เพื่อทดสอบ Business Rules
+- Lab 1: เลือก 3 core cases และ 2 optional cases เพื่อทดสอบ Business Rules
 - Lab 2: เลือก HIGH/MEDIUM/LOW อย่างละ 1 รายการ
 - Lab 3: ใช้ 10–20 rows โดยเลือกหลาย department และเก็บ themes ซ้ำ
+- Lab 4: ใช้ไฟล์ [manus-lab-input.md](manus-lab-input.md) ซึ่งตัด Expected Priority ออกเพื่อทดสอบ Agent อย่างยุติธรรม
 - `AMBIGUOUS` หมายถึงข้อมูลยังไม่พอ ผู้เรียนต้องระบุ missing information ก่อนตัดสิน ไม่ใช่ Priority ที่ส่งเข้า Router
 
 ## Dataset
@@ -72,4 +73,4 @@
 
 ---
 
-[← Home](../README.md) · [Lab 2](../03-build-agentic-workflow/README.md) · [Lab 3](../04-generate-management-report/README.md)
+[← Home](../README.md) · [Lab 2](../03-build-agentic-workflow/README.md) · [Lab 3](../04-generate-management-report/README.md) · [Lab 4 Manus Input](manus-lab-input.md)

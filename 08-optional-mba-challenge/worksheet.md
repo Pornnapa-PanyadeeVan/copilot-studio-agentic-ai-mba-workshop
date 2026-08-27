@@ -70,6 +70,14 @@ Management Insight
 | Decision | Evidence/data required | Possible next action | Confidence/exception rule |
 |---|---|---|---|
 | | | | |
+
+## 3A. Architecture Choice
+
+เลือกหนึ่ง: `Make Workflow` / `Manus Agent` / `Hybrid`
+
+**เหตุผลด้าน setup, repeatability, control, external action และ audit:**
+
+>
 | | | | |
 | | | | |
 
