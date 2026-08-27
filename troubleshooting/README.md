@@ -1,130 +1,187 @@
 # Troubleshooting Guide
 
-ใช้กติกา **5-minute fallback**: หากเป็นปัญหา permission, license, environment หรือ connector และแก้ไม่ได้ภายใน 5 นาที ให้ใช้ Instructor fallback เพื่อรักษา learning outcome และเวลา Workshop
+[← Home](../README.md) · [Instructor Checklist](../templates/instructor-checklist.md)
 
-> [!IMPORTANT]
-> **UI MAY VARY:** บันทึกชื่อ environment, ขั้นตอนที่ล้มเหลว และข้อความ error แบบไม่เปิดเผยข้อมูลลับ ห้าม paste token, connection ID, tenant ID หรือข้อมูลบุคคลลง repository
+ทุกหัวข้อมี `Problem → Likely Cause → Quick Fix → Instructor Fallback` เพื่อให้ Workshop เดินต่อได้ภายใน 3 ชั่วโมง
 
-## Cannot access Copilot Studio
+> **UI MAY VARY:** ใช้ชื่อเมนูที่เห็นจริงในบัญชีและเลือก function เทียบเท่า อย่าเปิด paid tier เพียงเพื่อแก้ปัญหาในห้อง
 
-| Item | Detail |
+## Cannot access Google AI Studio
+
+| | |
 |---|---|
-| Problem | เปิด Copilot Studio ไม่ได้, redirect loop หรือเห็นหน้าไม่มีสิทธิ์ |
-| Likely cause | ไม่มี license, admin policy, conditional access, wrong account หรือ region/environment restriction |
-| Quick fix | ตรวจ work/school account, sign out/in, เปิด private window, ตรวจ license กับ instructor/admin และใช้ URL `https://copilotstudio.microsoft.com` |
-| Instructor fallback | จับคู่กับ maker ที่เข้าได้; ให้ผู้เรียนทำ prompt review และทดสอบผ่าน demo agent ของผู้สอน |
+| **Problem** | เปิด Google AI Studio ไม่ได้, redirect loop, service unavailable หรือบัญชีไม่มีสิทธิ์ |
+| **Likely Cause** | Account/age/country/admin restriction, browser cookie, network หรือ service availability |
+| **Quick Fix** | ตรวจ account ที่ sign in, ใช้ browser profile/incognito ที่ได้รับอนุญาต, refresh และตรวจ network; อย่าใช้ข้อมูลจริง |
+| **Instructor Fallback** | จับคู่กับผู้เรียนที่เข้าได้ หรือให้ดู Instructor screen แล้วใช้ expected outputs/prompts ใน repository |
 
-## Cannot create Agent
+## System Instructions not visible
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | `New agent` ไม่มี, disabled หรือ Save ไม่สำเร็จ |
-| Likely cause | Wrong environment, security role, capacity, trial limit หรือ agent creation ถูก admin ปิด |
-| Quick fix | ตรวจ environment, refresh Agents page, ลอง blank agent, ตรวจ required Name/Language และให้ admin ตรวจ maker permission |
-| Instructor fallback | 1 agent ต่อทีม; ใช้ agent ที่ผู้สอนสร้างไว้ แล้วให้ผู้เรียนวิเคราะห์/ปรับ Instructions บนสำเนา worksheet |
+| **Problem** | ไม่พบพื้นที่ System Instructions |
+| **Likely Cause** | Panel ถูกพับ, session/mode ต่างกัน หรือ UI rollout เปลี่ยน |
+| **Quick Fix** | หา run/model settings หรือ function ที่กำหนด persistent model behavior ตาม [AI Studio quickstart](https://ai.google.dev/gemini-api/docs/ai-studio-quickstart) |
+| **Instructor Fallback** | Paste System Instructions ไว้ส่วนต้นของ Prompt พร้อม delimiter แล้วทำ test ใน session ใหม่ อธิบายว่าคำสั่งไม่ได้ persistent แบบเดียวกัน |
 
-## Cannot find Workflow
+## Gemini output not in expected format
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | ไม่เห็น `Workflows`, `Flows`, `New agent flow` หรือ Forms trigger |
-| Likely cause | Classic/new experience ต่างกัน, preview ไม่เปิด, harness ต่างกัน หรือ license จำกัด |
-| Quick fix | หา function ที่สร้าง flow; ลอง Copilot Studio → Flows/Workflows; หากไม่มีให้เปิด Power Automate → Create → Automated cloud flow ใน environment เดียวกัน |
-| Instructor fallback | ใช้ flow demo ของผู้สอน หรือวาด flow conceptually ใน [Challenge Worksheet](../04-mba-challenge/worksheet.md) |
+| **Problem** | ขาดหัวข้อ, ตอบยาว, Priority ไม่ใช่ค่าเดียว หรือภาษาไม่ตรง |
+| **Likely Cause** | Instruction ไม่ครบ, chat context รบกวน หรือ model ตีความ output format ไม่ชัด |
+| **Quick Fix** | ย้ำ exact format/allowed values/Thai output แล้วเริ่ม session ใหม่; ลดคำสั่งที่ขัดกัน |
+| **Instructor Fallback** | ใช้ expected output ตัวอย่างและให้ผู้เรียนตรวจว่าแต่ละ field มาจาก rule ใด |
 
-## Microsoft Forms connector unavailable
+## Cannot create API key
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | ไม่พบ connector/trigger หรือ Form ไม่อยู่ใน Form Id |
-| Likely cause | Connection ใช้คนละบัญชี, Form เป็นของ group/คนอื่น, DLP policy, admin consent หรือ connection หมดอายุ |
-| Quick fix | สร้าง Form ด้วยบัญชีเดียวกับ flow, refresh connection, ตรวจ environment/DLP และเลือก `When a new response is submitted` + `Get response details` |
-| Instructor fallback | ใช้ Manual trigger พร้อม text inputs หรือ copy Form response ไป Agent ด้วยตนเอง |
+| **Problem** | ไม่มีตัวเลือกสร้าง key, permission denied หรือหน้าจอขอ billing |
+| **Likely Cause** | Account/admin/country/project restriction หรือ free-tier eligibility ต่างกัน |
+| **Quick Fix** | ตรวจบัญชีและหน้าจัดการ key; ใช้ตัวเลือก free ที่บัญชีมี; ไม่เปิด billing เพื่อ Workshop |
+| **Instructor Fallback** | Lab 1 ต่อได้โดยไม่มี key; Lab 2 ใช้ [fallback JSON](../03-build-agentic-workflow/prompts.md#fallback-json) หรือ Instructor scenario โดยไม่แชร์ key |
 
-## Teams connector unavailable
+## Gemini API quota issue
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | ไม่พบ Team/Channel, connection error หรือ post ไม่สำเร็จ |
-| Likely cause | ไม่มี membership/post permission, connection หมดอายุ, private channel limitation หรือ DLP policy |
-| Quick fix | ใช้ standard channel ที่ผู้เรียนเป็น member, reauthenticate, เลือก `Post a message in a chat or channel`, ตรวจ Post as/Post in |
-| Instructor fallback | แทน Teams action ด้วย Compose หรือบันทึก notification text ใน Excel แล้วให้ผู้สอน demo Teams action |
+| **Problem** | Error `429`, quota exceeded, rate limit หรือ model unavailable |
+| **Likely Cause** | 50 คน run พร้อมกัน, free-tier RPM/TPM/daily limit, preview model limit หรือ request ใหญ่เกิน |
+| **Quick Fix** | หยุด 1–2 นาที, stagger team runs, ลด dataset/output, ใช้ model ฟรีที่ available และไม่ retry รัว |
+| **Instructor Fallback** | ใช้ Google AI Studio manual output หรือ prepared JSON/report แล้วทำ Router/Action ต่อ |
 
-## Excel table not detected
+## Make cannot connect to Gemini
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | File พบแต่ Table dropdown ว่าง หรือ `Add a row into a table` ล้มเหลว |
-| Likely cause | Data เป็น cell range ไม่ใช่ table, workbook อยู่ local device, connection ไม่มีสิทธิ์, file lock หรือ table เพิ่งสร้าง |
-| Quick fix | เก็บไฟล์ใน OneDrive for Business/SharePoint, ใช้ Format as Table, ตั้งชื่อ `BusinessRequestsTable`, save/close workbook แล้ว refresh action |
-| Instructor fallback | ใช้ Compose เพื่อแสดง row ที่ควรบันทึก หรือใช้ workbook/table ที่ผู้สอนเตรียมไว้ |
+| **Problem** | Connection rejected, authentication error หรือ Gemini action run ไม่ผ่าน |
+| **Likely Cause** | Key ผิด/หมดอายุ/ถูก block, model unavailable, quota หรือ connection configuration |
+| **Quick Fix** | สร้าง connection ใหม่ด้วย key ของตนเอง ตรวจ key/model/quota และดู error detail โดยไม่แชร์ secret |
+| **Instructor Fallback** | ตัด AI step ชั่วคราวแล้วป้อน fallback JSON เข้า parsing/Router เพื่อรักษา Learning Objective |
 
-## AI output cannot be used in Condition
+## Make cannot connect to Google Sheets
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | Dynamic content ไม่มี Priority หรือมี output เป็นข้อความก้อนเดียว |
-| Likely cause | Prompt output เป็น Text, schema ยังไม่บันทึก/ทดสอบ หรือเลือก token ผิด action |
-| Quick fix | เปลี่ยนเป็น JSON/Structured output และกำหนด `summary`, `priority`, `reason`, `recommendedAction`; save และ test AI step ใหม่ |
-| Instructor fallback | ใช้ Compose/ตัวแปร Priority ที่ผู้เรียนกรอกเอง แล้วสาธิต Decision branch โดยไม่เรียก AI |
+| **Problem** | OAuth fail, ไม่เห็น Spreadsheet/Sheet หรือ permission denied |
+| **Likely Cause** | Sign in ผิด account, admin blocks OAuth, file ownership/permission หรือ stale connection |
+| **Quick Fix** | ตรวจ Google account, เปิด Sheet โดยตรง, reconnect และเลือก file ของตนเอง |
+| **Instructor Fallback** | แสดง mapping บน Scenario แล้ว paste output ลง prepared Sheet ด้วยตนเอง |
 
-## Priority text does not match HIGH exactly
+## Router condition does not match
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | AI แสดง HIGH แต่ flow ไปผิด branch |
-| Likely cause | มีช่องว่าง, markdown, sentence เพิ่ม, case ต่าง หรือเลือก token ผิด |
-| Quick fix | ใช้ structured field; บังคับ allowed values; ตรวจ run output; หาก text-only ใช้ `toUpper(trim(...))` ก่อนเทียบ `HIGH` |
-| Instructor fallback | ใช้ sample Priority value แบบคงที่เพื่อทดสอบ branch แล้วกลับไปปรับ prompt หลัง class |
+| **Problem** | Bundle ไม่เข้า HIGH/MEDIUM/LOW route |
+| **Likely Cause** | Mapping ผิด field, lowercase, whitespace หรือ filter ใช้ค่าที่ไม่ตรง |
+| **Quick Fix** | ดู parsed `priority`, trim/normalize และใช้ exact match กับ `HIGH`, `MEDIUM`, `LOW` |
+| **Instructor Fallback** | ใช้ prepared JSON ที่ priority สะอาด แล้วสาธิตทีละ route |
 
-## Workflow does not trigger
+## Priority contains extra text
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | Submit Form แล้วไม่มี run |
-| Likely cause | Flow ยัง off/unsaved, เลือก Form ผิด, trigger connection error, polling delay หรือ submit ก่อนบันทึก flow |
-| Quick fix | Save/turn on flow, ตรวจ Form Id, ดู connection, ตรวจ run history และรอก่อน submit ใหม่ |
-| Instructor fallback | ใช้ Test/Manual run หรือแสดง run history จาก flow ที่ผู้สอนทดสอบไว้ |
+| **Problem** | ค่าเป็น `Priority: HIGH`, `HIGH because...` หรือมี code fence |
+| **Likely Cause** | Prompt ไม่บังคับ schema หรือ map จาก full response แทน parsed field |
+| **Quick Fix** | ใช้ JSON prompt, ย้ำ allowed values และ map `priority` หลัง parse ไม่ใช้ full text |
+| **Instructor Fallback** | แก้ค่าใน fallback JSON เพื่อสาธิต Router และอภิปรายว่าทำไม structured output สำคัญ |
 
-## Permission/environment issue
+## JSON cannot parse
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | Asset หรือ connection ที่เพื่อนเห็นไม่ปรากฏ, action forbidden, share ไม่ได้ |
-| Likely cause | คนละ Power Platform environment, security role ต่าง, connection เป็นของ owner หรือ DLP policy |
-| Quick fix | เปรียบเทียบ environment name, account และ connection owner; ใช้ asset ของตนเอง; ให้ admin ตรวจ role/policy |
-| Instructor fallback | 1 maker ต่อทีมและ screen-share; คนอื่นทำ testing, business rules และ risk review |
+| **Problem** | JSON parser error หรือไม่มี 4 fields |
+| **Likely Cause** | Markdown fence, single quotes, trailing comma, ข้อความก่อน/หลัง JSON หรือ output ถูกตัด |
+| **Quick Fix** | ตรวจ raw output, ย้ำ `Return ONLY valid JSON`, ลด verbosity และ run ใหม่หนึ่งครั้ง |
+| **Instructor Fallback** | ใช้ [valid fallback JSON](../03-build-agentic-workflow/prompts.md#fallback-json) แล้วทำขั้นตอนถัดไป |
 
-## Run succeeds but output is wrong
+## Google Sheet does not receive row
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | Flow สำเร็จแต่ Summary/Priority/Excel mapping ผิด |
-| Likely cause | Dynamic content map สลับ, prompt placeholder ผิด, stale schema หรือ test data ไม่ครบ |
-| Quick fix | เปิด run history ทีละ action; เปรียบเทียบ Inputs/Outputs; แก้ mapping; save; ส่ง test case ใหม่เพียงหนึ่งรายการ |
-| Instructor fallback | ใช้ screenshots ของ correct run และให้ผู้เรียนหา mapping error เป็นกิจกรรม debugging |
+| **Problem** | Scenario ผ่านแต่ไม่มี row หรือ row อยู่ผิด Sheet |
+| **Likely Cause** | Action ไม่ได้ run, route ไม่ match, เลือก Spreadsheet/Sheet ผิด, header changed หรือ permission |
+| **Quick Fix** | เปิด run history ตาม bundle, ตรวจ selected file/tab และ refresh column mapping |
+| **Instructor Fallback** | Paste row ด้วยตนเองและให้ผู้เรียนวาด mapping Trigger/AI fields → 8 Sheet columns |
 
-## Duplicate Excel rows or Teams messages
+## Gmail connection unavailable
 
-| Item | Detail |
+| | |
 |---|---|
-| Problem | Request เดียวสร้างหลาย rows/messages |
-| Likely cause | Submit ซ้ำ, flow หลายสำเนาเปิดอยู่ หรือ retry หลัง timeout |
-| Quick fix | ตรวจ Form response ID และ run history; turn off flow สำเนา; ใส่ Request ID/Response ID ใน audit row |
-| Instructor fallback | ลบ test duplicates หลัง classตามนโยบาย; ระหว่าง classให้ทำเครื่องหมาย duplicate แทนการเสียเวลาแก้ data |
+| **Problem** | OAuth denied, send action unavailable หรือ policy block |
+| **Likely Cause** | Google Workspace admin policy, account type, connection scope หรือ Make plan/UI difference |
+| **Quick Fix** | ใช้บัญชีของตนเองที่อนุญาต ส่งถึงตนเอง และ reconnect โดยอ่าน permission ก่อนยอมรับ |
+| **Instructor Fallback** | ข้าม email; เก็บ PDF/Drive link และสร้าง email draft text ถือว่าผ่าน Lab 3 |
 
-## Safe escalation note
+## PDF cannot generate
 
-เมื่อขอความช่วยเหลือ ให้ส่งเฉพาะ:
+| | |
+|---|---|
+| **Problem** | ได้ text/link แทน PDF, file 0 bytes หรือเปิดไม่ได้ |
+| **Likely Cause** | ยังไม่ได้ export binary, document ID ผิด, conversion action/format ไม่รองรับ |
+| **Quick Fix** | ตรวจ document ก่อน แล้วเลือก function export/convert เป็น PDF; ตรวจ filename และ file data mapping |
+| **Instructor Fallback** | Copy report ไป Google Docs แล้ว download/export PDF ด้วยตนเองตาม UI ปัจจุบัน |
 
-- ชื่อ step
-- ข้อความ error ที่ตัดข้อมูลลับออกแล้ว
-- เวลา run โดยประมาณ
-- environment name ที่ไม่ใช่ secret
-- screenshot ที่ปิดบังข้อมูลบุคคล
+## Google Drive permission issue
 
-ห้ามส่ง password, token, connection details, tenant identifiers, customer data หรือ employee data
+| | |
+|---|---|
+| **Problem** | หา folder ไม่พบ, upload denied หรือ link เปิดไม่ได้ |
+| **Likely Cause** | ผิด account/Drive, folder ownership, insufficient scope หรือ shared-drive restriction |
+| **Quick Fix** | ใช้ My Drive ของตนเอง สร้าง `Agentic-AI-Reports/Weekly-Reports` และ reconnect |
+| **Instructor Fallback** | เก็บ PDF local ชั่วคราวและบันทึก intended Drive path ใน worksheet; ไม่เปิด public sharing |
+
+## Report only summarizes individual requests
+
+| | |
+|---|---|
+| **Problem** | รายงานไล่สรุป Record 1, 2, 3 แต่ไม่มี pattern/risk/insight |
+| **Likely Cause** | Dataset เล็ก, ไม่มี theme ซ้ำ หรือ Prompt ไม่เน้น cross-record analysis |
+| **Quick Fix** | ใช้ 10–20 sample rows ที่มี repeated themes และย้ำ `NOT to summarize each request separately` |
+| **Instructor Fallback** | ใช้ Suggested Lab 3 Set ใน [sample data](../templates/sample-requests.md#suggested-lab-3-set) แล้วอภิปราย pattern ด้วยมือ |
+
+## Workflow does not run
+
+| | |
+|---|---|
+| **Problem** | Run once รออยู่, trigger ไม่เข้าหรือ Scenario หยุดกลางทาง |
+| **Likely Cause** | Trigger ไม่ได้รับ event, schedule off, invalid connection, unmapped required field หรือ previous error |
+| **Quick Fix** | เริ่มจาก trigger test ใหม่ ส่ง payload หลัง Scenario รอฟัง ตรวจ required fields และ run history จากซ้ายไปขวา |
+| **Instructor Fallback** | เดิน architecture ด้วย prepared bundles ทีละขั้น: Input → JSON → Router → Sheet |
+
+## Duplicate rows or alerts
+
+| | |
+|---|---|
+| **Problem** | คำร้องเดียวเกิดหลาย row/email |
+| **Likely Cause** | กด Run ซ้ำ, webhook redelivery, overlapping routes หรือ retry หลัง timeout |
+| **Quick Fix** | ใช้ request/event ID, exact mutually exclusive filters และตรวจผลก่อน retry |
+| **Instructor Fallback** | ลบ duplicate ในข้อมูลจำลอง แล้วอภิปราย idempotency และ audit trail |
+
+## API key may have leaked
+
+| | |
+|---|---|
+| **Problem** | Key ปรากฏใน screenshot, chat, Sheet, run input หรือ Git commit |
+| **Likely Cause** | Paste ผิดที่หรือ connection ไม่เก็บเป็น secret |
+| **Quick Fix** | หยุดใช้และ revoke/rotate key ทันที จากนั้นลบข้อมูลที่เปิดเผยตาม policy; อย่าคิดว่าการลบข้อความอย่างเดียวทำให้ key ปลอดภัย |
+| **Instructor Fallback** | ใช้ prepared output ต่อ ห้ามแจก key ใหม่แบบ shared key |
+
+## Escalation Rule
+
+หากแก้ไม่สำเร็จภายใน 3 นาที ให้ใช้ fallback เพื่อรักษาเวลา Workshop:
+
+```text
+Full Automation
+↓ fails
+Manual AI + Workflow
+↓ fails
+Prepared JSON + Router
+↓ fails
+Paper/Sheet Simulation
+```
 
 ---
 
-[← Home](../README.md) · [Instructor Checklist](../templates/instructor-checklist.md) · [Images Checklist](../images/README.md)
+[← Home](../README.md) · [Instructor Checklist](../templates/instructor-checklist.md)

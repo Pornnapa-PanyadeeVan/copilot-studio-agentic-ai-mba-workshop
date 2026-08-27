@@ -1,67 +1,75 @@
-# Sample Business Requests
+# Sample Business Requests — ข้อมูลจำลอง
 
-ข้อมูลจำลองสำหรับ Microsoft Forms, Agent Test/Preview และ end-to-end workflow test ไม่มีข้อมูลบุคคลจริง
+[← Home](../README.md) · [Lab 2](../03-build-agentic-workflow/README.md) · [Lab 3](../04-generate-management-report/README.md)
 
-> [!TIP]
-> ผู้สอนสามารถซ่อนคอลัมน์ Expected Priority/Why ก่อนแจกผู้เรียน แล้วใช้เป็น answer guide ระหว่าง debrief
+ใช้ข้อมูลจำลองนี้สำหรับทดสอบ Lab 1–3 ห้ามแทนที่ด้วยคำร้องจริงของลูกค้าหรือพนักงาน
 
-## HIGH priority
+## วิธีใช้
 
-| # | Requester Name | Department | Business Request | Required Date | Expected Priority | Why |
-|---:|---|---|---|---|---|---|
-| 1 | Customer Service Lead | Customer Service | A key customer paid this morning but the account is still blocked. They cannot place orders and may move to a competitor. Restore access today. | Today | HIGH | Immediate customer, revenue and reputation impact; ≤24h |
-| 2 | Revenue Operations Manager | Sales | The quoting system is failing for all sales representatives. Three enterprise proposals must be submitted by 4 PM today. | Today, 4 PM | HIGH | Critical operational issue and revenue deadline within hours |
-| 3 | Accounts Payable Manager | Finance | A supplier appears to have been paid twice for a large invoice. The bank file will settle this afternoon unless an authorized manager intervenes. | This afternoon | HIGH | Financial impact and immediate deadline; human authorization required |
-| 4 | Service Desk Manager | IT | The customer checkout service is unavailable in all regions. Orders have stopped and monitoring shows continued failures. | Immediately | HIGH | Critical outage and immediate revenue/customer impact |
-| 5 | Brand Director | Marketing | A live campaign may contain an unlicensed image. Legal asked us to pause distribution while ownership is verified. | Within 2 hours | HIGH | Serious compliance/reputation risk; AI must route, not make legal decision |
+- Lab 1: เลือก 5 cases เพื่อทดสอบ Business Rules
+- Lab 2: เลือก HIGH/MEDIUM/LOW อย่างละ 1 รายการ
+- Lab 3: ใช้ 10–20 rows โดยเลือกหลาย department และเก็บ themes ซ้ำ
+- `AMBIGUOUS` หมายถึงข้อมูลยังไม่พอ ผู้เรียนต้องระบุ missing information ก่อนตัดสิน ไม่ใช่ Priority ที่ส่งเข้า Router
 
-## MEDIUM priority
+## Dataset
 
-| # | Requester Name | Department | Business Request | Required Date | Expected Priority | Why |
-|---:|---|---|---|---|---|---|
-| 6 | Finance Analyst | Finance | Prepare the monthly margin report for next Friday's management meeting. Data is available but needs manager review. | Next Friday | MEDIUM | Deadline within several days and management attention |
-| 7 | HR Coordinator | HR | Create the onboarding schedule for six employees who start next Monday. Managers need the draft in four days. | In 4 days | MEDIUM | Important, time-bound, not immediate crisis |
-| 8 | Campaign Manager | Marketing | Review the launch plan and recommend which of two media options should receive the remaining budget. Leadership meets in three days. | In 3 days | MEDIUM | Management decision and financial relevance within days |
-| 9 | Procurement Specialist | Operations | Compare two supplier renewal options before the current agreement expires in five days. | In 5 days | MEDIUM | Time-bound and needs management attention |
-| 10 | Sales Operations Analyst | Sales | Clean and prioritize the lead list before the weekly pipeline review on Friday. No customer is currently waiting. | Friday | MEDIUM | Supports management process within several days |
+| ID | Requester | Department | Business Request | Context / Deadline | Expected | Rationale | Repeated Theme |
+|---:|---|---|---|---|---|---|---|
+| 01 | ผู้ร้องจำลอง A | Sales | ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้และอาจยกเลิกคำสั่งซื้อ | ต้องแก้ภายในวันนี้; มี order มูลค่าสำคัญ | HIGH | Customer + revenue + time impact | Payment failure |
+| 02 | ผู้ร้องจำลอง B | Sales | ขอรายงานยอดขายแยกตามสาขาสำหรับ review ประจำสัปดาห์ | ใช้ในอีก 4 วัน; งานขายยังเดินต่อ | MEDIUM | Management attention; operations continue | Urgent report |
+| 03 | ผู้ร้องจำลอง C | Sales | ด่วนมาก ขอเปลี่ยนสีใน template ใบเสนอราคา | ไม่มีลูกค้าหรือ order รออยู่ | LOW | Keyword “ด่วน” แต่ไม่มี impact | Routine request |
+| 04 | ผู้ร้องจำลอง D | Sales | ลูกค้าต้องการแก้ใบเสนอราคาโดยเร็วที่สุด | ไม่ระบุ deadline, order value หรือผลกระทบ | AMBIGUOUS | ต้องถาม deadline/revenue/dependency | Quote change |
+| 05 | ผู้ร้องจำลอง E | Marketing | ผู้จัดการต้องการรายงานผลแคมเปญสำหรับประชุมวันศุกร์หน้า | มีเวลา 5 วัน; campaign ทำงานต่อได้ | MEDIUM | Deadline หลายวัน; management use | Urgent report |
+| 06 | ผู้ร้องจำลอง F | Marketing | มีโพสต์กล่าวหาบริษัทเรื่องความปลอดภัยและกำลังถูกแชร์อย่างรวดเร็ว | Public reputation risk กำลังขยาย | HIGH | Serious reputation impact | Customer complaint |
+| 07 | ผู้ร้องจำลอง G | Marketing | ขอโลโก้ไฟล์ความละเอียดสูงสำหรับเก็บในคลังทีม | ไม่มี deadline และไม่กระทบ campaign | LOW | Routine information/artifact | Routine request |
+| 08 | ผู้ร้องจำลอง H | Marketing | ด่วน ขอข้อมูล conversion ของแคมเปญล่าสุด | ไม่บอกว่าจะใช้เมื่อใดหรือ decision ใดขึ้นกับข้อมูล | AMBIGUOUS | ขาด deadline/decision impact | Urgent report |
+| 09 | ผู้ร้องจำลอง I | Finance | ระบบรับชำระเงินล้มเหลวหลายช่องทาง ลูกค้าไม่สามารถจ่ายได้ | เกิดอยู่ขณะนี้; กระทบหลาย order | HIGH | Revenue + customer + operational impact | Payment failure |
+| 10 | ผู้ร้องจำลอง J | Finance | ต้องการ reconciliation report เพื่อปิดงบในอีกสามวัน | มี deadline; ยังทำงานส่วนอื่นต่อได้ | MEDIUM | Financial process สำคัญแต่ไม่หยุดทันที | Urgent report |
+| 11 | ผู้ร้องจำลอง K | Finance | ขอสำเนาแบบฟอร์มเบิกค่าเดินทางฉบับล่าสุด | ไม่มี deadline | LOW | Routine administrative information | Routine request |
+| 12 | ผู้ร้องจำลอง L | Finance | พบยอดต่างจากที่คาด กรุณาตรวจสอบ ASAP | ไม่ระบุจำนวนเงิน สาเหตุ หรือ deadline | AMBIGUOUS | ขาด materiality และ business impact | Financial discrepancy |
+| 13 | ผู้ร้องจำลอง M | HR | ระบบ payroll คำนวณเงินเดือนผิดสำหรับพนักงานจำนวนมากก่อนวันจ่าย | อาจกระทบค่าจ้างและ compliance | HIGH | Financial + employee + compliance impact | HR system issue |
+| 14 | ผู้ร้องจำลอง N | HR | ต้องจัดทำ headcount report ให้ผู้บริหารในอีกสี่วัน | HR operations ยังทำต่อได้ | MEDIUM | Important management report | Urgent report |
+| 15 | ผู้ร้องจำลอง O | HR | พนักงานใหม่ขอวิธีเปลี่ยนรูป Profile ในระบบประชุมออนไลน์ | ไม่มี deadline | LOW | General information | Routine HR question |
+| 16 | ผู้ร้องจำลอง P | HR | พนักงานแจ้งปัญหาสิทธิ์เข้าระบบและบอกว่าด่วน | ไม่ระบุว่าจะเริ่มงานใดหรือมีใครได้รับผลกระทบ | AMBIGUOUS | ต้องถาม role/task/impact | IT access issue |
+| 17 | ผู้ร้องจำลอง Q | Operations | ระบบรับคำสั่งซื้อของหนึ่งสาขาหยุดทำงาน พนักงานรับ Order ไม่ได้ | เริ่มตั้งแต่ 10:00 และไม่ทราบเวลาแก้เสร็จ | HIGH | Critical operational disruption | System outage |
+| 18 | ผู้ร้องจำลอง R | Operations | ลูกค้าหลายรายร้องเรียนการส่งสินค้าล่าช้าซ้ำในสัปดาห์นี้ | ยังส่งได้แต่ SLA เริ่มเสีย | MEDIUM | Recurring customer/operational issue | Customer complaint |
+| 19 | ผู้ร้องจำลอง S | Operations | ขอแก้ชื่อห้องประชุมในปฏิทินทีม | ไม่มี deadline หรือ impact | LOW | Routine administration | Routine request |
+| 20 | ผู้ร้องจำลอง T | Operations | เครื่องจักรแจ้งเตือนผิดปกติและขอให้ตรวจทันที | ไม่ระบุว่าหยุดสายการผลิตหรือเป็น safety warning หรือไม่ | AMBIGUOUS | ต้องถาม safety/production impact | Operational problem |
+| 21 | ผู้ร้องจำลอง U | IT | ผู้ใช้ทุกสาขาเข้า ERP ไม่ได้และไม่สามารถออกใบสั่งซื้อ | เกิดอยู่ขณะนี้; core operations หยุด | HIGH | Major multi-site disruption | IT access issue |
+| 22 | ผู้ร้องจำลอง V | IT | ทีมใหม่ 8 คนต้องได้สิทธิ์ dashboard ก่อนเริ่มโครงการในสามวัน | มี deadline; workaround ยังมี | MEDIUM | Important access setup | IT access issue |
+| 23 | ผู้ร้องจำลอง W | IT | ขอคู่มือ reset password สำหรับบัญชีทดสอบ | ไม่มี deadline | LOW | General information | IT access issue |
+| 24 | ผู้ร้องจำลอง X | IT | เข้าโฟลเดอร์ไม่ได้ ช่วยแก้ ASAP | ไม่ระบุโฟลเดอร์ งานที่หยุด หรือจำนวนผู้ใช้ | AMBIGUOUS | ขาด scope และ operational impact | IT access issue |
+| 25 | ผู้ร้องจำลอง Y | Customer Service | ลูกค้าหลายรายถูกตัดเงินแต่ระบบไม่สร้างคำสั่งซื้อ | เกิดอยู่ขณะนี้; มี financial/reputation risk | HIGH | Customer + financial + reputation impact | Payment failure |
+| 26 | ผู้ร้องจำลอง Z | Customer Service | ข้อร้องเรียนส่งล่าช้าเพิ่มขึ้นและต้องสรุปสาเหตุภายในสัปดาห์ | Operations ยังเดินต่อแต่ trend ต้องแก้ | MEDIUM | Recurring issue requiring attention | Customer complaint |
+| 27 | ผู้ร้องจำลอง AA | Customer Service | ลูกค้าขอทราบเวลาทำการของสาขา | ไม่มีเหตุเร่งด่วน | LOW | Routine information | Routine request |
+| 28 | ผู้ร้องจำลอง AB | Customer Service | ลูกค้าบอกว่าไม่พอใจมากและต้องการคำตอบทันที | ไม่ระบุเหตุการณ์ มูลค่า หรือความเสียหาย | AMBIGUOUS | Emotion/urgent words ไม่พอ ต้องถาม facts | Customer complaint |
 
-## LOW priority
+## Suggested Lab 2 Set
 
-| # | Requester Name | Department | Business Request | Required Date | Expected Priority | Why |
-|---:|---|---|---|---|---|---|
-| 11 | HR Assistant | HR | How do I change my profile picture in Microsoft Teams? | No deadline | LOW | General information; no immediate impact |
-| 12 | Sales Coordinator | Sales | Please send the link to the standard travel policy for future reference. | No deadline | LOW | Routine information request |
-| 13 | Content Coordinator | Marketing | Where is the current presentation template stored? | When convenient | LOW | Routine administrative request |
-| 14 | Support Technician | IT | Please explain how to switch Teams from dark mode to light mode. | No deadline | LOW | General how-to question |
-| 15 | Finance Assistant | Finance | What naming format should we use for internal cost-center folders? | This month | LOW | Administrative information with no immediate impact |
+| Priority | ID | เหตุผลที่เลือก |
+|---|---:|---|
+| HIGH | 01 | เห็น customer/revenue/time impact |
+| MEDIUM | 05 | เห็น deadline แต่ operations continue |
+| LOW | 15 | เห็น routine information |
+| Anti-keyword | 03 | ทดสอบว่าคำว่า “ด่วน” ไม่ทำให้ HIGH |
 
-## AMBIGUOUS / debate cases
+## Suggested Lab 3 Set
 
-| # | Requester Name | Department | Business Request | Required Date | Expected Priority | Why / discussion point |
-|---:|---|---|---|---|---|---|
-| 16 | Operations Coordinator | Operations | We need approval for the vendor issue urgently. Please handle it. | Soon | NEEDS CLARIFICATION | No specific impact, amount, decision or deadline |
-| 17 | Account Executive | Sales | A customer wants a special discount and is waiting. Please approve it quickly. | Not specified | NEEDS CLARIFICATION | Missing discount value, authority, deal value and deadline; AI must not approve |
-| 18 | HR Business Partner | HR | An employee raised a serious concern about a manager. We need a decision as soon as possible. | As soon as possible | NEEDS CLARIFICATION | Potential high impact, but facts are unverified; route to authorized HR review |
-| 19 | Sponsorship Manager | Marketing | Management wants a recommendation on a significant conference sponsorship. The offer expires in two days and could influence next quarter's leads. | In 2 days | MEDIUM (debate) | Management and financial attention; debate whether more evidence could justify HIGH |
-| 20 | Warehouse Supervisor | Operations | A packing machine is making an unusual sound, but production continues normally. Maintenance can inspect tomorrow; no safety assessment has been completed. | Tomorrow | NEEDS CLARIFICATION (debate) | Possible operational/safety risk requires verified facts and human safety review |
+ใช้ ID `01, 02, 05, 06, 09, 10, 13, 14, 17, 18, 21, 22, 25, 26` เพื่อเห็น:
 
-## Copy/paste format for Forms
+- Payment failures ซ้ำใน Sales, Finance และ Customer Service
+- Customer complaints/reputation ใน Marketing, Operations และ Customer Service
+- IT/system access issues
+- Management/urgent reports หลาย department
+- HIGH concentration ที่ payment/system disruption
 
-```text
-Requester Name: Customer Service Lead
-Department: Customer Service
-Business Request: A key customer paid this morning but the account is still blocked. They cannot place orders and may move to a competitor. Restore access today.
-Required Date: Today
-```
+## Discussion Questions
 
-## Suggested testing order
-
-1. เริ่ม LOW เพื่อยืนยัน basic formatting
-2. ทดสอบ MEDIUM เพื่อดู management/deadline logic
-3. ทดสอบ HIGH และตรวจ Teams notification
-4. ทดสอบ ambiguous และตรวจ Default/Human Review
-5. ทดสอบ debate case แล้วเปรียบเทียบ evidence ระหว่างทีม
+1. Pattern ใดเป็น symptom และ pattern ใดอาจเป็น root cause?
+2. Department ที่มี HIGH มากที่สุดต้องการ resource หรือ process change ใด?
+3. จำนวน rows เท่านี้เพียงพอสำหรับข้อสรุปเชิงสถิติหรือไม่?
+4. Insight ใดเป็น evidence และ insight ใดเป็น hypothesis ที่ต้องสอบสวนต่อ?
 
 ---
 
-[← Home](../README.md) · [Lab 1](../02-build-ai-agent/README.md) · [Lab 2](../03-build-agentic-workflow/README.md)
+[← Home](../README.md) · [Lab 2](../03-build-agentic-workflow/README.md) · [Lab 3](../04-generate-management-report/README.md)

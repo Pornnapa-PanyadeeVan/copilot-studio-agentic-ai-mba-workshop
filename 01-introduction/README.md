@@ -1,167 +1,195 @@
-# 01 — Introduction: จาก Generative AI สู่ Agentic AI
+# 01 — Introduction: Generative AI → AI Agent → Agentic AI
 
-🎯 **Goal**  เข้าใจเส้นทางการเรียนรู้ คำศัพท์ และกรณีศึกษาเดียวที่จะใช้ตลอด Workshop
+[← Home](../README.md) · [Next: Lab 1 →](../02-build-ai-agent/README.md)
+
+🎯 **Goal**  เข้าใจองค์ประกอบของ Agentic AI, autonomy spectrum และกรณีศึกษา Business Request Management
 
 ⏱ **Estimated Time**  25 นาที
 
-> 📷 Screenshot needed:
-> ภาพสไลด์หรือ whiteboard ที่แสดง `Generative AI → AI Agent → Agent + Tools → Workflow → Decision → Action → Agentic AI`
-
-## 📌 Step 1 — เริ่มจากสิ่งที่คุ้นเคย: Generative AI
-
-**Generative AI** รับ prompt แล้วสร้างเนื้อหา เช่น สรุปข้อความ เขียนอีเมล หรือสร้างไอเดีย
+## Learning Path
 
 ```text
-Prompt → Model → Generated content
+Generative AI → AI Agent → Agent + Rules → Workflow → Decision → Action
+→ Data / Memory → Management Report → Insight → Human Decision → Agentic AI
 ```
 
-💡 **Why This Matters**  การสร้างคำตอบที่ดีมีคุณค่า แต่ยังไม่เท่ากับการรับผิดชอบผลลัพธ์ทางธุรกิจ ระบบอาจเพียง “ตอบ” โดยไม่ได้เลือกเครื่องมือ ตัดสินใจ หรือทำ Action ต่อ
+## 1. Generative AI คืออะไร
 
-✅ **Checkpoint**  ลองอธิบายด้วยประโยคเดียวว่า Generative AI ทำอะไร: “สร้างเนื้อหาจากข้อมูลและคำสั่งที่ได้รับ”
-
-## 📌 Step 2 — เพิ่ม Goal, Instructions และ Tools: AI Agent
-
-**AI Agent** ทำงานเพื่อเป้าหมาย โดยประสานองค์ประกอบสำคัญ:
-
-- Goal — ต้องการให้งานสำเร็จแบบใด
-- Instructions — กติกาและขอบเขต
-- Context/Knowledge — ข้อมูลที่ใช้ประกอบ
-- Reasoning — วิเคราะห์สถานการณ์
-- Tools — อ่านหรือเปลี่ยนข้อมูลในระบบอื่น
+Generative AI (AI สำหรับสร้างเนื้อหา) รับ Prompt แล้วสร้างคำตอบ ข้อความ ภาพ หรือเนื้อหาอื่น
 
 ```text
-Goal + Instructions + Context + Tools
-                  ↓
-               AI Agent
+Prompt
+↓
+Generate
+↓
+Response
 ```
 
-ใน Lab 1 เราจะสร้าง Agent ที่วิเคราะห์ Business Request แต่ผู้ใช้ยังต้องนำคำขอไปถามเองทุกครั้ง
+ตัวอย่าง: “ช่วยสรุปข้อร้องเรียนลูกค้านี้” ระบบตอบเป็นข้อความแล้วหยุด
 
-💬 **Discussion**  ถ้า Agent เพียงตอบคำถามอย่างมีโครงสร้าง แต่ไม่เริ่มงานหรือทำ Action เอง เราควรเรียกว่า AI Agent หรือ Agentic AI?
+## 2. AI Agent คืออะไร
 
-## 📌 Step 3 — เชื่อม Agent เข้ากับ Workflow
-
-Workflow ทำให้ขั้นตอนเกิดตามลำดับที่ตรวจสอบได้:
-
-```text
-Trigger → Input → AI Analysis → Decision → Action
-```
-
-ในกรณีศึกษานี้:
-
-- **Trigger:** พนักงานส่ง Microsoft Form
-- **Input:** ชื่อ แผนก คำขอ และวันที่ต้องการ
-- **AI Analysis:** สรุปและจัด Priority
-- **Decision:** HIGH, MEDIUM, LOW หรือ NEEDS CLARIFICATION
-- **Action:** แจ้ง Teams หรือบันทึก Excel
-
-💡 **Why This Matters**  Workflow เปลี่ยนคำตอบของ AI ให้เป็นกระบวนการธุรกิจ แต่ workflow ที่เดินตามกฎตายตัวไม่ได้เป็น Agentic AI โดยอัตโนมัติ
-
-## 📌 Step 4 — Agentic AI เป็นวงจร ไม่ใช่เพียงเส้นตรง
-
-ใช้โมเดลนี้ในการอภิปราย:
+AI Agent (ตัวแทน AI ที่ทำงานสู่เป้าหมาย) มี Goal, Instructions, Context และ Reasoning เพื่อเลือกคำตอบหรือข้อเสนอแนะที่สอดคล้องกับเป้าหมาย
 
 ```text
 Goal
- ↓
-Observe
- ↓
+↓
+Observe Input
+↓
+Apply Instructions and Rules
+↓
 Reason
- ↓
+↓
 Decide
- ↓
-Act
- ↓
-Observe
- ↺
+↓
+Recommend
 ```
 
-| ขั้น | คำถามทางธุรกิจ |
-|---|---|
-| Goal | ต้องการผลลัพธ์อะไร และใครเป็นเจ้าของผลลัพธ์? |
-| Observe | ระบบเห็นข้อมูลหรือเหตุการณ์อะไร? |
-| Reason | ต้องตีความหรือเปรียบเทียบอะไร? |
-| Decide | ระบบได้รับอนุญาตให้ตัดสินใจแค่ไหน? |
-| Act | ทำอะไรใน Teams, Excel หรือระบบงาน? |
-| Observe again | รู้ได้อย่างไรว่า Action สำเร็จ และควรแก้ไขอะไร? |
+ใน Workshop นี้ Agent จะวิเคราะห์คำร้อง จัด Priority และแนะนำการดำเนินการ แต่ใน Lab 1 ยังไม่สั่งระบบอื่น
 
-### Autonomy is a spectrum
+## 3. Agent + Tools
 
-| ระดับ | ตัวอย่าง | บทบาทมนุษย์ |
+Tool (เครื่องมือที่ Agent หรือ Workflow เรียกใช้) ทำให้ผลวิเคราะห์เชื่อมไปยังระบบจริง เช่น:
+
+- Google Sheets เพื่อเก็บ Request History
+- Gmail เพื่อส่ง Alert/Report
+- Google Drive เพื่อเก็บ PDF
+- LINE OA เพื่อรับข้อความจากช่องทางลูกค้า
+
+ความสามารถใช้ Tool เพิ่มประโยชน์และเพิ่มความเสี่ยง จึงต้องจำกัด permission และกำหนด approval
+
+## 4. Workflow, Decision และ Action
+
+| องค์ประกอบ | คำถามธุรกิจ | ตัวอย่าง |
 |---|---|---|
-| AI-assisted | AI สรุปคำขอ | มนุษย์เริ่มและตัดสินใจทั้งหมด |
-| Agent | Agent วิเคราะห์เป้าหมายตาม instructions | มนุษย์เริ่มงานและตรวจผล |
-| Agentic workflow | Event เริ่มงาน, AI วิเคราะห์, workflow ตัดสินและทำ Action | มนุษย์ออกแบบกติกาและจัดการ exception |
-| Higher autonomy | ระบบสังเกตผลและปรับแผนภายใน guardrails | มนุษย์กำกับ KPI, permission และเหตุการณ์เสี่ยงสูง |
+| Trigger (เหตุการณ์เริ่มต้น) | งานเริ่มเมื่อใด | มีคำร้องใหม่ |
+| Workflow (ลำดับกระบวนการ) | ขั้นตอนเชื่อมกันอย่างไร | รับ → วิเคราะห์ → route → เก็บ |
+| Decision (การตัดสินใจ) | อะไรกำหนดขั้นตอนถัดไป | Priority = HIGH |
+| Action (การลงมือทำ) | ระบบทำอะไรจริง | เพิ่มแถวและส่ง alert |
+| Data / Memory | ระบบจำอะไรไว้ | Request Log |
+| Feedback | รู้ได้อย่างไรว่าผลดี | Manager ตรวจและแก้ classification |
 
-## เปรียบเทียบ 4 แนวคิด
+> Automation ที่ทำ `ถ้า field = X ให้ส่ง email` ตามกฎคงที่ อาจเป็น Workflow Automation แต่ยังไม่จำเป็นต้องเป็น Agentic AI
 
-| แนวคิด | จุดเด่น | มี Reasoning? | ทำ Action? | เริ่มเองได้? |
-|---|---|---:|---:|---:|
-| AI Automation | กฎและขั้นตอนคงที่ | ไม่จำเป็น | ได้ | ได้เมื่อมี trigger |
-| AI Agent | ทำงานตาม Goal/Instructions และใช้ tools ได้ | มี | อาจมี | อาจต้องให้มนุษย์เริ่ม |
-| Agentic Workflow | ผสาน AI judgment กับ workflow ที่ตรวจสอบได้ | มีในบางขั้น | มี | ได้เมื่อมี event |
-| Agentic AI | วงจร Observe–Reason–Decide–Act–Observe ภายใต้ guardrails | มี | มี | มีระดับ autonomy สูงกว่า |
+## 5. Agentic AI คืออะไร
 
-> [!CAUTION]
-> อย่าเรียกทุก automated workflow ว่า Agentic AI หากไม่มี AI reasoning, decision boundary, feedback หรือความสามารถปรับการทำงานตามบริบท ระบบนั้นอาจเป็น automation ที่ดี—ซึ่งก็มีคุณค่าทางธุรกิจ—แต่ไม่จำเป็นต้องเป็น Agentic AI
-
-## Business Request Management
-
-### Input
-
-- Requester Name
-- Department
-- Business Request
-- Required Date
-
-### Required output
+Agentic AI ผสาน:
 
 ```text
-Summary:
-Priority:
-Reason:
-Recommended Action:
+Goal + Reasoning + Tools + Decision + Action
++ Workflow + Data + Feedback + Human Oversight
 ```
 
-### Priority policy
+เพื่อบรรลุ Business Goal ไม่ใช่เพียงสร้างข้อความ
 
-| Priority | ใช้เมื่อ |
+> **Agentic AI is not a product name. It is a way of designing AI-enabled business systems.**
+
+## 6. Autonomy Spectrum
+
+Autonomy (ระดับความเป็นอิสระ) ควรมองเป็นสเปกตรัม:
+
+| ระดับ | ระบบทำอะไร | ตัวอย่าง Workshop | Human Role |
+|---|---|---|---|
+| 0: Manual | คนทำทุกขั้นตอน | อ่านและจัด Priority เอง | ตัดสินใจทั้งหมด |
+| 1: Assist | AI สร้างคำแนะนำ | Lab 1 | คนตรวจและลงมือทำ |
+| 2: Conditional Action | Workflow ทำ Action ที่ความเสี่ยงต่ำ | Lab 2 บันทึก Sheet | คนตรวจ HIGH |
+| 3: Bounded Autonomy | ระบบเลือกและทำหลายขั้นตอนภายในขอบเขต | สร้าง/ส่ง weekly report | คนกำหนด policy และ exception |
+| 4: Higher Autonomy | ระบบวางแผนและเลือก tools กว้างขึ้น | Optional agent comparison | ต้องมี guardrails และ monitoring เข้มขึ้น |
+
+“อัตโนมัติมากกว่า” ไม่ได้แปลว่า “ดีกว่า” เสมอไป ระดับที่เหมาะสมขึ้นกับ impact, reversibility, data sensitivity และ accountability
+
+### Optional Agent Comparison — Manus Free Tier
+
+ทำเฉพาะเมื่อมีเวลาและ free tier ยัง available ในวันสอน ไม่ใช่ requirement ของ Workshop:
+
+| Human-designed Workflow | Goal-based Autonomous Agent |
 |---|---|
-| HIGH | ลูกค้าหรือรายได้กระทบทันที, critical operation, deadline ≤ 24 ชั่วโมง, compliance/reputation risk ร้ายแรง |
-| MEDIUM | สำคัญแต่ยังไม่วิกฤต, deadline ภายในหลายวัน, ต้องการ management attention |
-| LOW | งาน routine, general information, ไม่มีผลกระทบทันที |
-| NEEDS CLARIFICATION | ข้อมูลไม่พอตัดสิน; ห้ามเดาความเร่งด่วน |
+| คนออกแบบ Trigger, route และ action ทีละขั้น | คนกำหนด Goal แล้ว Agent วางแผนขั้นตอนมากขึ้น |
+| เส้นทางคาดการณ์และ audit ง่ายกว่า | ยืดหยุ่นกับงานปลายเปิดมากกว่า |
+| เปลี่ยน process ต้องแก้ workflow | Agent อาจปรับแผนตาม context |
+| เหมาะกับงานซ้ำและ policy ชัด | เหมาะกับงานสำรวจ/วางแผนที่ขอบเขตชัดและตรวจสอบได้ |
 
-🧪 **Test — 2-minute classification warm-up**
+ให้ผู้เรียนใช้ข้อมูลจำลองและสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ผู้ใช้ต้องกำหนด boundary, approval และ evidence เพิ่มขึ้นอย่างไร หาก Manus unavailable ให้ข้ามส่วนนี้โดยไม่กระทบ Lab ใด
 
-ให้ผู้เรียนโหวต Priority:
+## 7. Business Request Management
 
-> “ลูกค้ารายใหญ่ชำระเงินแล้ว แต่ระบบยังระงับบัญชี ทำให้ใช้งานไม่ได้ ต้องแก้วันนี้”
+องค์กรได้รับคำร้องจากลูกค้าหรือพนักงาน Agent ต้อง:
 
-คำตอบที่คาดหวัง: **HIGH** เพราะมี immediate customer impact และ financial/reputation risk
+```text
+Read → Summarize → Classify → Explain → Recommend
+```
 
-> “ขอวิธีเปลี่ยนรูปโปรไฟล์ใน Teams ไม่มี deadline”
+### Priority Rules
 
-คำตอบที่คาดหวัง: **LOW** เพราะเป็น general information และไม่มี immediate business impact
+**HIGH**
 
-## 💬 Discussion — AI ควรตัดสินใจได้แค่ไหน?
+- กระทบลูกค้าทันที
+- กระทบรายได้/การเงินอย่างมีนัยสำคัญ
+- ระบบงานสำคัญหยุดชะงัก
+- ความเสี่ยง compliance หรือ reputation รุนแรง
+- deadline สั้นและหากพลาดจะเกิดผลกระทบธุรกิจสำคัญ
 
-ถามกลุ่ม:
+**MEDIUM**
 
-1. ถ้า Agent จัด Priority ผิด ใครได้รับผลกระทบ?
-2. คำขอใดควรส่งให้มนุษย์เสมอ?
-3. ความเร็วหรือความถูกต้องสำคัญกว่ากันในแต่ละกรณี?
-4. เราจะรู้ได้อย่างไรว่าระบบสร้างคุณค่าทางธุรกิจจริง?
+- สำคัญแต่ยังไม่ critical
+- ต้องการ management attention
+- มี deadline ภายในหลายวัน
+- Operations ยังทำต่อได้
+
+**LOW**
+
+- Routine administration
+- General information
+- ไม่มีผลกระทบทันทีและไม่มี urgent deadline
+
+### Anti-keyword Rule
+
+คำว่า “ด่วน” หรือ “ASAP” เป็นเพียงสัญญาณ ไม่ใช่หลักฐานของผลกระทบ
+
+```text
+“ขอวิธีเปลี่ยนรูป Profile ด่วนมาก”
+```
+
+ควรเป็น LOW หากไม่มี customer, financial, operational, compliance หรือ time impact ที่สำคัญ
+
+## 8. Operational AI กับ Managerial AI
+
+> **Operational AI:** “What should we do with this request?”
+
+> **Managerial AI:** “What are all these requests telling us about the business?”
+
+เชื่อมกับ Management Information Systems (MIS):
+
+```text
+Data → Information → Insight → Decision → Action
+```
+
+| ชั้น | ตัวอย่าง |
+|---|---|
+| Data | คำร้องแต่ละรายการ |
+| Information | Summary + Priority |
+| Insight | รูปแบบซ้ำ ความเสี่ยง และหน่วยงานที่ต้องสนใจ |
+| Decision Support | Management recommendation |
+| Action | แก้ process, จัดสรรคน, อนุมัติหรือ escalate |
+
+## 💬 Discussion
+
+1. Chatbot ที่ตอบคำถามแต่ไม่ใช้ Tools เป็น Agentic AI หรือไม่?
+2. Workflow ที่ส่ง email ตามเวลาโดยไม่มี AI reasoning เป็น Agentic AI หรือไม่?
+3. การจัด Priority ผิดอาจสร้างผลกระทบต่อใครบ้าง?
+4. Action ใดควรให้ AI ทำอัตโนมัติ และ Action ใดต้องรอคนอนุมัติ?
+
+## ✅ Checkpoint
+
+- [ ] อธิบาย Generative AI, Agent, Workflow และ Agentic AI ด้วยคำของตนเองได้
+- [ ] ยกตัวอย่าง Decision และ Action อย่างละหนึ่งตัวอย่าง
+- [ ] อธิบายว่า autonomy เป็น spectrum ได้
+- [ ] แยก Operational AI กับ Managerial AI ได้
 
 ## 🏁 Completed
 
-คุณพร้อมไป Lab 1 เมื่อสามารถอธิบายได้ว่า:
-
-- Generative AI สร้างเนื้อหา
-- AI Agent ทำงานเพื่อ Goal โดยใช้ Instructions และ Tools
-- Agentic AI ต้องพิจารณา Reasoning, Decision, Action, Feedback และ Guardrails ร่วมกัน
+พร้อมเปลี่ยน Prompt ธรรมดาให้เป็น Business Request Agent ใน Google AI Studio
 
 ---
 
-[← Home](../README.md) · [Next: Lab 1 — Build an AI Agent →](../02-build-ai-agent/README.md)
+[← Home](../README.md) · [Next: Lab 1 →](../02-build-ai-agent/README.md)

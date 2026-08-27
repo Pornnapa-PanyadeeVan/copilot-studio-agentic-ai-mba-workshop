@@ -1,424 +1,350 @@
-# 03 — Lab 2: Build an Agentic Workflow
+# 03 — Lab 2: Build an Agentic Workflow with Make
 
-🎯 **Goal**  เปลี่ยน `Business Request Assistant` จาก Agent ที่รอมนุษย์ถาม ให้เป็น workflow ที่เริ่มจาก Microsoft Forms วิเคราะห์ ตัดสินใจ และทำ Business Action
+[← Previous: Lab 1](../02-build-ai-agent/README.md) · [Home](../README.md) · [Next: Lab 3 →](../04-generate-management-report/README.md)
 
-⏱ **Estimated Time**  70 นาที
+🎯 **Goal**  เปลี่ยน AI reasoning เป็น Business Action ผ่าน Make, Gemini API และ Google Sheets
 
-## Target workflow
+⏱ **Estimated Time**  45–50 นาที
+
+🧰 **Tools**  Make + Gemini API key + Google Sheets
+
+## Architecture
 
 ```text
-Microsoft Forms
-      ↓
-New Business Request
-      ↓
-Get Response Details
-      ↓
-AI Analysis
-      ↓
+Business Request
+↓
+Make
+↓
+Gemini
+↓
+Analyze
+↓
 Priority Decision
-   ↙       ↓       ↘
-HIGH    MEDIUM     LOW
-  ↓        ↓        ↓
-Teams    Excel    Excel
+↓
+Router
+↙      ↓      ↘
+HIGH  MEDIUM  LOW
+↓       ↓       ↓
+Action / Record
+↓
+Google Sheets
 ```
 
-หาก AI ตอบ `NEEDS CLARIFICATION` หรือค่าที่ไม่ตรง ระบบต้องส่งให้มนุษย์ตรวจ ไม่ควรเดา branch
-
-## เวลาแนะนำสำหรับ Lab
+## Timebox
 
 | นาที | งาน |
 |---:|---|
-| 0–12 | สร้าง Form |
-| 12–20 | เตรียม Excel table และ Teams channel |
-| 20–35 | Trigger + Get Response Details |
-| 35–50 | AI Analysis |
-| 50–62 | Decision + Teams/Excel Actions |
-| 62–70 | Test + Debrief |
+| 0–7 | เตรียม Google Sheet |
+| 7–14 | สร้าง API key และ connection |
+| 14–23 | สร้าง Scenario และส่งคำร้องเข้า Gemini |
+| 23–32 | ตรวจ/parse JSON |
+| 32–41 | Router + Google Sheets action |
+| 41–47 | HIGH alert |
+| 47–50 | ทดสอบและสรุป |
 
-> [!IMPORTANT]
-> **UI MAY VARY:** Microsoft มีทั้ง `Flows`, `Workflows (preview)`, `Agent flows` และ Power Automate cloud flows ตาม harness, tenant และ rollout ปัจจุบัน Microsoft ระบุว่า Workflows แบบใหม่ยังเป็น preview และ Agent flows แบบมาตรฐานอาจเปิด designer ในอีก tab ดู [Copilot Studio flows overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/flows-overview) และ [Copilot Studio overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio)
+> **UI MAY VARY:** Make และ Google AI Studio อาจเปลี่ยนชื่อ/ตำแหน่ง module, connection dialog, scenario controls และ model list ให้เลือก component ตามหน้าที่ที่อธิบาย อย่าเลือก paid-only feature หากบัญชีไม่มี และไม่ต้องอัปเกรดเพื่อทำ Lab
 
-## เส้นทางที่แนะนำในห้องเรียน
+## ก่อนเริ่ม
 
-ใช้ **Power Automate Automated cloud flow** เพราะ Microsoft Forms มี event trigger โดยตรง และแนวคิดที่เรียนเหมือนกันกับ flow designer ที่เปิดจาก Copilot Studio
+- [ ] ผ่าน Lab 1 หรือมี [Lab 1 System Instructions](../02-build-ai-agent/prompts.md)
+- [ ] Make account เปิด Scenario builder ได้
+- [ ] Google Sheets ใช้งานได้
+- [ ] ใช้ข้อมูลจำลองเท่านั้น
+- [ ] เปิด [Lab 2 Prompts](prompts.md) อีก tab
+
+## 📌 Step 1 — Prepare Google Sheet
+
+1. สร้าง Google Spreadsheet ชื่อ `Business Request Log`
+2. ตั้งชื่อ sheet/tab เช่น `Requests`
+3. ใส่ชื่อ columns ในแถวแรกตามลำดับ:
 
 ```text
-Copilot Studio environment
-        ↕ same Power Platform environment
-Power Automate automated cloud flow
+Timestamp
+Requester
+Department
+Request
+Summary
+Priority
+Reason
+Recommended Action
 ```
 
-### เลือกเส้นทางตามสิ่งที่เห็น
+4. Freeze header row หากต้องการ
+5. อย่าใส่ชื่อคน อีเมลลูกค้า หรือข้อมูลจริง
 
-| หากเห็น | ให้ทำ |
+💡 **Why This Matters**  Google Sheets ทำหน้าที่เป็น business data storage แบบง่าย เก็บ audit trail และสร้าง Request History สำหรับ Lab 3 ไม่ใช่ long-term production database
+
+✅ **Checkpoint**  มี 8 columns สะกดตรงกันและ Sheet ยังไม่มีข้อมูลจริง
+
+⚠️ **Common Problem**  Make มองไม่เห็น columns หาก header ว่างหรือซ้ำ ให้แก้ header แล้ว refresh/reselect data structure ใน connection
+
+## 📌 Step 2 — Create a Gemini API Key
+
+> ⚠️ **SECURITY: Never paste your API key into public GitHub files.**
+
+1. เปิดหน้าจัดการ API keys จาก [Google AI Studio](https://aistudio.google.com/)
+2. สร้าง key สำหรับบัญชี/โปรเจกต์ของตนเองตามตัวเลือกที่หน้า UI แสดง
+3. คัดลอก key ไปใส่ใน Make connection โดยตรง
+4. ไม่ส่ง key ให้เพื่อน ไม่วางใน Prompt, Sheet, screenshot หรือช่อง chat
+5. หลัง Workshop ให้ลบ/rotate key หากไม่ใช้ต่อ
+
+> **UI MAY VARY:** บัญชีใหม่บางประเภทอาจสร้าง project/key ให้อัตโนมัติ ขณะที่บัญชีองค์กร โรงเรียน หรือบางประเทศอาจถูกจำกัด ดู [Gemini API key documentation](https://ai.google.dev/gemini-api/docs/api-key)
+
+### Free-tier Safety
+
+- เลือก model ที่ระบุว่าใช้ได้ใน Free Tier ของบัญชี
+- ไม่เปิด billing เพื่อผ่าน Workshop
+- Free tier มี rate limits และรุ่นที่ใช้ได้อาจเปลี่ยน ตรวจ [Pricing](https://ai.google.dev/gemini-api/docs/pricing) และ [Rate limits](https://ai.google.dev/gemini-api/docs/rate-limits)
+- จำกัดการทดสอบคนละ 3–5 ครั้ง
+- หากสร้าง key ไม่ได้ ไปที่ [Fallback without API](#fallback-without-api)
+
+✅ **Checkpoint**  Make connection บันทึก key แบบ secret/credential และไม่มี key ปรากฏในไฟล์หรือภาพ
+
+⚠️ **Common Problem**  หาก Make connection ไม่ผ่าน ให้ตรวจว่า key ถูกคัดลอกครบ, model/region ใช้ได้ และ quota ยังเหลือ อย่าแชร์ key ของผู้สอนให้ทั้งห้อง
+
+## 📌 Step 3 — Create a Make Scenario
+
+สร้าง Scenario ใหม่ แล้วจัด component ตามหน้าที่:
+
+```text
+Trigger → AI → JSON Data → Router → Action
+```
+
+### Trigger ที่เหมาะกับห้อง 50 คน
+
+เลือกหนึ่งทางตาม UI/บัญชี:
+
+1. **Preferred:** จุดเริ่มแบบ run-on-demand/manual test ที่ให้ใส่ `Requester`, `Department`, `Business Request`
+2. **Simple webhook:** รับ test payload จาก URL/form ทดสอบส่วนตัว
+3. **Form-like trigger:** ใช้เฉพาะเมื่อ Instructor ทดสอบแล้วว่า free และทุกบัญชีเข้าถึงได้
+
+อย่าใช้ channel จริงหรือ trigger ที่ต้องขอ enterprise permission
+
+> **UI MAY VARY:** ใช้ Trigger ที่ผู้สอนยืนยันในวันสอน ไม่จำเป็นต้องชื่อเดียวกันทุกบัญชี หากใช้ webhook ห้ามแชร์ URL ต่อสาธารณะ เพราะ URL อาจเรียก Scenario ได้
+
+### ข้อมูลเริ่มต้นสำหรับ Test Run
+
+```text
+Requester: Demo Customer
+Department: Customer Service
+Business Request: ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้ และอาจยกเลิกคำสั่งซื้อหากแก้ไม่ทันวันนี้
+```
+
+💡 **Why This Matters**  Trigger ระบุว่า Workflow เริ่มเมื่อใด ส่วน Agentic behavior มาจาก AI reasoning, decision และ action ที่ตามมา ไม่ได้มาจาก Trigger เพียงอย่างเดียว
+
+✅ **Checkpoint**  Run test แล้ว Make รับค่าทั้ง 3 fields ได้
+
+## 📌 Step 4 — Send the Request to Gemini
+
+1. เพิ่ม Google Gemini AI integration หรือวิธีเรียก Gemini API ที่บัญชี Make รองรับ
+2. สร้าง connection ด้วย API key ของตนเอง
+3. เลือก text-generation function/model ที่ Free Tier เปิดให้บัญชี
+4. Map `Business Request` ไปยัง `{{BUSINESS_REQUEST}}` ใน Prompt
+5. ใช้ Prompt นี้จาก [prompts.md](prompts.md#business-request-json-prompt)
+
+### 📋 Copy This Prompt
+
+```text
+You are a Business Request Assistant.
+
+Analyze the following request.
+
+Return ONLY valid JSON.
+
+Use exactly this structure:
+
+{
+  "summary": "",
+  "priority": "HIGH | MEDIUM | LOW",
+  "reason": "",
+  "recommended_action": ""
+}
+
+Priority rules:
+
+HIGH:
+customer, revenue, major operations, compliance,
+reputation, or major time-sensitive business impact.
+
+MEDIUM:
+important but operations can continue.
+
+LOW:
+routine or informational request.
+
+Do not classify HIGH only because the request says urgent.
+
+Request:
+
+{{BUSINESS_REQUEST}}
+
+Respond in Thai except the priority value,
+which must be HIGH, MEDIUM, or LOW.
+```
+
+💡 **Why This Matters**  JSON (รูปแบบข้อมูลที่มี key/value ชัดเจน) ช่วยให้ Workflow อ่านผลได้คาดการณ์มากกว่าข้อความอิสระ
+
+🧪 **Test**  Run once แล้วเปิด output ของ Gemini ควรเห็น `summary`, `priority`, `reason`, `recommended_action`
+
+✅ **Checkpoint**  Output เป็น JSON object เดียวและ `priority` เป็นตัวพิมพ์ใหญ่หนึ่งค่า
+
+⚠️ **Common Problem**  หากมี Markdown code fence เช่น `````json`` ให้ย้ำ `Return ONLY valid JSON` แล้ว run ใหม่ หรือใช้ข้อความตัวอย่างจาก Instructor fallback
+
+## 📌 Step 5 — Parse AI Output
+
+ใช้ function/module ที่ทำหน้าที่ parse JSON ใน Make:
+
+1. ใช้ Gemini text output เป็น input
+2. กำหนด data structure จาก JSON ตัวอย่าง:
+
+```json
+{
+  "summary": "ลูกค้ารายใหญ่ชำระเงินไม่ได้และอาจยกเลิกคำสั่งซื้อภายในวันนี้",
+  "priority": "HIGH",
+  "reason": "กระทบลูกค้าทันที รายได้ และมีผลกระทบด้านเวลาสำคัญ",
+  "recommended_action": "แจ้งผู้รับผิดชอบระบบชำระเงินและผู้จัดการทันที พร้อมติดตามจนกู้ระบบได้"
+}
+```
+
+3. ตรวจให้เห็น 4 output fields แยกจากกัน
+
+💡 **Why This Matters**  AI output กำลังเปลี่ยนจาก “ข้อความ” เป็น “workflow data” ที่นำไปใช้ใน Condition และ Action ได้
+
+✅ **Checkpoint**  Map ค่า `priority` เดี่ยว ๆ ไปยัง filter ได้โดยไม่ต้องคัดลอกด้วยมือ
+
+⚠️ **Common Problem**  JSON parse ไม่ผ่าน ให้ตรวจ comma, quote, code fence และข้อความก่อน/หลัง object ดู [Troubleshooting](../troubleshooting/README.md#json-cannot-parse)
+
+## 📌 Step 6 — Create the Decision Router
+
+1. เพิ่ม Router (ตัวแยกเส้นทาง)
+2. สร้าง 3 routes
+3. ตั้ง Condition แบบ exact match:
+
+```text
+Priority = HIGH
+Priority = MEDIUM
+Priority = LOW
+```
+
+4. อย่าใช้ `contains HIGH` เพราะข้อความอื่นอาจทำให้ match ผิด
+
+💡 **Why This Matters**  นี่คือ Decision step: ผล AI ไม่ได้เป็นเพียงข้อความ แต่กำหนดว่า Workflow จะทำอะไรต่อ
+
+✅ **Checkpoint**  แต่ละ route มี filter ชัดเจนและไม่มีคำร้องหนึ่งรายการไปมากกว่าหนึ่ง route
+
+⚠️ **Common Problem**  Route ไม่ match เพราะมีช่องว่าง/ข้อความเพิ่ม ให้ trim/normalize หรือแก้ Prompt ให้ `priority` เป็นค่าเดียว
+
+## 📌 Step 7 — Add Actions
+
+### Action สำหรับทุก Priority
+
+ในแต่ละ route เพิ่ม Google Sheets action ที่ทำหน้าที่เพิ่ม row และ map:
+
+| Sheet Column | Source |
 |---|---|
-| Copilot Studio → Workflows/Flows และสร้าง event-triggered flow ได้ | สร้างจากหน้านั้น แล้วใช้ขั้นตอนเชิงหน้าที่ด้านล่าง |
-| Copilot Studio เปิด classic designer/Power Automate tab | ทำต่อใน tab ที่เปิด |
-| ไม่พบ Forms trigger ใน Copilot Studio | ไปที่ [Power Automate](https://make.powerautomate.com) → Create → Automated cloud flow |
-| ไม่มี AI action หรือ connector permission | ใช้ conceptual fallback ท้าย Lab; ห้ามเสียเวลาทั้งชั้นกับ permission |
+| Timestamp | เวลาที่ Scenario ทำงาน |
+| Requester | Trigger input |
+| Department | Trigger input |
+| Request | Business Request input |
+| Summary | Parsed Gemini output |
+| Priority | Parsed Gemini output |
+| Reason | Parsed Gemini output |
+| Recommended Action | Parsed Gemini output |
 
-> 📷 Screenshot needed:
-> จุดเข้า Workflows/Flows ใน Copilot Studio และหน้า Create → Automated cloud flow ใน Power Automate
+### Additional HIGH Alert
 
-## Part A — Prepare the inputs
+เพิ่ม Action ความเสี่ยงต่ำอีกหนึ่งอย่างเฉพาะ HIGH:
 
-### 📌 Step 1 — สร้าง Microsoft Form
+- ส่ง email ถึงอีเมลของผู้เรียนเอง โดยใช้ `[Your Email]` ตอนเขียนคู่มือ/ตัวอย่าง หรือ
+- เพิ่ม alert marker ใน Sheet เช่น prefix `⚠️ HIGH — Human review required`
 
-1. เปิด [Microsoft Forms](https://forms.office.com)
-2. เลือก **New Form**
-3. ตั้งชื่อ:
+> Alert ไม่ใช่การอนุมัติ ไม่ใช่การคืนเงิน ไม่ใช่การลงโทษ และไม่ใช่การแก้ปัญหาอัตโนมัติ Manager ยังต้องตรวจข้อเท็จจริง
 
-```text
-New Business Request
-```
+💡 **Why This Matters**  Workflow ทำ Real Action แล้ว แต่ Action ถูกจำกัดให้ reversible และ low-risk
 
-4. เลือก **Add new** แล้วสร้างคำถามตามตาราง
+✅ **Checkpoint**  ทุก route บันทึก Sheet; HIGH มี alert เพิ่มและส่งถึงตนเองเท่านั้น
 
-| ลำดับ | Field | Question type | Setting |
-|---:|---|---|---|
-| 1 | Requester Name | Text | Required |
-| 2 | Department | Choice หรือ Text | Required |
-| 3 | Business Request | Text | Required + Long answer |
-| 4 | Required Date | Date | Required |
+⚠️ **Common Problem**  หาก Gmail connection unavailable ให้ใช้ alert marker ใน Sheet ซึ่งถือว่าผ่าน Lab 2
 
-ตัวเลือก Department ที่แนะนำ:
+## 📌 Step 8 — Test HIGH, MEDIUM, LOW
+
+ใช้ [Test Requests](prompts.md#test-requests) ทีละรายการ
 
 ```text
-Sales
-Marketing
-Finance
-HR
-Operations
-IT
-Customer Service
-Other
+Input
+↓
+Gemini
+↓
+Priority
+↓
+Router
+↓
+Correct Branch
+↓
+Google Sheet
 ```
 
-5. เลือก **Preview** แล้วกรอกหนึ่งคำขอทดสอบ
-6. เลือก **Collect responses** และใช้การจำกัดผู้ตอบตามนโยบายของชั้นเรียน
+### 🧪 Test Checklist
 
-💡 **Why This Matters**  Form เปลี่ยนคำขอที่หลากหลายให้มี input ขั้นต่ำเหมือนกัน ช่วยให้ AI มี context และช่วยสร้าง audit trail
+- [ ] HIGH ไป HIGH route, มี row และ alert
+- [ ] MEDIUM ไป MEDIUM routeและมี row
+- [ ] LOW ไป LOW route และมี row
+- [ ] Sheet มี 8 fields ที่ถูกต้อง
+- [ ] ไม่มี request ซ้ำจากการกด Run หลายครั้ง
+- [ ] ไม่มี API key ใน input/output history ที่แชร์กับผู้อื่น
 
-✅ **Checkpoint**  Form มี 4 fields ครบ และส่ง test response ได้
+✅ **Checkpoint**  เห็นอย่างน้อย 3 rows ใน Google Sheets และแต่ละ Priority เข้า route ถูกต้อง
 
-⚠️ **Common Problem**  หาก Form ไม่ปรากฏใน connector ตรวจว่าเจ้าของ Form และ connection เป็นบัญชีเดียวกัน ดู [Troubleshooting](../troubleshooting/README.md#microsoft-forms-connector-unavailable)
+## 💬 Discussion
 
-> 📷 Screenshot needed:
-> Microsoft Forms → New Business Request พร้อม 4 fields
-
-### 📌 Step 2 — เตรียม Excel table
-
-1. เปิด Excel Online และสร้าง workbook ชื่อ:
+เปรียบเทียบ:
 
 ```text
-BusinessRequests.xlsx
+Generative AI: Prompt → Response
+
+AI Agent: Goal → Reason → Decision → Recommendation
+
+Agentic Workflow: Trigger → AI Reasoning → Decision → Tool → Action
 ```
 
-2. บันทึกใน **OneDrive for Business** หรือ **SharePoint document library** ที่ connection ของผู้เรียนเข้าถึงได้
-3. ใส่ headers ต่อไปนี้ใน row แรก:
+คำถาม:
+
+1. หากเอา Gemini ออกแล้วใช้ keyword rule อย่างเดียว ระบบยังเป็น Agentic AI หรือไม่?
+2. หาก AI จัด HIGH ผิด Alert จะสร้างผลกระทบอะไร?
+3. ควรเก็บ Manager override กลับมาเป็น feedback อย่างไร?
+
+## Fallback without API
+
+หากสร้าง key ไม่ได้, quota เต็ม หรือ Make เชื่อม Gemini ไม่สำเร็จ:
+
+1. ใช้ Google AI Studio จาก Lab 1 วิเคราะห์คำร้องด้วยมือ
+2. คัดลอกเฉพาะ JSON จำลองจาก [prompts.md](prompts.md#fallback-json)
+3. ป้อน JSON เข้า Scenario หลังจุด AI หรือสาธิต mapping ด้วย Instructor scenario
+4. ทำ Router และ Google Sheets ต่อให้ครบ
 
 ```text
-SubmittedAt | RequesterName | Department | BusinessRequest | RequiredDate | Summary | Priority | Reason | RecommendedAction | ReviewStatus
+Input → AI (manual) → Decision → Action
 ```
 
-4. เลือกช่วง header แล้วใช้ **Home → Format as Table** หรือ **Insert → Table**
-5. ยืนยันว่า table มี headers
-6. ตั้งชื่อ table เป็น:
+ผู้เรียนยังได้เรียนรู้ architecture แม้ connector ล้มเหลว
 
-```text
-BusinessRequestsTable
-```
+## Free-tier Reminder
 
-💡 **Why This Matters**  Action ของ Excel เขียนข้อมูลลง **table** ไม่ใช่ช่วง cell ธรรมดา Microsoft แนะนำให้เก็บ workbook ใน OneDrive/SharePoint และ format เป็น table ก่อนใช้ Power Automate
-
-✅ **Checkpoint**  เปิด workbook ใหม่อีกครั้งแล้วยังเห็น table name และ headers ครบ
-
-> 📷 Screenshot needed:
-> Excel Online → BusinessRequestsTable และชื่อคอลัมน์
-
-### 📌 Step 3 — เตรียม Teams destination
-
-ผู้สอนควรเตรียม Team และ standard channel เช่น:
-
-```text
-Team: MBA Agentic AI Workshop
-Channel: High Priority Requests
-```
-
-หากนักศึกษาไม่มีสิทธิ์สร้าง Team/Channel ให้ใช้ destination กลางของผู้สอน หรือทำ branch ให้เสร็จโดยยังไม่เปิด flow
-
-⚠️ **Common Problem**  Microsoft ระบุว่า action `Post a message in a chat or channel` ไม่รองรับการส่งไป private channel ในบางรูปแบบ ใช้ standard channel สำหรับ Lab
-
-## Part B — Build the flow
-
-### 📌 Step 4 — สร้าง Automated cloud flow
-
-**เส้นทาง Power Automate ที่แนะนำ**
-
-1. เปิด [Power Automate](https://make.powerautomate.com)
-2. ตรวจ environment ให้ตรงกับ Copilot Studio
-3. เลือก **Create** → **Automated cloud flow**
-4. ตั้งชื่อ:
-
-```text
-Business Request Agentic Workflow
-```
-
-5. ค้นหา trigger ของ Microsoft Forms:
-
-```text
-When a new response is submitted
-```
-
-6. เลือก **Create**
-7. ใน `Form Id` เลือก `New Business Request`
-
-**UI MAY VARY:** ใน new designer อาจเลือก card แล้วตั้งค่าทางซ้าย; classic designer แสดง fields บน card โดยตรง
-
-💡 **Why This Matters**  Trigger ทำให้ flow เริ่มจาก business event แทนการรอให้มนุษย์เปิด chat และพิมพ์คำถาม
-
-✅ **Checkpoint**  Trigger แสดง Form Id ที่ถูกต้อง
-
-### 📌 Step 5 — Get Response Details
-
-1. เลือก `+` หรือ **New step / Add an action**
-2. ค้นหา connector **Microsoft Forms**
-3. เลือก action:
-
-```text
-Get response details
-```
-
-4. ตั้งค่า:
-
-| Field | Value |
-|---|---|
-| Form Id | `New Business Request` |
-| Response Id | Dynamic content: `Response Id` จาก trigger |
-
-💡 **Why This Matters**  Trigger แจ้งว่ามี response ใหม่ แต่ `Get response details` ดึงคำตอบจริงของแต่ละ field มาให้ขั้นถัดไปใช้
-
-✅ **Checkpoint**  Dynamic content แสดง Requester Name, Department, Business Request และ Required Date
-
-> 📷 Screenshot needed:
-> Trigger และ Get response details พร้อม mapping ของ Response Id
-
-### 📌 Step 6 — เพิ่ม AI Analysis
-
-เลือกวิธีที่ tenant รองรับเพียงหนึ่งวิธี
-
-📋 **Copy This Prompt**  เปิด [Workflow AI Analysis Prompt](prompts.md#workflow-ai-analysis-prompt) แล้ววางทั้งชุดใน AI action จากนั้นแทน placeholder ด้วย dynamic content ของ Form
-
-#### Option A — Run a prompt (แนะนำเมื่อใช้ standard agent flow/AI Builder)
-
-1. เพิ่ม action ใหม่
-2. ใน AI capabilities ค้นหา:
-
-```text
-Run a prompt
-```
-
-3. เลือก prompt ที่เตรียมไว้ หรือเลือก **New custom prompt** หากมี
-4. วาง [Workflow AI Analysis Prompt](prompts.md#workflow-ai-analysis-prompt)
-5. แทรก dynamic content จาก `Get response details` ในตำแหน่ง Requester Name, Department, Business Request และ Required Date
-6. หากเลือก output ได้ ให้ใช้ **JSON/Structured output**
-
-Microsoft ระบุว่าชื่อเดิม `Create text with GPT using a prompt` เปลี่ยนเป็น `Run a prompt` ตั้งแต่ May 2025 แต่ **UI MAY VARY** ตาม rollout และ license
-
-#### Option B — Run an agent (เมื่อใช้ new Workflows experience)
-
-1. Publish `Business Request Assistant` ก่อน หากระบบกำหนด
-2. เพิ่ม action ที่ทำหน้าที่ **Run an agent**
-3. เลือก existing agent `Business Request Assistant`
-4. ใส่ message จาก [Agent Message Template](prompts.md#agent-message-template)
-5. เลือก **Structured output** หรือ **Custom structured output** ถ้ามี
-6. สร้าง fields: `summary`, `priority`, `reason`, `recommendedAction`
-
-**UI MAY VARY:** หากไม่พบ Prompt node ใน new workflow ไม่ต้องเดา Microsoft ระบุว่า Prompt node มีใน standard harness; new workflow ใช้ Agent action เพื่อได้ผลลัพธ์เทียบเท่า
-
-#### Option C — Classroom fallback
-
-หากไม่มี AI capacity หรือ permission:
-
-1. ให้ผู้เรียนส่ง Form
-2. คัดลอก Business Request ไปทดสอบใน Agent จาก Lab 1
-3. บันทึก 4 fields ลงใน worksheet หรือ Excel ด้วยตนเอง
-4. วาด Decision branches ให้ครบ
-
-นี่คือ fallback ที่ยอมรับได้สำหรับ Workshop เพราะยังสอน Goal, Input, Reasoning, Decision, Action และ Human-in-the-loop ได้
-
-💡 **Why This Matters**  AI Analysis เป็นจุดที่ free-form request ถูกเปลี่ยนเป็นข้อมูลที่ workflow ตัดสินต่อได้
-
-✅ **Checkpoint**  เห็น output แยก 4 fields หรืออย่างน้อยข้อความ 4 บรรทัดตาม format
-
-### 📌 Step 7 — สร้าง Priority Decision
-
-#### ถ้ามี Structured output
-
-1. เพิ่ม control **Switch**
-   **UI MAY VARY:** หากไม่มี Switch ให้ใช้ Condition ซ้อนกัน
-2. เลือก dynamic content `priority` จาก AI step
-3. สร้าง cases:
-
-```text
-HIGH
-MEDIUM
-LOW
-```
-
-4. ตั้ง Default/Otherwise เป็น Human Review สำหรับ `NEEDS CLARIFICATION` หรือค่าอื่น
-
-#### ถ้ามีเพียง Text output
-
-แนะนำให้กลับไปใช้ JSON/Structured output ก่อน เพราะทนต่อการเปลี่ยนข้อความได้ดีกว่า หากจำเป็นจริง ให้ตรวจค่าที่ normalize แล้ว:
-
-```text
-toUpper(trim(<priority text>))
-```
-
-จากนั้นใช้ `equals(..., 'HIGH')` ตามลำดับ
-
-⚠️ **Common Problem**  ช่องว่าง, markdown เช่น `**HIGH**` หรือประโยคยาวทำให้ Condition ไม่ match วิธีแก้ที่ดีที่สุดคือ structured output ไม่ใช่เพิ่มเงื่อนไขเดาจำนวนมาก
-
-💡 **Why This Matters**  Decision boundary ควรอ่านได้ ตรวจสอบได้ และมี default branch เพื่อไม่ให้ค่าที่ผิด format ไปทำ Action เสี่ยงสูง
-
-✅ **Checkpoint**  มี HIGH, MEDIUM, LOW และ Default/Human Review ครบ
-
-> 📷 Screenshot needed:
-> Priority Switch/Condition ที่แสดง 3 branches และ Default
-
-### 📌 Step 8 — HIGH → Teams notification
-
-ใน branch `HIGH`:
-
-1. เพิ่ม Microsoft Teams action:
-
-```text
-Post a message in a chat or channel
-```
-
-2. ตั้งค่าตัวอย่าง:
-
-| Setting | Value |
-|---|---|
-| Post as | Flow bot |
-| Post in | Channel |
-| Team | Team ที่ผู้สอนเตรียม |
-| Channel | High Priority Requests |
-| Message | ใช้ [Teams Message Template](prompts.md#teams-message-template) |
-
-3. แทรก dynamic content แทน placeholder
-
-> [!CAUTION]
-> Teams message เป็น notification ไม่ใช่การอนุมัติหรือแก้ปัญหาโดยอัตโนมัติ Owner ที่ได้รับแจ้งยังต้องตรวจสอบข้อเท็จจริงและตัดสินใจ
-
-✅ **Checkpoint**  Teams action มี Team, Channel และ Message ครบ
-
-### 📌 Step 9 — MEDIUM/LOW → Excel
-
-ใน branch `MEDIUM` และ `LOW` เพิ่ม action:
-
-```text
-Excel Online (Business) → Add a row into a table
-```
-
-ตั้งค่า:
-
-| Field | Value |
-|---|---|
-| Location | OneDrive for Business หรือ SharePoint Site |
-| Document Library | ตำแหน่งที่เก็บ workbook |
-| File | `BusinessRequests.xlsx` |
-| Table | `BusinessRequestsTable` |
-
-Map columns:
-
-| Excel column | Dynamic content / value |
-|---|---|
-| SubmittedAt | Submission time หรือ `utcNow()` |
-| RequesterName | Requester Name |
-| Department | Department |
-| BusinessRequest | Business Request |
-| RequiredDate | Required Date |
-| Summary | AI `summary` |
-| Priority | AI `priority` |
-| Reason | AI `reason` |
-| RecommendedAction | AI `recommendedAction` |
-| ReviewStatus | `Pending` |
-
-💡 **Why This Matters**  Excel ทำหน้าที่เป็น work queue และ audit trail เบื้องต้น ผู้จัดการยังตรวจ แก้ไข และติดตามได้
-
-✅ **Checkpoint**  MEDIUM และ LOW มี Excel action และเลือก table ถูกต้อง
-
-> [!TIP]
-> Optional improvement: บันทึก HIGH ลง Excel ด้วยเพื่อให้ทุก request มี audit trail แล้วค่อยส่ง Teams เพิ่มใน HIGH branch การปรับนี้เหมาะสำหรับอภิปรายหลังจากทำ core lab เสร็จ
-
-### 📌 Step 10 — Default → Human review
-
-เมื่อ Priority เป็น `NEEDS CLARIFICATION`, ว่าง หรือไม่ตรง format:
-
-- ส่งข้อความไป queue ของผู้สอน/ผู้จัดการ หรือ
-- บันทึก Excel โดยตั้ง `ReviewStatus = Needs Clarification`
-
-ห้าม route ไป HIGH/MEDIUM/LOW ด้วยการเดา
-
-💡 **Why This Matters**  Exception path คือส่วนสำคัญของ Responsible Agentic AI ระบบที่ไม่มีทางออกเมื่อไม่แน่ใจมักสร้างความเสี่ยงมากกว่าความเร็วที่ได้
-
-## Part C — Save and test
-
-### 📌 Step 11 — บันทึกและทดสอบ end-to-end
-
-🧪 **Test**  ส่งคำขอจำลองผ่าน Form แล้วติดตามข้อมูลเดียวกันตั้งแต่ trigger จนถึง Teams/Excel
-
-1. เลือก **Save**
-2. ใช้ **Flow checker** หากมี และแก้ connection/required field
-3. เลือก **Test** → Manual หรือวิธีที่ UI เสนอ
-4. กลับไป Microsoft Forms แล้ว submit 3 responses จาก [Sample Requests](../templates/sample-requests.md):
-   - 1 HIGH
-   - 1 MEDIUM
-   - 1 LOW
-5. เปิด Run history และตรวจทีละ action
-6. ตรวจผล:
-   - HIGH ปรากฏใน Teams
-   - MEDIUM/LOW เพิ่ม row ใน Excel
-   - fields ใน output ไม่สลับกัน
-
-**UI MAY VARY:** บาง trigger poll เป็นระยะ จึงอาจไม่เริ่มทันที อย่ากด submit ซ้ำหลายครั้งโดยไม่ตรวจ run history เพราะจะสร้างข้อมูลซ้ำ
-
-✅ **Final checkpoint**
-
-- [ ] Trigger ทำงานจาก Form submission
-- [ ] Get response details ดึงค่าถูก response
-- [ ] AI output มี 4 fields
-- [ ] Priority branch match แบบ exact
-- [ ] Teams ได้เฉพาะ HIGH ใน core lab
-- [ ] Excel ได้ MEDIUM/LOW
-- [ ] Default/Human Review รองรับ ambiguous output
-
-⚠️ **Common Problem**  ไปที่ [Troubleshooting Guide](../troubleshooting/README.md) และใช้ instructor fallback หลัง 5 นาทีหากเป็นปัญหา tenant/permission
-
-## 💬 Discussion — From Agent to Agentic Workflow
-
-| Lab 1 | Lab 2 |
-|---|---|
-| มนุษย์เริ่ม chat | Form event เริ่ม flow |
-| Agent วิเคราะห์และแนะนำ | AI output เข้า Decision branch |
-| ไม่มี Action ต่อระบบ | Teams/Excel action |
-| ผู้ใช้เห็นคำตอบ | มี operational outcome และ run history |
-
-คำถามสำคัญ:
-
-1. Lab 2 เป็น Agentic AI เต็มรูปแบบหรือเป็น Agentic Workflow?
-2. ระบบ observe ผลหลังส่ง Teams/เขียน Excel หรือยัง?
-3. ใครรับผิดชอบถ้า HIGH ถูกจัดเป็น LOW?
-4. KPI ควรวัดเวลาตอบสนอง ความถูกต้อง หรือ business impact?
-
-คำตอบที่สมเหตุผล: ระบบนี้เป็น **Agentic Workflow** ที่มี event, AI reasoning, decision และ action แต่ feedback loop ยังจำกัด และมนุษย์ยังต้องจัดการ high-impact/ambiguous cases จึงควรอธิบาย autonomy อย่างตรงไปตรงมา
+- Make Free มี credit และ scheduling limits; ตรวจ [Make Pricing](https://www.make.com/en/pricing)
+- Gemini Free Tier มี model/rate limits; ไม่รับประกันว่าจะรองรับ 50 accounts พร้อมกัน
+- ปิด Scenario schedule หลังทดสอบเพื่อไม่ใช้ credits ต่อ
+- Lab ผ่านเมื่อเห็น decision และ action ไม่จำเป็นต้องเปิดระบบ production
 
 ## 🏁 Completed
 
-คุณได้เปลี่ยน Business Request Assistant จาก Agent ที่รอคำถาม ให้เป็น workflow ที่เริ่มจากเหตุการณ์และทำ Action ภายใต้ decision rules และ human fallback
+- [ ] สร้าง Business Request Log
+- [ ] เก็บ API key ใน connection อย่างปลอดภัย หรือใช้ fallback
+- [ ] Gemini ตอบ valid JSON
+- [ ] Router มี 3 routes
+- [ ] ทุก request บันทึกใน Sheet
+- [ ] HIGH มี low-risk alert
+- [ ] ทดสอบ HIGH, MEDIUM และ LOW แล้ว
 
 ---
 
-[← Previous: Lab 1](../02-build-ai-agent/README.md) · [Home](../README.md) · [Next: MBA Challenge →](../04-mba-challenge/README.md)
+[← Previous: Lab 1](../02-build-ai-agent/README.md) · [Home](../README.md) · [Next: Lab 3 →](../04-generate-management-report/README.md)

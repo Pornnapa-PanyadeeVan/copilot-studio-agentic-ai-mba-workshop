@@ -1,134 +1,187 @@
-# Instructor Preparation Checklist
+# Instructor Checklist — 50-person Workshop
 
-Checklist สำหรับ Workshop 3 ชั่วโมง ผู้เรียนประมาณ 30 คน
+[← Home](../README.md) · [Troubleshooting](../troubleshooting/README.md)
 
-## 1–2 weeks before class
+ใช้ checklist นี้ก่อนสอน `Build Your First Agentic AI for Business` ทุกครั้ง เพราะ free-tier eligibility, quota และ UI เปลี่ยนได้
 
-### Access and licenses
+## 7–14 วันก่อนสอน
 
-- [ ] ผู้เรียนมี Microsoft 365 work/school account
-- [ ] ผู้เรียนเข้าถึง Microsoft 365 Copilot ตามที่หลักสูตรกำหนด
-- [ ] ผู้เรียนเข้าถึง [Microsoft Copilot Studio](https://copilotstudio.microsoft.com)
-- [ ] ตรวจ Copilot Studio license/capacity หรือ trial limitation
-- [ ] ผู้เรียนเข้าถึง Microsoft Forms
-- [ ] ผู้เรียนเข้าถึง Excel Online (Business)
-- [ ] ผู้เรียนเข้าถึง Microsoft Teams
-- [ ] ผู้เรียนเข้าถึง Power Automate หรือ flow designer ที่เปิดจาก Copilot Studio
+### Account and Access
 
-### Environment and governance
+- [ ] ผู้เรียนมี Google Account ที่ได้รับอนุญาตให้ใช้บริการภายนอก
+- [ ] ทดสอบ [Google AI Studio](https://aistudio.google.com/) ด้วยบัญชีประเภทเดียวกับผู้เรียน
+- [ ] ทดสอบว่ามองเห็นพื้นที่ System Instructions
+- [ ] ทดสอบ Make account creation/verification
+- [ ] ทดสอบ Google Sheets, Google Docs, Google Drive และ Gmail
+- [ ] ตรวจว่าบัญชีตัวอย่างสร้าง Gemini API key แบบ free tier ได้โดยไม่เปิด billing
+- [ ] ตรวจ restrictions ของบัญชีโรงเรียน/องค์กรและประเทศ
+- [ ] ไม่ใช้ instructor API key ร่วมกันทั้งห้อง
 
-- [ ] ระบุ Power Platform environment ที่ทุกคนต้องใช้
-- [ ] ตรวจ DLP policy ว่า Forms, Teams, Excel Online (Business) และ AI action ใช้ร่วมกันได้
-- [ ] ตรวจว่า student role สร้าง Agent และ flow ได้
-- [ ] ตรวจ connector authentication ด้วยบัญชีประเภทเดียวกับผู้เรียน
-- [ ] ตรวจ Teams Team/Channel และสิทธิ์ post
-- [ ] ตรวจ OneDrive/SharePoint location และสิทธิ์ workbook
-- [ ] ตกลงว่าจะ Publish Agent หรือทดสอบใน Preview/Test เท่านั้น
-- [ ] ตกลง policy การใช้ AI capacity/credits ระหว่าง class
+### Make Connections
 
-### Test the exact workshop path
+- [ ] ทดสอบ connection ไป Gemini ด้วย key สำหรับ demo
+- [ ] ทดสอบ Google Sheets read/write
+- [ ] ทดสอบ Router/filters ด้วย exact Priority values
+- [ ] ทดสอบการอ่านหลาย rows และ aggregate request data
+- [ ] ทดสอบ document generation path ที่บัญชีปัจจุบันรองรับ
+- [ ] ทดสอบ PDF export/conversion
+- [ ] ทดสอบ Google Drive upload/save
+- [ ] ทดสอบ Gmail ส่งถึงอีเมลทดสอบของผู้สอนเอง
+- [ ] ปิด schedule ของ scenario หลังทดสอบ
 
-- [ ] สร้าง `Business Request Assistant` ด้วย prompt จาก repository
-- [ ] ทดสอบทั้ง HIGH, MEDIUM, LOW และ NEEDS CLARIFICATION
-- [ ] สร้าง `New Business Request` Form
-- [ ] สร้าง `BusinessRequests.xlsx` และ `BusinessRequestsTable`
-- [ ] สร้าง flow ตั้งแต่ Forms trigger ถึง AI Analysis
-- [ ] ยืนยันชื่อ AI action ที่ tenant แสดง (`Run a prompt`, `Run an agent` หรือเทียบเท่า)
-- [ ] ยืนยัน Structured output/JSON ใช้งานได้
-- [ ] ทดสอบ Priority Switch/Condition แบบ exact
-- [ ] ทดสอบ Teams notification ใน standard channel
-- [ ] ทดสอบ Excel `Add a row into a table`
-- [ ] เปิด run history และเตรียมอธิบาย failure details
+### Free-tier and Capacity
 
-## 2–3 days before class
+- [ ] ตรวจ [Gemini API Pricing](https://ai.google.dev/gemini-api/docs/pricing)
+- [ ] ตรวจ [Gemini API Rate Limits](https://ai.google.dev/gemini-api/docs/rate-limits)
+- [ ] ตรวจ [Make Pricing/Credits](https://www.make.com/en/pricing)
+- [ ] ยืนยันว่าไม่มี Lab บังคับ paid model, paid Make feature หรือ Cloud Billing
+- [ ] จำกัด Lab 2 คนละ 3–5 Gemini requests
+- [ ] จำกัด Lab 3 dataset 10–20 rows
+- [ ] วางแผนกระจายเวลาสร้าง API keys ไม่ให้ 50 คนทำพร้อมกันวินาทีเดียว
+- [ ] เตรียม quota/rate-limit fallback
 
-### Classroom setup for 30 participants
+## 2–3 วันก่อนสอน
 
-- [ ] แบ่งผู้เรียนเป็น 8–10 ทีม ทีมละ 3–4 คน
-- [ ] กำหนดให้ทำ Agent คนละคน หรือ 1 maker ต่อทีมเพื่อลด connector load
-- [ ] แจก repository link และขอให้เปิดก่อนวันเรียน
-- [ ] เตรียม Team/Channel กลาง หรือช่องทางแยกสำหรับการทดสอบ HIGH
-- [ ] ตั้งชื่อ flow/agent ด้วย team number หากใช้ environment ร่วมกัน
-- [ ] เตรียม sample data โดยไม่ใช้ข้อมูลจริง
-- [ ] เตรียม QR/link ของ Form ตัวอย่างสำหรับ demo
-- [ ] Capture screenshots ตาม [Images Checklist](../images/README.md)
-- [ ] เตรียม browser tabs: Copilot Studio, Forms, Power Automate, Teams, Excel, repository
-- [ ] เตรียม timer และประกาศจุด fallback ที่ 5 นาที
+### Materials
 
-### Recommended naming convention
+- [ ] เปิดลิงก์ทุก Lab จาก [README](../README.md)
+- [ ] ตรวจ Previous / Home / Next navigation
+- [ ] เตรียม [Sample Requests](sample-requests.md) อย่างน้อย 20 รายการ
+- [ ] เตรียมสำเนา sample data ใน Sheet ของผู้สอน
+- [ ] เตรียม fallback JSON จาก [Lab 2 Prompts](../03-build-agentic-workflow/prompts.md#fallback-json)
+- [ ] เตรียม fallback management report จาก [Lab 3 Prompts](../04-generate-management-report/prompts.md)
+- [ ] เตรียม blank Google Doc และ Drive folders สำหรับ fallback
+- [ ] เตรียม PDF ตัวอย่างที่ไม่มีข้อมูลจริง
+- [ ] เตรียม worksheet สำหรับ 13–17 ทีม
+- [ ] เตรียม Exit Ticket
+
+### Screenshots and Demo
+
+- [ ] ถ่าย screenshot ตาม [Screenshot Guide](../images/README.md)
+- [ ] ปิด API key, email, IDs และ webhook URLs ในทุกภาพ
+- [ ] ใส่ `UI MAY VARY` และวันที่ถ่าย
+- [ ] ทดสอบ flow สดหนึ่งรอบ HIGH/MEDIUM/LOW
+- [ ] บันทึกภาพหรือวิดีโอ fallback ของ run ที่สำเร็จ
+- [ ] หากสาธิต LINE OA ให้ใช้ demo account/channel เท่านั้น
+- [ ] เตรียม LINE architecture-only fallback
+
+### Room and Network
+
+- [ ] Wi‑Fi รองรับ browser sessions ประมาณ 50 คน
+- [ ] เตรียม QR/short link ไป repository
+- [ ] แนะนำจับคู่ 2 คนต่อเครื่องหาก Wi‑Fi หรือ account จำกัด
+- [ ] เตรียม projector scaling และ browser zoom
+- [ ] มีช่องทางประกาศ “หยุด API test” เมื่อ quota เริ่มมีปัญหา
+- [ ] แบ่งผู้ช่วยดูแลประมาณ 1 คนต่อผู้เรียน 12–15 คนหากทำได้
+
+## วันสอน — ก่อนเริ่ม 60 นาที
+
+- [ ] Sign in Google AI Studio และ Make ด้วย demo account
+- [ ] ตรวจว่า model ที่เลือกยังมี free-tier access
+- [ ] Run Lab 1 test case หนึ่งรายการ
+- [ ] Run Lab 2 HIGH request end-to-end
+- [ ] ตรวจ row ใน Business Request Log
+- [ ] Run Lab 3 ด้วย sample data
+- [ ] เปิด PDF จาก Drive
+- [ ] ส่ง Gmail ถึงตนเองและเปิด attachment
+- [ ] ตรวจ Make credit/quota dashboard
+- [ ] เปิด browser tabs: repository, AI Studio, Make, Sheets, Drive, Gmail
+- [ ] เปิด troubleshooting และ fallback files
+- [ ] ลบผล demo เก่าที่อาจทำให้ผู้เรียนสับสน แต่ไม่ลบ audit ที่ต้องเก็บ
+
+## Class Setup สำหรับ 50 คน
+
+### Grouping
+
+- [ ] ให้ผู้เรียนทำ Lab 1 รายบุคคลหรือคู่
+- [ ] Lab 2–3 อนุญาตจับคู่เพื่อช่วยเรื่อง connection/quota
+- [ ] MBA Challenge ทีมละ 3–4 คน
+- [ ] กำหนดตัวแทนทีมเพียงหนึ่งคนกด Run ใน Make
+
+### Timing Guardrails
+
+- [ ] 00:25 เริ่ม Lab 1 ไม่ช้ากว่า 5 นาที
+- [ ] 01:05 หยุด Lab 1 แม้บางคนใช้ fallback
+- [ ] 01:15 เริ่ม Lab 2 พร้อมกันจาก architecture
+- [ ] 01:40 ผู้ที่ API ยังไม่ผ่านเปลี่ยนเป็น fallback JSON
+- [ ] 02:05 เริ่ม Lab 3 ด้วย sample data ทันที
+- [ ] 02:20 ผู้ที่ PDF connector ไม่ผ่านใช้ manual document fallback
+- [ ] 02:35 เริ่ม Challenge
+- [ ] 02:50 หยุด pitch และเข้าสู่ Responsible AI
+
+## Risk Register
+
+| Risk | Early warning | Mitigation | Fallback |
+|---|---|---|---|
+| Gemini API rate limit | 429/quota messages หลายคน | ลด run, stagger teams, ใช้สั้นลง | Lab 1 manual AI + fallback JSON |
+| Free-tier model unavailable | Model หาย/ขอ billing | ใช้ model ฟรีที่บัญชีแสดง | Instructor output/sample JSON |
+| API key creation blocked | ไม่มี create option/permission | จับคู่กับผู้เรียนที่มีสิทธิ์โดยไม่แชร์ key | Instructor scenario หรือ manual simulation |
+| Make module differences | หา action ตามชื่อไม่พบ | สอนตาม function และ screenshot วันที่ล่าสุด | Architecture card/manual mapping |
+| Make account verification | เข้า builder ไม่ได้ | ตรวจล่วงหน้า/จับคู่ | ผู้เรียนออกแบบบน worksheet |
+| Make credits low | dashboard ใกล้ limit | จำกัด 3 runs ปิด schedule | Use recorded run/sample output |
+| Slow Wi‑Fi | หน้าโหลดช้า/timeouts | จับคู่ ลด tabs หยุด simultaneous runs | Instructor-led walkthrough |
+| Google account restrictions | OAuth blocked | ใช้บัญชีที่สถาบันอนุญาต | Manual copy/paste path |
+| Sheets connection fail | file/columns ไม่แสดง | refresh headers/connection | Paste rows manually |
+| Gmail authorization fail | OAuth denied | ใช้ email ตนเอง/ตรวจ permission | Save Drive link only |
+| PDF generation fail | ได้ text/link ไม่ใช่ PDF | ตรวจ export/binary path | Google Docs manual export |
+| 50 API keys พร้อมกัน | throttling/verification delay | stagger 5 กลุ่ม | แชร์ผลผ่าน projector ไม่แชร์ key |
+| Sensitive data ถูก paste | พบชื่อ/email จริง | หยุด run และลบจาก workspace/history ตาม policy | ใช้ sample dataset ใหม่ |
+
+## Fallback Ladder
+
+ใช้ระดับต่ำสุดที่ยังรักษา Learning Objective:
+
+### Level A — Full Hands-on
 
 ```text
-Agent: Team-01 Business Request Assistant
-Flow: Team-01 Business Request Agentic Workflow
-Form: Team-01 New Business Request
-Workbook: Team-01 BusinessRequests.xlsx
+Input → Make → Gemini → Router → Sheet → Report → PDF → Drive → Gmail
 ```
 
-ช่วยลดการเลือก asset ผิดใน environment ที่ใช้ร่วมกัน
+### Level B — AI Manual, Workflow Hands-on
 
-## Day-of-class quick check
+```text
+Input → Google AI Studio → Copy JSON → Make Router → Sheet
+```
 
-- [ ] Sign-in ทำงานและไม่มี conditional access prompt ที่ค้าง
-- [ ] Copilot Studio เปิด environment ที่ถูกต้อง
-- [ ] Agent creation ไม่ถูกปิดโดย admin
-- [ ] Forms connector เห็น form ของบัญชีผู้ทดสอบ
-- [ ] Teams connector post ได้
-- [ ] Excel connector เห็น file และ table
-- [ ] AI action test สำเร็จอย่างน้อย 1 ครั้ง
-- [ ] Run history พร้อมใช้งาน
-- [ ] Repository relative links เปิดได้
-- [ ] Backup slides/screenshots/worksheet พร้อม
+### Level C — Prepared Output
 
-## Setup risks for a 30-person class
+```text
+Prepared JSON → Make Router → Sheet → Prepared report data
+```
 
-| Risk | Early warning | Mitigation |
-|---|---|---|
-| Sign-in/conditional access delay | หลายคนเห็น approval/MFA loop | ให้ sign in ก่อนเริ่ม 10 นาที; มี 1 maker ต่อทีม |
-| Mixed environments | หา Agent/Form/connection ไม่พบ | แสดง environment name บนจอ; ใช้ naming convention |
-| License/capacity limit | Create/Run AI action disabled | ทดสอบ student account; ใช้ Lab 1 + conceptual Lab 2 fallback |
-| Connector consent blocked | Forms/Teams/Excel ขอ admin approval | Pre-authorize connectors หรือใช้ instructor demo flow |
-| 30 flows ส่ง Teams พร้อมกัน | Channel spam/throttling | ให้แต่ละทีม submit 1 HIGH; แยก channel หรือทำ action disabled demo |
-| Excel file lock/table missing | Add row ล้มเหลว | ใช้ workbook ต่อทีม; ปิด desktop Excel; format as table ล่วงหน้า |
-| UI rollout differs | นักศึกษาเห็นเมนูไม่ตรง | สอนตาม function; ใช้ป้าย UI MAY VARY และ screenshots 2 variants |
-| Slow network | Designer/AI test timeout | ลดจำนวน maker, ใช้ prompt walkthrough และ worksheet |
-| Accidental real data use | ผู้เรียน paste email/customer details | ย้ำ synthetic data; monitor shared screens; delete test artifacts ตาม policy |
-| Duplicate flow runs | ผู้เรียน submit ซ้ำระหว่างรอ | ตรวจ run history ก่อน submit ใหม่; use unique requester label |
+### Level D — Manual Simulation
 
-## Recommended backup plan
+```text
+Input card → Team applies AI rules → Decision card → Action card
+→ Prepared data → Management insight discussion
+```
 
-หาก workflow connectors fail:
+> Workshop ต้องสำเร็จได้แม้ automation connectors fail ผู้เรียนยังต้องอธิบาย Goal, Reasoning, Decision, Action, Data และ Human Oversight
 
-1. ทุกคนทำ Lab 1 ให้เสร็จ
-2. ผู้สอน demo flow ที่ทดสอบไว้ หรือใช้ screenshots จริงจาก tenant
-3. ผู้เรียน copy Form request ไปใส่ Agent ด้วยตนเอง
-4. ผู้เรียนบันทึก output ลง worksheet/Excel ด้วยตนเอง
-5. ทุกทีมวาด Trigger → Input → AI Analysis → Decision → Action
-6. ใช้เวลาที่เหลือกับ Decision boundary, Human-in-the-loop และ MBA Challenge
+## Security Checklist
 
-**Learning outcomes ยังสำเร็จได้** แม้ connector ใช้งานไม่ได้ เพราะเป้าหมายหลักคือ business understanding และการออกแบบ Agentic Workflow ไม่ใช่การแก้ปัญหา tenant ภายในห้อง
+- [ ] ใช้ข้อมูลจำลองเท่านั้น
+- [ ] ไม่ใส่ API key ใน GitHub, Prompt, Sheet หรือ screenshot
+- [ ] ไม่มีอีเมลจริงใน repository; ใช้ `[Your Email]`
+- [ ] ใช้ least-privilege connections
+- [ ] ส่ง Gmail ถึงตนเองเท่านั้น
+- [ ] Drive files private/restricted
+- [ ] ปิด Scenario schedule หลังจบ
+- [ ] Rotate/revoke demo key หลัง class หากไม่ใช้ต่อ
+- [ ] ไม่บันทึกหน้าจอที่มี secret
+- [ ] ไม่สาธิต high-impact automatic action
 
-## Facilitation checkpoints
+## หลังสอน
 
-| เวลา | ผู้สอนตรวจ |
-|---|---|
-| 00:25 | ผู้เรียนแยก GenAI/Agent/Agentic AI ได้ |
-| 00:40 | Agent name + instructions saved |
-| 01:00 | ผ่าน 5 tests หรือรู้สาเหตุที่ไม่ผ่าน |
-| 01:40 | Form + Excel table พร้อม |
-| 02:00 | Trigger + AI step พร้อม |
-| 02:20 | Decision + at least one Action พร้อม |
-| 02:30 | เปลี่ยนไป MBA Challenge ไม่ว่า connector status เป็นอย่างไร |
-| 02:50 | เริ่ม Responsible AI wrap-up |
-
-## After class
-
-- [ ] ปิด/turn off test flows ที่ไม่ต้องใช้ต่อ
-- [ ] ลบข้อมูลจำลองตาม retention plan
-- [ ] ตรวจ connection owners และ shared permissions
-- [ ] เก็บ feedback: access, timing, difficult steps, business relevance
-- [ ] อัปเดต screenshots เมื่อ Copilot Studio UI เปลี่ยน
-- [ ] บันทึก tenant-specific differences แยกจาก student guide
+- [ ] ปิด scenario schedules/webhooks ที่ไม่ใช้
+- [ ] ลบหรือ anonymize test data ตาม retention plan
+- [ ] Rotate/revoke workshop API keys ที่ไม่ใช้
+- [ ] ตรวจ Make credits/quota
+- [ ] เก็บ feedback ว่า issue ใดเกิดบ่อย
+- [ ] Update troubleshooting และ screenshots
+- [ ] ตรวจลิงก์ free-tier/pricing ก่อนรอบถัดไป
+- [ ] บันทึก UI/module ที่เปลี่ยน แต่หลีกเลี่ยงคำรับประกันชื่อเมนู
 
 ---
 
-[← Home](../README.md) · [Troubleshooting](../troubleshooting/README.md) · [Images Checklist](../images/README.md)
+[← Home](../README.md) · [Troubleshooting](../troubleshooting/README.md)
