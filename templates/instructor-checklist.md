@@ -49,7 +49,7 @@
 ### Materials
 
 - [ ] เปิดลิงก์ทุก Lab จาก [README](../README.md)
-- [ ] ส่ง [Glossary คำศัพท์พื้นฐาน](../01-introduction/glossary.md) เป็น pre-read และเตรียมอธิบาย Agent, Skill, Tool, Connector, Workflow, Guardrail
+- [ ] ส่ง [Glossary คำศัพท์พื้นฐาน](../01-introduction/glossary.md) เป็น pre-read และเตรียมอธิบาย Agent, Skill, Tool, Connector, MCP, Workflow, Guardrail
 - [ ] ตรวจ Previous / Home / Next navigation
 - [ ] เตรียม [Sample Requests](sample-requests.md) อย่างน้อย 20 รายการ
 - [ ] เตรียมสำเนา sample data ใน Sheet ของผู้สอน

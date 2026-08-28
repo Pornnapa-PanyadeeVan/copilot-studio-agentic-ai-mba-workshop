@@ -47,9 +47,10 @@ Human Review
 
 - ไม่ต้องสร้าง Manus **Skill**: Prompt + business rules + dataset ทำหน้าที่เป็น bounded task instructions ก่อน หากใช้ซ้ำในองค์กรจึงค่อยจัด playbook ที่ผ่านการทดสอบเป็น Skill
 - ไม่ใช้ **Connector**: Agent อ่านเฉพาะไฟล์แนบและสร้าง artifacts ใน workspace ไม่เชื่อม Sheet, Gmail, LINE หรือระบบภายนอก
+- ไม่ติดตั้ง **MCP Server**: Lab นี้ไม่ต้องเปิด Tools/Resources จากระบบภายนอกผ่าน MCP
 - มี **Guardrails** หลายชั้น: ข้อมูลจำลอง, ห้าม browse, ห้าม external action, บังคับ allowed values, ตรวจจำนวน rows และให้ Human Review
 
-คำว่า Skill อาจมีชื่อและรูปแบบต่างกันในแต่ละแพลตฟอร์ม ดูนิยามกลางที่ [Skill](../01-introduction/glossary.md#skill), [Connector](../01-introduction/glossary.md#connector) และ [Guardrail](../01-introduction/glossary.md#guardrail)
+คำว่า Skill อาจมีชื่อและรูปแบบต่างกันในแต่ละแพลตฟอร์ม ดูนิยามกลางที่ [Skill](../01-introduction/glossary.md#skill), [Connector](../01-introduction/glossary.md#connector), [MCP](../01-introduction/glossary.md#mcp-model-context-protocol) และ [Guardrail](../01-introduction/glossary.md#guardrail)
 
 ## เปรียบเทียบโจทย์เดิม
 

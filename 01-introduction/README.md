@@ -6,7 +6,7 @@
 
 ⏱ **Estimated Time**  20 นาที
 
-📖 **Reference**  [คำศัพท์พื้นฐาน Agentic AI: Agent, Skill, Tool, Connector, Workflow และ Guardrail](glossary.md)
+📖 **Reference**  [คำศัพท์พื้นฐาน Agentic AI: Agent, Skill, Tool, Connector, MCP, Workflow และ Guardrail](glossary.md)
 
 ## Learning Path
 
@@ -30,12 +30,29 @@ Generative AI → AI Agent → Agent + Rules → Workflow → Decision → Actio
 
 ดูนิยาม ตัวอย่าง และ Quick Check เพิ่มเติมใน [Glossary](glossary.md)
 
+### แล้ว MCP อยู่ตรงไหน
+
+MCP หรือ Model Context Protocol เป็นมาตรฐานเปิดที่ช่วยให้ AI application เชื่อมกับ context และความสามารถจากระบบภายนอกในรูปแบบเดียวกัน
+
+```text
+AI Application (MCP Host)
+↓
+MCP Client
+↓
+MCP Server
+├─ Resources: ข้อมูลและ context
+├─ Prompts: reusable templates
+└─ Tools: ฟังก์ชันที่ Model เรียกใช้
+```
+
+**Connector** เป็นคำกว้างสำหรับ integration และสิทธิ์เข้าถึงระบบ ส่วน **MCP** เป็น protocol เฉพาะรูปแบบหนึ่ง Connector ไม่จำเป็นต้องใช้ MCP และ MCP ไม่ได้แทน Workflow หรือ Guardrail
+
 ## Timebox
 
 | นาที | เนื้อหา |
 |---:|---|
 | 0–4 | Generative AI → AI Agent → Agentic AI |
-| 4–9 | Agent, Skill, Tool, Connector, Workflow, Guardrail |
+| 4–9 | Agent, Skill, Tool, Connector, MCP, Workflow, Guardrail |
 | 9–14 | Autonomy Spectrum และ Make vs Manus |
 | 14–18 | Business Request Management + Managerial AI |
 | 18–20 | Discussion และ Checkpoint |
@@ -209,7 +226,7 @@ Data → Information → Insight → Decision → Action
 ## ✅ Checkpoint
 
 - [ ] อธิบาย Generative AI, Agent, Workflow และ Agentic AI ด้วยคำของตนเองได้
-- [ ] แยก Agent, Skill, Tool, Connector, Workflow และ Guardrail ได้
+- [ ] แยก Agent, Skill, Tool, Connector, MCP, Workflow และ Guardrail ได้
 - [ ] ยกตัวอย่าง Decision และ Action อย่างละหนึ่งตัวอย่าง
 - [ ] อธิบายว่า autonomy เป็น spectrum ได้
 - [ ] แยก Operational AI กับ Managerial AI ได้

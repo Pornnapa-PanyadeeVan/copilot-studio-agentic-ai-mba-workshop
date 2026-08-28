@@ -38,6 +38,8 @@ Google Sheets
 
 Connector ทำให้ระบบ “เข้าถึงได้” แต่ไม่ได้ตัดสินว่าควรทำอะไร และไม่ได้แปลว่าควรให้ทุก permission ใช้เฉพาะ Sheet ทดสอบตามหลัก Least Privilege ดูเพิ่มที่ [Connector ใน Glossary](../01-introduction/glossary.md#connector)
 
+> **MCP clarification:** Lab นี้ใช้ native connectors ของ Make ไม่ได้ติดตั้ง MCP Client/Server จึงไม่ควรเรียกทุก connection ว่า MCP ดูความแตกต่างที่ [MCP ใน Glossary](../01-introduction/glossary.md#mcp-model-context-protocol)
+
 ## Timebox
 
 | นาที | งาน |

@@ -160,6 +160,34 @@ Large Language Model คือโมเดลที่ประมวลผล�
 
 ข้อมูลที่ระบบเก็บเพื่อใช้ภายหลัง เช่น Request History ใน Google Sheets ต้องกำหนดว่าเก็บอะไร นานเท่าใด ใครเข้าถึง และลบอย่างไร
 
+### MCP (Model Context Protocol)
+
+มาตรฐานเปิดที่กำหนดวิธีให้ AI/LLM application เชื่อมและแลกเปลี่ยน context กับระบบภายนอกอย่างเป็นรูปแบบเดียวกัน โดยมีองค์ประกอบหลัก:
+
+- **MCP Host:** AI application ที่ประสานการเชื่อมต่อ เช่น AI-enabled IDE หรือ chat application
+- **MCP Client:** component ภายใน Host ที่สื่อสารกับ MCP Server
+- **MCP Server:** program ที่เปิด context และ capabilities ให้ Client
+
+MCP Server เปิด primitive หลักได้สามแบบ:
+
+| Primitive | หน้าที่ |
+|---|---|
+| **Resources** | ข้อมูลหรือ context เช่นไฟล์และ database schema |
+| **Prompts** | template หรือ instructions ที่นำกลับมาใช้ได้ |
+| **Tools** | ฟังก์ชันที่ Model เรียกเพื่ออ่านข้อมูล คำนวณ หรือทำ Action |
+
+```text
+MCP Host → MCP Client → MCP Server → Resources / Prompts / Tools
+```
+
+MCP เน้นมาตรฐานการเชื่อมและแลกเปลี่ยน context ไม่ได้กำหนด Business Goal, Workflow หรือ Guardrail ให้โดยอัตโนมัติ การเชื่อม MCP Server จึงยังต้องตรวจแหล่งที่มา จำกัด permission, allowlist tools, ขอ consent/approval และเก็บ audit trail
+
+**MCP ต่างจาก Connector:** Connector เป็นคำกว้างระดับผลิตภัณฑ์สำหรับ integration, authentication และ permission ส่วน MCP เป็น protocol เฉพาะรูปแบบหนึ่ง MCP Client อาจทำหน้าที่เป็น connector component ใน Host แต่ Connector จำนวนมากใช้ native API/OAuth โดยไม่ใช้ MCP
+
+**MCP ต่างจาก Skill:** Skill คือวิธีทำงานหรือ playbook ส่วน MCP คือช่องทางมาตรฐานที่ใช้ค้นพบและเรียก capabilities ปัจจุบันมี `Skills over MCP` เป็น optional extension แต่ Skill ไม่จำเป็นต้องส่งผ่าน MCP เสมอไป
+
+อ่านต่อ: [MCP Specification](https://modelcontextprotocol.io/specification/latest) และ [Architecture Overview](https://modelcontextprotocol.io/docs/learn/architecture)
+
 ### Module
 
 หน่วยงานหนึ่งขั้นใน Make Scenario เช่น รับข้อมูล เรียก AI แปลง JSON หรือเพิ่มแถว Module อาจเป็น Trigger, Action, Search หรือ data transformation
@@ -225,6 +253,7 @@ Skill อาจประกอบด้วย:
 | Skill | Playbook สำหรับสรุป จัด Priority และตรวจผล |
 | Tool | Analyze text, add row, create report |
 | Connector | Gemini API, Google Sheets, Gmail connection |
+| MCP | หาก AI Host ใช้ MCP Server เพื่อเปิด Resources/Prompts/Tools; Labs หลักไม่ได้ใช้ MCP |
 | Workflow | Input → Gemini → JSON → Router → Sheet/Alert |
 | Guardrail | ใช้ข้อมูลจำลอง, 3 Priority values, anti-urgent rule, Human Review |
 | Memory | Business Request Log |
@@ -251,9 +280,10 @@ Skill อาจประกอบด้วย:
 1. `Priority = HIGH` แล้วไปเส้นทางแจ้งเตือน → **Condition + Router**
 2. สิทธิ์ที่ Make ใช้เขียน Sheet → **Connector + Permission**
 3. คู่มือจัด Priority ที่นำกลับมาใช้ซ้ำ → **Skill / Playbook**
-4. ห้าม HIGH จากคำว่า urgent เพียงอย่างเดียว → **Business Rule + Guardrail**
-5. ผู้จัดการต้องอนุมัติก่อนคืนเงิน → **Human-in-the-loop + Approval Gate**
-6. PDF ที่ Agent สร้าง → **Artifact**
+4. มาตรฐานที่ Host ใช้ค้นพบ Resources/Prompts/Tools จาก Server → **MCP**
+5. ห้าม HIGH จากคำว่า urgent เพียงอย่างเดียว → **Business Rule + Guardrail**
+6. ผู้จัดการต้องอนุมัติก่อนคืนเงิน → **Human-in-the-loop + Approval Gate**
+7. PDF ที่ Agent สร้าง → **Artifact**
 
 ---
 

@@ -27,7 +27,7 @@ Guardrail คือ controls หลายชั้นที่จำกัด �
 | Input | ข้อมูลใดเข้าได้และ field ใดจำเป็น | ใช้ simulated data และ Request ID |
 | Instructions / Rules | ขอบเขตและเกณฑ์การตัดสิน | ห้ามให้ HIGH จากคำว่า urgent เพียงอย่างเดียว |
 | Output Validation | รูปแบบ ค่า และจำนวนถูกต้องหรือไม่ | JSON schema, allowed priorities และ count check |
-| Tool / Connector Permission | ระบบใดและ Action ใดเข้าถึงได้ | เขียนเฉพาะ Sheet ทดสอบ; Lab 4 ไม่มี external connector |
+| Tool / Connector / MCP Permission | ระบบใดและ Action ใดเข้าถึงได้ | เขียนเฉพาะ Sheet ทดสอบ; ใช้ MCP Server ที่เชื่อถือได้; Lab 4 ไม่มี external connection |
 | Approval Gate | จุดใดต้องหยุดรอคน | HIGH, sensitive และ high-impact decisions |
 | Monitoring / Audit | ตรวจย้อนหลังและพบความผิดปกติ | request ID, route, version, override และ error |
 | Stop / Recovery | เมื่อใดต้องหยุด retry หรือใช้ fallback | parse fail, quota fail, duplicate และ manual fallback |

@@ -29,7 +29,7 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 เมื่อจบ Workshop ผู้เรียนจะสามารถ:
 
 1. แยกความแตกต่างระหว่าง Generative AI, AI Agent, Workflow และ Agentic AI
-2. อธิบาย Agent, Skill, Tool, Connector, Workflow และ Guardrail ด้วยตัวอย่างธุรกิจได้
+2. อธิบาย Agent, Skill, Tool, Connector, MCP, Workflow และ Guardrail ด้วยตัวอย่างธุรกิจได้
 3. อธิบายว่า autonomy (ระดับความเป็นอิสระ) เป็นสเปกตรัม ไม่ใช่มีหรือไม่มีเพียงสองสถานะ
 4. สร้าง `Business Request Assistant` ด้วย System Instructions ใน Google AI Studio
 5. ใช้ Business Rules เพื่อจัดลำดับ `HIGH`, `MEDIUM`, `LOW` จากผลกระทบจริง
@@ -209,7 +209,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 
 ## เริ่ม Workshop
 
-อ่านก่อนหรือเปิดเป็น reference: [คำศัพท์พื้นฐาน Agentic AI — Agent, Skill, Tool, Connector, Workflow และ Guardrail](01-introduction/glossary.md)
+อ่านก่อนหรือเปิดเป็น reference: [คำศัพท์พื้นฐาน Agentic AI — Agent, Skill, Tool, Connector, MCP, Workflow และ Guardrail](01-introduction/glossary.md)
 
 1. [Introduction — แนวคิด คำศัพท์พื้นฐาน และ Autonomy Spectrum](01-introduction/README.md)
 2. [Lab 1 — Google AI Studio Agent](02-build-ai-agent/README.md) · [Prompts](02-build-ai-agent/prompts.md)
