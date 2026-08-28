@@ -21,12 +21,12 @@ Repository นี้ไม่สร้าง screenshot ปลอม เพร�
 | `02-system-instructions.png` | Google AI Studio | System Instructions area | Lab 1 Step 3 |
 | `03-agent-test-output.png` | Google AI Studio | Summary, Priority, Reason, Action | Lab 1 test |
 | `04-ai-studio-api-key-redacted.png` | API key page | จุดสร้าง key โดยปิดค่าของ key | Lab 2 Step 2 |
-| `05-sheet-columns.png` | Google Sheets | 8 columns ของ Business Request Log | Lab 2 Step 1 |
+| `05-sheet-columns.png` | Google Forms + Sheets | Form questions และ 9 columns ของ Business Request Log | Lab 2 Steps 1–2 |
 | `06-make-new-scenario.png` | Make | Scenario canvas | Lab 2 Step 3 |
 | `07-make-gemini-connection.png` | Make | Connection dialog โดยไม่เห็น key | Lab 2 Step 4 |
 | `08-make-json-output.png` | Make run history | JSON 4 fields | Lab 2 Step 5 |
-| `09-make-router.png` | Make | HIGH/MEDIUM/LOW routes | Lab 2 Step 6 |
-| `10-sheet-result.png` | Google Sheets | Synthetic rows | Lab 2 checkpoint |
+| `09-make-router.png` | Make | HIGH และ MEDIUM/LOW routes | Lab 2 Step 7 |
+| `10-sheet-result.png` | Google Sheets | Form response และ AI result ในแถวเดียวกัน | Lab 2 checkpoint |
 | `11-report-flow.png` | Make | Read → Gemini → Document → PDF → Drive → Gmail | Lab 3 overview |
 | `12-management-report.png` | Google Docs/PDF | Section headings ของ report | Lab 3 checkpoint |
 | `13-drive-report.png` | Google Drive | Weekly-Reports folder และไฟล์จำลอง | Lab 3 Step 6 |

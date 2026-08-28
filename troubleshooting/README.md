@@ -69,11 +69,20 @@
 | **Quick Fix** | ตรวจ Google account, เปิด Sheet โดยตรง, reconnect และเลือก file ของตนเอง |
 | **Instructor Fallback** | แสดง mapping บน Scenario แล้ว paste output ลง prepared Sheet ด้วยตนเอง |
 
+## Google Form response is not detected
+
+| | |
+|---|---|
+| **Problem** | Submit Form แล้วไม่มี response row หรือ `Watch New Rows` ไม่ได้รับ bundle |
+| **Likely Cause** | Form ยังไม่ได้ link Sheet, เลือก Spreadsheet/tab ผิด, Submit ก่อน `Run once` หรือ starting point ข้ามแถว |
+| **Quick Fix** | Link response destination ให้ถูก เลือก `Form Responses 1`, ตั้ง start เป็น `From now on`, กด `Run once` แล้ว Submit ข้อมูลจำลองใหม่ 1 รายการ |
+| **Instructor Fallback** | ใช้ prepared response sheet/bundle ที่มี `Row number`, Form fields และข้อมูลจำลอง |
+
 ## Router condition does not match
 
 | | |
 |---|---|
-| **Problem** | Bundle ไม่เข้า HIGH/MEDIUM/LOW route |
+| **Problem** | Bundle ไม่เข้า HIGH หรือ MEDIUM/LOW route |
 | **Likely Cause** | Mapping ผิด field, lowercase, whitespace หรือ filter ใช้ค่าที่ไม่ตรง |
 | **Quick Fix** | ดู parsed `priority`, trim/normalize และใช้ exact match กับ `HIGH`, `MEDIUM`, `LOW` |
 | **Instructor Fallback** | ใช้ prepared JSON ที่ priority สะอาด แล้วสาธิตทีละ route |
@@ -96,14 +105,14 @@
 | **Quick Fix** | ตรวจ raw output, ย้ำ `Return ONLY valid JSON`, ลด verbosity และ run ใหม่หนึ่งครั้ง |
 | **Instructor Fallback** | ใช้ [valid fallback JSON](../03-build-agentic-workflow/prompts.md#fallback-json) แล้วทำขั้นตอนถัดไป |
 
-## Google Sheet does not receive row
+## Update a Row writes the wrong row or creates a duplicate
 
 | | |
 |---|---|
-| **Problem** | Scenario ผ่านแต่ไม่มี row หรือ row อยู่ผิด Sheet |
-| **Likely Cause** | Action ไม่ได้ run, route ไม่ match, เลือก Spreadsheet/Sheet ผิด, header changed หรือ permission |
-| **Quick Fix** | เปิด run history ตาม bundle, ตรวจ selected file/tab และ refresh column mapping |
-| **Instructor Fallback** | Paste row ด้วยตนเองและให้ผู้เรียนวาด mapping Trigger/AI fields → 8 Sheet columns |
+| **Problem** | AI result ไปผิด row, response เดิมถูกล้าง หรือจำนวน rows เพิ่มเป็นสองเท่า |
+| **Likely Cause** | ใช้ `Add a Row`, พิมพ์ row number เอง, map row number ผิด module หรือไม่ map Form fields เดิมกลับไป |
+| **Quick Fix** | ใช้ `Update a Row`; map `Row number` และ Form fields จาก `Watch New Rows`; map ผล AI จาก `Parse JSON` แล้วทดสอบ 1 response |
+| **Instructor Fallback** | อัปเดต prepared row ด้วยมือและตรวจ mapping table ใน Lab 2 |
 
 ## Gmail connection unavailable
 
@@ -112,7 +121,7 @@
 | **Problem** | OAuth denied, send action unavailable หรือ policy block |
 | **Likely Cause** | Google Workspace admin policy, account type, connection scope หรือ Make plan/UI difference |
 | **Quick Fix** | ใช้บัญชีของตนเองที่อนุญาต ส่งถึงตนเอง และ reconnect โดยอ่าน permission ก่อนยอมรับ |
-| **Instructor Fallback** | ข้าม email; เก็บ PDF/Drive link และสร้าง email draft text ถือว่าผ่าน Lab 3 |
+| **Instructor Fallback** | Lab 2 ใช้ `Processing Status = HIGH — HUMAN REVIEW REQUIRED`; Lab 3 เก็บ PDF/Drive link และสร้าง email draft text |
 
 ## PDF cannot generate
 

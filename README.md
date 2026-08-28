@@ -33,7 +33,7 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 3. อธิบายว่า autonomy (ระดับความเป็นอิสระ) เป็นสเปกตรัม ไม่ใช่มีหรือไม่มีเพียงสองสถานะ
 4. สร้าง `Business Request Assistant` ด้วย System Instructions ใน Google AI Studio
 5. ใช้ Business Rules เพื่อจัดลำดับ `HIGH`, `MEDIUM`, `LOW` จากผลกระทบจริง
-6. เชื่อม Trigger → Gemini → Decision Router → Action → Google Sheets ใน Make
+6. เชื่อม Google Form → Google Sheets → Gemini → Decision Router → Update Row/Alert ใน Make
 7. เปลี่ยน Request History ให้เป็น Management Insight และส่งรายงาน PDF
 8. ให้ Manus Agent รับ Goal เดียวกับ Lab 2–3 แล้ววางแผน วิเคราะห์ และสร้าง deliverables โดยไม่ประกอบ Workflow
 9. เปรียบเทียบ Human-designed Workflow กับ Goal-based Autonomous Agent
@@ -84,13 +84,15 @@ Agentic AI เชื่อม Agent เข้ากับ execution, capabilitie
 ## สถาปัตยกรรมหลัก
 
 ```text
-Business Request
+Google Form / Business Request
+↓
+Google Sheets — Form Response
 ↓
 Make Workflow / Orchestrator
 ├─ AI Agent / Gemini Reasoning
 ├─ Priority Decision / Router
 ├─ Tool + Connector
-└─ Action → Google Sheets
+└─ Action → Update Google Sheets / HIGH Alert
 ↓
 Request History
 ↓
@@ -131,7 +133,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 |---|---|---|
 | 00:00–00:20 | [Introduction](01-introduction/README.md) | เข้าใจ end-to-end Agentic AI Path และคำศัพท์พื้นฐาน |
 | 00:20–00:50 | [Lab 1: AI Agent](02-build-ai-agent/README.md) | Agent วิเคราะห์และจัด Priority |
-| 00:50–01:30 | [Lab 2: Agentic Workflow](03-build-agentic-workflow/README.md) | Make เปลี่ยน AI decision เป็น Action และเก็บข้อมูล |
+| 00:50–01:30 | [Lab 2: Agentic Workflow](03-build-agentic-workflow/README.md) | Form → Sheet → AI decision → Update Row/Alert |
 | 01:30–01:40 | Break | พัก 10 นาที |
 | 01:40–02:05 | [Lab 3: Managerial AI](04-generate-management-report/README.md) | Request History → Insight → PDF/Email |
 | 02:05–02:15 | [LINE OA Demo](05-line-oa-demo/README.md) | เห็น Channel → Agentic Workflow |
@@ -164,7 +166,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 
 ### ผู้เรียน
 
-- Google Account ที่เข้า Google AI Studio, Sheets, Drive, Docs และ Gmail ได้
+- Google Account ที่เข้า Google AI Studio, Forms, Sheets, Drive, Docs และ Gmail ได้
 - Make account แบบ Free
 - Manus account แบบ Free หนึ่งบัญชีต่อทีมสำหรับ Lab 4 หรือใช้ Instructor run fallback
 - Browser รุ่นปัจจุบัน และอินเทอร์เน็ต
@@ -187,7 +189,8 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 | [Google AI Studio](https://aistudio.google.com/) | ทดลอง Prompt และ System Instructions | Lab 1 ใช้โดยไม่ต้องคัดลอก API key |
 | [Gemini API](https://ai.google.dev/gemini-api/docs) | วิเคราะห์คำร้องและสร้างรายงานจาก Make | ใช้ key ของผู้เรียน; free tier มี rate limits |
 | [Make](https://www.make.com/) | Workflow Orchestrator (ตัวประสานขั้นตอนงาน) | Free plan มี credit/feature limits และอาจเปลี่ยนได้ |
-| Google Sheets | Request Log และข้อมูลสะสม | ใช้ข้อมูลจำลอง |
+| Google Forms | ช่องทางรับ Business Request ใน Lab 2 | ไม่เก็บ email หากไม่จำเป็น และใช้ข้อมูลจำลอง |
+| Google Sheets | Form response log, ผล AI และข้อมูลสะสม | ใช้ข้อมูลจำลอง |
 | Google Docs / Drive | สร้างและเก็บรายงาน | Permission ต้องอนุญาตให้ Make ตามที่ใช้จริง |
 | Gmail | ส่งรายงานถึงอีเมลของผู้เรียนเอง | ใช้ `[Your Email]` ในคู่มือเสมอ |
 | LINE OA | Channel สำหรับ instructor demo | ผู้สอนเตรียมล่วงหน้า; ผู้เรียนไม่ต้องสร้างบัญชี |
@@ -224,8 +227,9 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 ผู้เรียนควรมี:
 
 - AI Agent ที่ใช้ System Instructions และทดสอบ Business Rules แล้ว
-- Make scenario ที่รับ input, เรียก Gemini, route ตาม Priority และบันทึก Sheet
-- Request Log ที่มี HIGH, MEDIUM และ LOW อย่างน้อยประเภทละหนึ่งรายการ
+- Google Form ที่เชื่อมกับ response sheet
+- Make scenario ที่ Watch New Rows, เรียก Gemini, route ตาม Priority และอัปเดตแถวเดิม
+- Request Log ที่มี HIGH, MEDIUM และ LOW อย่างน้อยประเภทละหนึ่งรายการโดยไม่มีแถวซ้ำ
 - Weekly Management Report ที่มองหารูปแบบข้ามหลายคำร้อง
 - PDF บน Google Drive และอีเมลทดสอบถึงตนเอง หรือ fallback artifact ที่เทียบเท่า
 - Manus task ที่สร้าง Request Triage และ Management Report จาก Goal เดียว โดยไม่สร้าง Workflow

@@ -7,7 +7,7 @@
 ## วิธีใช้
 
 - Lab 1: เลือก 3 core cases และ 2 optional cases เพื่อทดสอบ Business Rules
-- Lab 2: เลือก HIGH/MEDIUM/LOW อย่างละ 1 รายการ
+- Lab 2: Submit ผ่าน Google Form โดยเลือก HIGH/MEDIUM/LOW อย่างละ 1 รายการ
 - Lab 3: ใช้ 10–20 rows โดยเลือกหลาย department และเก็บ themes ซ้ำ
 - Lab 4: ใช้ไฟล์ [manus-lab-input.md](manus-lab-input.md) ซึ่งตัด Expected Priority ออกเพื่อทดสอบ Agent อย่างยุติธรรม
 - `AMBIGUOUS` หมายถึงข้อมูลยังไม่พอ ผู้เรียนต้องระบุ missing information ก่อนตัดสิน ไม่ใช่ Priority ที่ส่งเข้า Router

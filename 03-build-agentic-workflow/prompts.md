@@ -1,52 +1,70 @@
-# Lab 2 — Copy/Paste Prompts and Test Data
+# Lab 2 — Google Form Workflow Prompts and Test Data
 
 [← Lab 2 Guide](README.md) · [Home](../README.md) · [Next: Lab 3 Prompts →](../04-generate-management-report/prompts.md)
 
-> ใช้ simulated data เท่านั้น และห้ามวาง API key ใน Prompt
+> ใช้ simulated data เท่านั้น ปิดการเก็บ email ใน Form ถ้าไม่จำเป็น และห้ามวาง API key ใน Prompt, Form หรือ Sheet
 
 ## Business Request JSON Prompt
 
-แทน `{{BUSINESS_REQUEST}}` ด้วยค่าจาก Trigger ผ่าน Make mapping ไม่ใช่พิมพ์วงเล็บปีกกาตายตัว
+Map ค่า `{{REQUESTER}}`, `{{DEPARTMENT}}` และ `{{BUSINESS_REQUEST}}` จาก output ของ `Google Sheets — Watch New Rows`
 
 ```text
 You are a Business Request Assistant.
 
-Analyze the following request.
+Analyze the request using business impact, not urgency words alone.
 
-Return ONLY valid JSON.
+Return ONLY one valid JSON object.
+Do not use Markdown or code fences.
 
-Use exactly this structure:
+Use exactly these keys:
 
 {
   "summary": "",
-  "priority": "HIGH | MEDIUM | LOW",
+  "priority": "HIGH",
   "reason": "",
   "recommended_action": ""
 }
 
+The priority value must be exactly one of:
+HIGH, MEDIUM, LOW
+
 Priority rules:
 
 HIGH:
-customer, revenue, major operations, compliance,
-reputation, or major time-sensitive business impact.
+- immediate customer impact
+- significant revenue or financial impact
+- critical operations disruption
+- serious compliance or reputation risk
+- a short deadline with material business impact if missed
 
 MEDIUM:
-important but operations can continue.
+- important and needs attention
+- a deadline within several days
+- operations can continue
 
 LOW:
-routine or informational request.
+- routine administration or general information
+- no immediate impact
+- no material urgent deadline
 
-Do not classify HIGH only because the request says urgent.
+Do not classify HIGH only because the request says
+"urgent", "ASAP", "ทันที", "ด่วน" or similar words.
 
-Request:
+Requester:
+{{REQUESTER}}
 
+Department:
+{{DEPARTMENT}}
+
+Business Request:
 {{BUSINESS_REQUEST}}
 
-Respond in Thai except the priority value,
-which must be HIGH, MEDIUM, or LOW.
+Respond in Thai except the priority value.
 ```
 
 ## Test Requests
+
+Submit ผ่าน Google Form ทีละรายการหลัง Make อยู่ในสถานะ `Run once`
 
 ### HIGH
 
@@ -54,6 +72,13 @@ which must be HIGH, MEDIUM, or LOW.
 Requester: Demo Customer
 Department: Customer Service
 Request: ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้ และอาจยกเลิกคำสั่งซื้อหากแก้ไม่ทันวันนี้
+```
+
+Expected:
+
+```text
+Route 1 → Update a Row → Gmail
+Processing Status = HIGH — HUMAN REVIEW REQUIRED
 ```
 
 ### MEDIUM
@@ -64,12 +89,28 @@ Department: Marketing
 Request: ต้องการรายงานผลแคมเปญเพื่อประชุมผู้บริหารในอีกสี่วัน ขณะนี้งานการตลาดยังดำเนินต่อได้
 ```
 
+Expected:
+
+```text
+Route 2 → Update a Row
+Processing Status = TRIAGED
+No email
+```
+
 ### LOW
 
 ```text
 Requester: Demo Employee
 Department: HR
 Request: ขอทราบขั้นตอนเปลี่ยนรูป Profile ในระบบประชุมออนไลน์ ไม่มี deadline และไม่กระทบงานปัจจุบัน
+```
+
+Expected:
+
+```text
+Route 2 → Update a Row
+Processing Status = TRIAGED
+No email
 ```
 
 ### Anti-keyword Test
@@ -80,11 +121,11 @@ Department: HR
 Request: ด่วนมาก ASAP กรุณาส่งคู่มือการตั้งค่าธีมสีของระบบ ไม่มีลูกค้า รายได้ หรือ operations ได้รับผลกระทบ
 ```
 
-Expected: `LOW` ไม่ใช่ `HIGH`
+Expected: `LOW` → Route 2 → Update a Row → No email
 
 ## Fallback JSON
 
-ใช้เมื่อ Gemini API/connection ไม่พร้อม เพื่อฝึก JSON → Router → Action ต่อ
+ใช้เมื่อ Gemini API/connection ไม่พร้อม เพื่อฝึก `Parse JSON → Router → Update a Row` ต่อ
 
 ### HIGH JSON
 
@@ -121,12 +162,14 @@ Expected: `LOW` ไม่ใช่ `HIGH`
 
 ## Expected Data Structure
 
+ใช้ object นี้สร้าง data structure ใน `JSON — Parse JSON`:
+
 ```json
 {
-  "summary": "string",
+  "summary": "ลูกค้ารายใหญ่ไม่สามารถชำระเงินและอาจยกเลิกคำสั่งซื้อภายในวันนี้",
   "priority": "HIGH",
-  "reason": "string",
-  "recommended_action": "string"
+  "reason": "มีผลกระทบต่อลูกค้าและรายได้ทันที พร้อมข้อจำกัดด้านเวลาที่สำคัญ",
+  "recommended_action": "แจ้งเจ้าของระบบชำระเงินและผู้จัดการทันที พร้อมติดตามสถานะเป็นระยะ"
 }
 ```
 
@@ -155,6 +198,7 @@ LOW
 
 ผู้ร้อง: {{REQUESTER}}
 หน่วยงาน: {{DEPARTMENT}}
+คำร้อง: {{BUSINESS_REQUEST}}
 สรุป: {{SUMMARY}}
 Priority: {{PRIORITY}}
 เหตุผล: {{REASON}}
@@ -166,8 +210,18 @@ Priority: {{PRIORITY}}
 ## Sheet Alert Marker Fallback
 
 ```text
-⚠️ HIGH — Human review required: {{SUMMARY}}
+HIGH — HUMAN REVIEW REQUIRED
 ```
+
+## Mapping Checklist
+
+- [ ] `Row number` มาจาก `Watch New Rows` ไม่ใช่ค่าที่พิมพ์เอง
+- [ ] Form fields มาจาก `Watch New Rows`
+- [ ] ผลวิเคราะห์ 4 fields มาจาก `Parse JSON`
+- [ ] Route 1 filter เป็น exact `HIGH`
+- [ ] Route 2 filter เป็น exact `MEDIUM OR LOW`
+- [ ] ทั้ง 2 routes ใช้ `Update a Row`
+- [ ] Gmail อยู่หลัง Update Row ใน Route 1 เท่านั้น
 
 ---
 

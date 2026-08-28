@@ -2,41 +2,50 @@
 
 [← Previous: Lab 1](../02-build-ai-agent/README.md) · [Home](../README.md) · [Next: Lab 3 →](../04-generate-management-report/README.md)
 
-🎯 **Goal**  เปลี่ยน AI reasoning เป็น Business Action ผ่าน Make, Gemini API และ Google Sheets
+🎯 **Goal**  รับ Business Request จาก Google Form ให้ Google Sheets เก็บคำตอบ แล้วใช้ Make + Gemini วิเคราะห์และเขียนผลกลับแถวเดิม โดยส่ง Gmail เฉพาะรายการ `HIGH`
 
 ⏱ **Estimated Time**  40 นาที
 
-🧰 **Tools**  Make + Gemini API key + Google Sheets
+🧰 **Tools**  Google Forms + Google Sheets + Make + Gemini API key + Gmail
 
-## Architecture
+## Completed Flow
 
 ```text
-Business Request
+Google Form
+↓ submit response
+Google Sheets — Form Responses 1
 ↓
-Make
+Make: Google Sheets — Watch New Rows
 ↓
-Gemini
+Google Gemini AI — Simple Text Prompt
 ↓
-Analyze
-↓
-Priority Decision
+JSON — Parse JSON
 ↓
 Router
-↙      ↓      ↘
-HIGH  MEDIUM  LOW
-↓       ↓       ↓
-Action / Record
-↓
-Google Sheets
+├─ Route 1: Priority = HIGH
+│  ↓
+│  Google Sheets — Update a Row
+│  ↓
+│  Gmail — Send an Email
+│
+└─ Route 2: Priority = MEDIUM OR LOW
+   ↓
+   Google Sheets — Update a Row
 ```
+
+> Google Form ไม่ได้ต่อเข้า Make โดยตรงใน Flow นี้ เมื่อมีคนกด Submit คำตอบจะถูกเพิ่มใน response sheet ก่อน แล้ว `Watch New Rows` จึงอ่านแถวใหม่ไปประมวลผล
+
+> **ส่วนที่เติมจากภาพ:** Route 2 ต้องมี `Google Sheets — Update a Row` เช่นกัน เพื่อให้ผลวิเคราะห์ของ `MEDIUM/LOW` ถูกเขียนกลับแถวเดิม ส่วน Gmail อยู่เฉพาะ Route 1
 
 ### Tool, Connector และ Workflow ใน Lab นี้
 
-- **Tool/Action:** ความสามารถที่ใช้ทำงาน เช่นเพิ่มแถวใน Google Sheets
-- **Connector:** connection พร้อม authentication และ permission ที่อนุญาตให้ Make เข้าถึง Gemini หรือ Google Sheets
-- **Workflow:** ลำดับที่ Make ประสาน Trigger → Gemini → Router → Action
+- **Channel/Input:** Google Form รับคำร้องจำลอง
+- **Data Store:** Google Sheets เก็บคำตอบจาก Form และผล AI ในแถวเดียวกัน
+- **Tool/Action:** `Parse JSON`, `Update a Row` และ `Send an Email`
+- **Connector:** connection พร้อม authentication และ permission ที่ให้ Make เข้าถึง Gemini, Google Sheets หรือ Gmail
+- **Workflow:** Make ประสาน Form response → AI → JSON → Router → Update/Alert
 
-Connector ทำให้ระบบ “เข้าถึงได้” แต่ไม่ได้ตัดสินว่าควรทำอะไร และไม่ได้แปลว่าควรให้ทุก permission ใช้เฉพาะ Sheet ทดสอบตามหลัก Least Privilege ดูเพิ่มที่ [Connector ใน Glossary](../01-introduction/glossary.md#connector)
+Connector ทำให้ระบบเข้าถึงบริการได้ แต่ไม่ได้ตัดสินว่าควรทำอะไร ใช้เฉพาะ Form, Sheet และอีเมลทดสอบตามหลัก Least Privilege ดูเพิ่มที่ [Connector ใน Glossary](../01-introduction/glossary.md#connector)
 
 > **MCP clarification:** Lab นี้ใช้ native connectors ของ Make ไม่ได้ติดตั้ง MCP Client/Server จึงไม่ควรเรียกทุก connection ว่า MCP ดูความแตกต่างที่ [MCP ใน Glossary](../01-introduction/glossary.md#mcp-model-context-protocol)
 
@@ -44,29 +53,51 @@ Connector ทำให้ระบบ “เข้าถึงได้” แ�
 
 | นาที | งาน |
 |---:|---|
-| 0–5 | เตรียม Google Sheet |
-| 5–10 | สร้าง API key และ connection |
-| 10–18 | สร้าง Scenario และส่งคำร้องเข้า Gemini |
-| 18–25 | ตรวจ/parse JSON |
-| 25–33 | Router + Google Sheets action |
-| 33–37 | HIGH alert |
+| 0–5 | สร้าง Google Form |
+| 5–9 | เชื่อม Form กับ Google Sheets และเพิ่ม result columns |
+| 9–14 | สร้าง Gemini API key/connection |
+| 14–19 | ตั้ง `Watch New Rows` |
+| 19–26 | Gemini + Parse JSON |
+| 26–33 | Router + Update Row ทั้ง 2 routes |
+| 33–37 | Gmail สำหรับ HIGH |
 | 37–40 | ทดสอบและสรุป |
 
-> **UI MAY VARY:** Make และ Google AI Studio อาจเปลี่ยนชื่อ/ตำแหน่ง module, connection dialog, scenario controls และ model list ให้เลือก component ตามหน้าที่ที่อธิบาย อย่าเลือก paid-only feature หากบัญชีไม่มี และไม่ต้องอัปเกรดเพื่อทำ Lab
+> **UI MAY VARY:** Google Forms, Make และ Google AI Studio อาจเปลี่ยนชื่อ/ตำแหน่งเมนู, module, connection dialog, scenario controls และ model list ให้เลือก component ตามหน้าที่ใน Flow อย่าอัปเกรด paid plan เพื่อผ่าน Lab
 
 ## ก่อนเริ่ม
 
 - [ ] ผ่าน Lab 1 หรือมี [Lab 1 System Instructions](../02-build-ai-agent/prompts.md)
 - [ ] Make account เปิด Scenario builder ได้
-- [ ] Google Sheets ใช้งานได้
+- [ ] Google Account ใช้ Forms, Sheets และ Gmail ได้
 - [ ] ใช้ข้อมูลจำลองเท่านั้น
-- [ ] เปิด [Lab 2 Prompts](prompts.md) อีก tab
+- [ ] เปิด [Lab 2 Prompts and Test Data](prompts.md) อีก tab
 
-## 📌 Step 1 — Prepare Google Sheet
+## 📌 Step 1 — Create the Google Form
 
-1. สร้าง Google Spreadsheet ชื่อ `Business Request Log`
-2. ตั้งชื่อ sheet/tab เช่น `Requests`
-3. ใส่ชื่อ columns ในแถวแรกตามลำดับ:
+1. สร้าง Google Form ชื่อ `Business Request Intake — Workshop`
+2. เพิ่มคำอธิบายว่า `ใช้ข้อมูลจำลองเท่านั้น ห้ามกรอกข้อมูลจริงหรือข้อมูลลับ`
+3. ปิดการเก็บ email address ถ้าไม่จำเป็น
+4. สร้างคำถามและเปิด `Required` ทั้ง 3 ข้อ:
+
+| Question | Type | Example |
+|---|---|---|
+| Requester | Short answer | `Demo Customer` |
+| Department | Dropdown | `Sales`, `Marketing`, `Finance`, `HR`, `Operations`, `IT`, `Customer Service` |
+| Request | Paragraph | `ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้...` |
+
+5. อย่าแชร์ Form เป็นสาธารณะ ใช้ลิงก์ทดสอบกับตนเองหรือภายในห้องเท่านั้น
+
+💡 **Why This Matters**  Form เป็น Channel/Input ที่กำหนดโครงสร้างข้อมูลก่อนเข้า Workflow แต่ตัว Form เองไม่ใช่ Agent
+
+✅ **Checkpoint**  เปิด Preview แล้วเห็น 3 คำถาม แต่ยังไม่ต้องกด Submit
+
+## 📌 Step 2 — Link Form Responses to Google Sheets
+
+1. เปิด tab `Responses` ของ Form
+2. เลือก `Link to Sheets` หรือ `Select destination for responses` ตาม UI ที่เห็น ([Google Forms Help](https://support.google.com/docs/answer/2917686))
+3. สร้าง Spreadsheet ใหม่ชื่อ `Business Request Log`
+4. เปิด tab ที่ Google Forms สร้างให้ เช่น `Form Responses 1`
+5. คง 4 headers แรกไว้ แล้วเพิ่ม result columns ทางขวาให้ครบ:
 
 ```text
 Timestamp
@@ -77,237 +108,212 @@ Summary
 Priority
 Reason
 Recommended Action
+Processing Status
 ```
 
-4. Freeze header row หากต้องการ
-5. อย่าใส่ชื่อคน อีเมลลูกค้า หรือข้อมูลจริง
+> อย่าเปลี่ยนชื่อหรือลบคอลัมน์คำตอบ 4 ช่องแรกหลังเชื่อม Form แล้ว หากแก้คำถามใน Form ให้กลับมา refresh field mapping ใน Make
 
-💡 **Why This Matters**  Google Sheets ทำหน้าที่เป็น business data storage แบบง่าย เก็บ audit trail และสร้าง Request History สำหรับ Lab 3 ไม่ใช่ long-term production database
+💡 **Why This Matters**  Google Sheets เป็นทั้ง response log, audit trail และ Request History ที่จะใช้ต่อใน Lab 3
 
-✅ **Checkpoint**  มี 8 columns สะกดตรงกันและ Sheet ยังไม่มีข้อมูลจริง
+✅ **Checkpoint**  Sheet มี 9 columns และ `Summary` ถึง `Processing Status` ยังว่าง
 
 ⚠️ **Common Problem**  Make มองไม่เห็น columns หาก header ว่างหรือซ้ำ ให้แก้ header แล้ว refresh/reselect data structure ใน connection
 
-## 📌 Step 2 — Create a Gemini API Key
+## 📌 Step 3 — Create a Gemini API Key
 
-> ⚠️ **SECURITY: Never paste your API key into public GitHub files.**
+> ⚠️ **SECURITY: Never paste your API key into Form, Sheet, Prompt, screenshot, chat หรือ public GitHub files.**
 
 1. เปิดหน้าจัดการ API keys จาก [Google AI Studio](https://aistudio.google.com/)
 2. สร้าง key สำหรับบัญชี/โปรเจกต์ของตนเองตามตัวเลือกที่หน้า UI แสดง
 3. คัดลอก key ไปใส่ใน Make connection โดยตรง
-4. ไม่ส่ง key ให้เพื่อน ไม่วางใน Prompt, Sheet, screenshot หรือช่อง chat
+4. ไม่ส่ง key ให้เพื่อนและไม่ใช้ shared instructor key
 5. หลัง Workshop ให้ลบ/rotate key หากไม่ใช้ต่อ
 
-> **UI MAY VARY:** บัญชีใหม่บางประเภทอาจสร้าง project/key ให้อัตโนมัติ ขณะที่บัญชีองค์กร โรงเรียน หรือบางประเทศอาจถูกจำกัด ดู [Gemini API key documentation](https://ai.google.dev/gemini-api/docs/api-key)
+> **UI MAY VARY:** บัญชีองค์กร โรงเรียน บางประเทศ หรือบาง project อาจสร้าง key ไม่ได้ ดู [Gemini API key documentation](https://ai.google.dev/gemini-api/docs/api-key)
 
 ### Free-tier Safety
 
-- เลือก model ที่ระบุว่าใช้ได้ใน Free Tier ของบัญชี
+- เลือก model ที่บัญชีระบุว่าใช้ได้ใน Free Tier
 - ไม่เปิด billing เพื่อผ่าน Workshop
-- Free tier มี rate limits และรุ่นที่ใช้ได้อาจเปลี่ยน ตรวจ [Pricing](https://ai.google.dev/gemini-api/docs/pricing) และ [Rate limits](https://ai.google.dev/gemini-api/docs/rate-limits)
 - จำกัดการทดสอบคนละ 3–5 ครั้ง
 - หากสร้าง key ไม่ได้ ไปที่ [Fallback without API](#fallback-without-api)
 
 ✅ **Checkpoint**  Make connection บันทึก key แบบ secret/credential และไม่มี key ปรากฏในไฟล์หรือภาพ
 
-⚠️ **Common Problem**  หาก Make connection ไม่ผ่าน ให้ตรวจว่า key ถูกคัดลอกครบ, model/region ใช้ได้ และ quota ยังเหลือ อย่าแชร์ key ของผู้สอนให้ทั้งห้อง
+## 📌 Step 4 — Watch New Form Responses
 
-## 📌 Step 3 — Create a Make Scenario
-
-สร้าง Scenario ใหม่ แล้วจัด component ตามหน้าที่:
+สร้าง Scenario ใหม่ใน Make แล้วเพิ่ม:
 
 ```text
-Trigger → AI → JSON Data → Router → Action
+Google Sheets → Watch New Rows
 ```
 
-### Trigger ที่เหมาะกับห้อง 50 คน
+ใช้ Google Sheets connector ที่ Make รองรับ ([Make Google Sheets documentation](https://apps.make.com/google-sheets)) แล้วตั้งค่า:
 
-เลือกหนึ่งทางตาม UI/บัญชี:
+- Spreadsheet: `Business Request Log`
+- Sheet: `Form Responses 1` หรือชื่อ tab ที่ Form สร้างจริง
+- Table contains headers: `Yes` ถ้ามีตัวเลือกนี้
+- Limit: `1–3` สำหรับการทดสอบในห้อง
+- Choose where to start: `From now on` สำหรับ Lab นี้
 
-1. **Preferred:** จุดเริ่มแบบ run-on-demand/manual test ที่ให้ใส่ `Requester`, `Department`, `Business Request`
-2. **Simple webhook:** รับ test payload จาก URL/form ทดสอบส่วนตัว
-3. **Form-like trigger:** ใช้เฉพาะเมื่อ Instructor ทดสอบแล้วว่า free และทุกบัญชีเข้าถึงได้
+ลำดับการทดสอบ trigger:
 
-อย่าใช้ channel จริงหรือ trigger ที่ต้องขอ enterprise permission
+1. กด `Run once` ใน Make ให้ Scenario รอแถวใหม่
+2. กลับไป Google Form แล้ว Submit ข้อมูลทดสอบ 1 รายการ
+3. ตรวจ output bundle ว่ามี `Row number`, `Timestamp`, `Requester`, `Department` และ `Request`
 
-> **UI MAY VARY:** ใช้ Trigger ที่ผู้สอนยืนยันในวันสอน ไม่จำเป็นต้องชื่อเดียวกันทุกบัญชี หากใช้ webhook ห้ามแชร์ URL ต่อสาธารณะ เพราะ URL อาจเรียก Scenario ได้
+> `Watch New Rows` เป็น scheduled trigger ไม่ใช่ instant webhook เมื่อเปิด schedule จริงอาจมีช่วงเวลารอตาม plan ของ Make สำหรับ Workshop ใช้ `Run once` ได้
 
-### ข้อมูลเริ่มต้นสำหรับ Test Run
+💡 **Why This Matters**  Trigger ระบุว่า Workflow เริ่มเมื่อใด ส่วน agentic behavior มาจาก AI reasoning, decision และ action ที่ตามมา
 
-```text
-Requester: Demo Customer
-Department: Customer Service
-Business Request: ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้ และอาจยกเลิกคำสั่งซื้อหากแก้ไม่ทันวันนี้
-```
+✅ **Checkpoint**  Make อ่านแถวที่เพิ่งมาจาก Form ได้ และเห็น `Row number`
 
-💡 **Why This Matters**  Trigger ระบุว่า Workflow เริ่มเมื่อใด ส่วน Agentic behavior มาจาก AI reasoning, decision และ action ที่ตามมา ไม่ได้มาจาก Trigger เพียงอย่างเดียว
+⚠️ **Common Problem**  ถ้า Make ไม่พบแถว ให้กด `Run once` ก่อน Submit รายการใหม่ ตรวจชื่อ tab และ starting point อย่า Submit ซ้ำรัว ๆ
 
-✅ **Checkpoint**  Run test แล้ว Make รับค่าทั้ง 3 fields ได้
+## 📌 Step 5 — Analyze the Request with Gemini
 
-## 📌 Step 4 — Send the Request to Gemini
-
-1. เพิ่ม Google Gemini AI integration หรือวิธีเรียก Gemini API ที่บัญชี Make รองรับ
+1. เพิ่ม `Google Gemini AI — Simple Text Prompt` ต่อจาก `Watch New Rows`
 2. สร้าง connection ด้วย API key ของตนเอง
-3. เลือก text-generation function/model ที่ Free Tier เปิดให้บัญชี
-4. Map `Business Request` ไปยัง `{{BUSINESS_REQUEST}}` ใน Prompt
-5. ใช้ Prompt นี้จาก [prompts.md](prompts.md#business-request-json-prompt)
+3. เลือก text-generation model ที่ Free Tier เปิดให้บัญชี
+4. Copy Prompt จาก [Lab 2 Prompts](prompts.md#business-request-json-prompt)
+5. Map `Requester`, `Department` และ `Request` จาก `Watch New Rows` ไปยัง placeholder ที่ตรงกัน
 
-### 📋 Copy This Prompt
-
-```text
-You are a Business Request Assistant.
-
-Analyze the following request.
-
-Return ONLY valid JSON.
-
-Use exactly this structure:
-
-{
-  "summary": "",
-  "priority": "HIGH | MEDIUM | LOW",
-  "reason": "",
-  "recommended_action": ""
-}
-
-Priority rules:
-
-HIGH:
-customer, revenue, major operations, compliance,
-reputation, or major time-sensitive business impact.
-
-MEDIUM:
-important but operations can continue.
-
-LOW:
-routine or informational request.
-
-Do not classify HIGH only because the request says urgent.
-
-Request:
-
-{{BUSINESS_REQUEST}}
-
-Respond in Thai except the priority value,
-which must be HIGH, MEDIUM, or LOW.
-```
-
-💡 **Why This Matters**  JSON (รูปแบบข้อมูลที่มี key/value ชัดเจน) ช่วยให้ Workflow อ่านผลได้คาดการณ์มากกว่าข้อความอิสระ
-
-🧪 **Test**  Run once แล้วเปิด output ของ Gemini ควรเห็น `summary`, `priority`, `reason`, `recommended_action`
-
-✅ **Checkpoint**  Output เป็น JSON object เดียวและ `priority` เป็นตัวพิมพ์ใหญ่หนึ่งค่า
-
-⚠️ **Common Problem**  หากมี Markdown code fence เช่น `````json`` ให้ย้ำ `Return ONLY valid JSON` แล้ว run ใหม่ หรือใช้ข้อความตัวอย่างจาก Instructor fallback
-
-## 📌 Step 5 — Parse AI Output
-
-ใช้ function/module ที่ทำหน้าที่ parse JSON ใน Make:
-
-1. ใช้ Gemini text output เป็น input
-2. กำหนด data structure จาก JSON ตัวอย่าง:
+Gemini ต้องตอบ JSON object เดียวในโครงสร้างนี้:
 
 ```json
 {
-  "summary": "ลูกค้ารายใหญ่ชำระเงินไม่ได้และอาจยกเลิกคำสั่งซื้อภายในวันนี้",
+  "summary": "",
   "priority": "HIGH",
-  "reason": "กระทบลูกค้าทันที รายได้ และมีผลกระทบด้านเวลาสำคัญ",
-  "recommended_action": "แจ้งผู้รับผิดชอบระบบชำระเงินและผู้จัดการทันที พร้อมติดตามจนกู้ระบบได้"
+  "reason": "",
+  "recommended_action": ""
 }
 ```
 
-3. ตรวจให้เห็น 4 output fields แยกจากกัน
+ค่าของ `priority` อนุญาตเฉพาะ `HIGH`, `MEDIUM` หรือ `LOW`
 
-💡 **Why This Matters**  AI output กำลังเปลี่ยนจาก “ข้อความ” เป็น “workflow data” ที่นำไปใช้ใน Condition และ Action ได้
+💡 **Why This Matters**  JSON ที่มี key/value ชัดเจนทำให้ Workflow นำผล AI ไปใช้ใน Condition และ Action ได้คาดการณ์กว่าข้อความอิสระ
 
-✅ **Checkpoint**  Map ค่า `priority` เดี่ยว ๆ ไปยัง filter ได้โดยไม่ต้องคัดลอกด้วยมือ
+✅ **Checkpoint**  Raw output ไม่มีข้อความหรือ Markdown code fence ก่อน/หลัง JSON
 
-⚠️ **Common Problem**  JSON parse ไม่ผ่าน ให้ตรวจ comma, quote, code fence และข้อความก่อน/หลัง object ดู [Troubleshooting](../troubleshooting/README.md#json-cannot-parse)
+## 📌 Step 6 — Parse the JSON
 
-## 📌 Step 6 — Create the Decision Router
+เพิ่ม `JSON — Parse JSON` แล้ว:
 
-1. เพิ่ม Router (ตัวแยกเส้นทาง)
-2. สร้าง 3 routes
-3. ตั้ง Condition แบบ exact match:
+1. Map text output จาก Gemini ไปที่ `JSON string`
+2. สร้าง data structure จาก [Expected Data Structure](prompts.md#expected-data-structure)
+3. Run once แล้วตรวจว่าได้ 4 fields แยกกัน:
 
 ```text
-Priority = HIGH
-Priority = MEDIUM
-Priority = LOW
+summary
+priority
+reason
+recommended_action
 ```
 
-4. อย่าใช้ `contains HIGH` เพราะข้อความอื่นอาจทำให้ match ผิด
+✅ **Checkpoint**  เลือก field `priority` เดี่ยว ๆ ไปใช้ใน filter ได้
 
-💡 **Why This Matters**  นี่คือ Decision step: ผล AI ไม่ได้เป็นเพียงข้อความ แต่กำหนดว่า Workflow จะทำอะไรต่อ
+⚠️ **Common Problem**  หาก Parse ไม่ผ่าน ให้ตรวจ quote, comma, code fence และย้ำ `Return ONLY valid JSON` ดู [Troubleshooting](../troubleshooting/README.md#json-cannot-parse)
 
-✅ **Checkpoint**  แต่ละ route มี filter ชัดเจนและไม่มีคำร้องหนึ่งรายการไปมากกว่าหนึ่ง route
+## 📌 Step 7 — Complete the Router
 
-⚠️ **Common Problem**  Route ไม่ match เพราะมีช่องว่าง/ข้อความเพิ่ม ให้ trim/normalize หรือแก้ Prompt ให้ `priority` เป็นค่าเดียว
+เพิ่ม Router หลัง `Parse JSON` แล้วสร้าง 2 routes ที่ไม่ทับกัน:
 
-## 📌 Step 7 — Add Actions
+### Route 1 — HIGH
 
-### Action สำหรับทุก Priority
+```text
+priority Equal to HIGH
+```
 
-ในแต่ละ route เพิ่ม Google Sheets action ที่ทำหน้าที่เพิ่ม row และ map:
+### Route 2 — MEDIUM/LOW
 
-| Sheet Column | Source |
+```text
+priority Equal to MEDIUM
+OR
+priority Equal to LOW
+```
+
+อย่าใช้ `contains HIGH` และไม่แนะนำให้ตั้ง Route 2 เป็นเพียง `priority != HIGH` เพราะค่าผิดรูปแบบอาจถูกบันทึกเป็นผลปกติ
+
+💡 **Why This Matters**  Router คือ Decision step: ผล AI ไม่ได้เป็นเพียงข้อความ แต่กำหนดว่า Workflow จะทำอะไรต่อ
+
+✅ **Checkpoint**  `HIGH` เข้า Route 1 ส่วน `MEDIUM` และ `LOW` เข้า Route 2 เท่านั้น
+
+## 📌 Step 8 — Update the Same Row on Both Routes
+
+เพิ่ม `Google Sheets — Update a Row` ใน Route 1 และ Route 2
+
+### Mapping ที่สำคัญ
+
+| Update a Row field | Source |
 |---|---|
-| Timestamp | เวลาที่ Scenario ทำงาน |
-| Requester | Trigger input |
-| Department | Trigger input |
-| Request | Business Request input |
-| Summary | Parsed Gemini output |
-| Priority | Parsed Gemini output |
-| Reason | Parsed Gemini output |
-| Recommended Action | Parsed Gemini output |
+| Row number | `Row number` จาก `Watch New Rows` |
+| Timestamp | `Timestamp` จาก `Watch New Rows` |
+| Requester | `Requester` จาก `Watch New Rows` |
+| Department | `Department` จาก `Watch New Rows` |
+| Request | `Request` จาก `Watch New Rows` |
+| Summary | `summary` จาก `Parse JSON` |
+| Priority | `priority` จาก `Parse JSON` |
+| Reason | `reason` จาก `Parse JSON` |
+| Recommended Action | `recommended_action` จาก `Parse JSON` |
 
-### Additional HIGH Alert
+ตั้ง `Processing Status` ให้ต่างกันตาม route:
 
-เพิ่ม Action ความเสี่ยงต่ำอีกหนึ่งอย่างเฉพาะ HIGH:
+| Route | Processing Status |
+|---|---|
+| HIGH | `HIGH — HUMAN REVIEW REQUIRED` |
+| MEDIUM/LOW | `TRIAGED` |
 
-- ส่ง email ถึงอีเมลของผู้เรียนเอง โดยใช้ `[Your Email]` ตอนเขียนคู่มือ/ตัวอย่าง หรือ
-- เพิ่ม alert marker ใน Sheet เช่น prefix `⚠️ HIGH — Human review required`
+> ต้องใช้ `Update a Row` และ map `Row number` จาก trigger เพื่อเขียนผลกลับแถวที่ Form สร้างไว้ ห้ามใช้ `Add a Row` ในขั้นนี้ เพราะจะสร้างแถวซ้ำ
 
-> Alert ไม่ใช่การอนุมัติ ไม่ใช่การคืนเงิน ไม่ใช่การลงโทษ และไม่ใช่การแก้ปัญหาอัตโนมัติ Manager ยังต้องตรวจข้อเท็จจริง
+> Map ค่าคำตอบเดิมกลับไปด้วย หาก module ที่บัญชีแสดงเขียนทั้งแถว เพราะ field ที่ปล่อยว่างอาจถูกล้างได้
 
-💡 **Why This Matters**  Workflow ทำ Real Action แล้ว แต่ Action ถูกจำกัดให้ reversible และ low-risk
+✅ **Checkpoint**  Submit Form 1 ครั้งแล้ว Sheet ยังมีเพียง 1 response row และมีผลวิเคราะห์ครบในแถวเดียวกัน
 
-✅ **Checkpoint**  ทุก route บันทึก Sheet; HIGH มี alert เพิ่มและส่งถึงตนเองเท่านั้น
+## 📌 Step 9 — Send Gmail Only for HIGH
 
-⚠️ **Common Problem**  หาก Gmail connection unavailable ให้ใช้ alert marker ใน Sheet ซึ่งถือว่าผ่าน Lab 2
+หลัง `Update a Row` ใน Route 1 เพิ่ม `Gmail — Send an Email`
 
-## 📌 Step 8 — Test HIGH, MEDIUM, LOW
+- To: อีเมลของผู้เรียนเอง `[Your Email]`
+- Subject: ใช้ [HIGH Alert Email Template](prompts.md#high-alert-email-template)
+- Body: Map Form fields และ parsed JSON fields
 
-ใช้ [Test Requests](prompts.md#test-requests) ทีละรายการ
+อย่าใส่ Gmail module ใน Route 2
 
-```text
-Input
-↓
-Gemini
-↓
-Priority
-↓
-Router
-↓
-Correct Branch
-↓
-Google Sheet
-```
+> Email นี้เป็น alert เพื่อให้คนตรวจ ไม่ใช่การอนุมัติ การคืนเงิน การลงโทษ หรือการแก้ปัญหาโดยอัตโนมัติ
+
+✅ **Checkpoint**  HIGH ได้ทั้งผลใน Sheet และอีเมล 1 ฉบับ ส่วน MEDIUM/LOW อัปเดต Sheet แต่ไม่มีอีเมล
+
+⚠️ **Common Problem**  หาก Gmail connection unavailable ให้ใช้ `Processing Status = HIGH — HUMAN REVIEW REQUIRED` เป็น alert marker ซึ่งถือว่าผ่าน Lab 2
+
+## 📌 Step 10 — Test HIGH, MEDIUM, LOW
+
+ใช้ [Test Requests](prompts.md#test-requests) ทีละรายการ โดยกด `Run once` ให้รอก่อนแล้วจึง Submit Form
+
+| Test | Expected Route | Sheet | Gmail |
+|---|---|---|---|
+| HIGH | Route 1 | Update row + human review status | ส่ง 1 ฉบับ |
+| MEDIUM | Route 2 | Update row + `TRIAGED` | ไม่ส่ง |
+| LOW | Route 2 | Update row + `TRIAGED` | ไม่ส่ง |
 
 ### 🧪 Test Checklist
 
-- [ ] HIGH ไป HIGH route, มี row และ alert
-- [ ] MEDIUM ไป MEDIUM routeและมี row
-- [ ] LOW ไป LOW route และมี row
-- [ ] Sheet มี 8 fields ที่ถูกต้อง
-- [ ] ไม่มี request ซ้ำจากการกด Run หลายครั้ง
+- [ ] Form มี responses 3 รายการ
+- [ ] Sheet มี 3 rows ไม่ใช่ 6 rows
+- [ ] ทุก row มี Summary, Priority, Reason และ Recommended Action
+- [ ] HIGH email ถูกส่งเพียง 1 ฉบับถึงตนเอง
+- [ ] Route filters ไม่ทับกัน
 - [ ] ไม่มี API key ใน input/output history ที่แชร์กับผู้อื่น
+- [ ] ปิด Scenario schedule หลัง Lab
 
-✅ **Checkpoint**  เห็นอย่างน้อย 3 rows ใน Google Sheets และแต่ละ Priority เข้า route ถูกต้อง
+✅ **Checkpoint**  HIGH, MEDIUM และ LOW เข้า route ถูกต้อง และทุก response มีผล AI ในแถวเดิม
+
+## Optional Recovery Route
+
+หากมีเวลา เพิ่ม error handler สำหรับกรณี Gemini/JSON ผิดรูปแบบ แล้วตั้ง `Processing Status = ERROR — MANUAL REVIEW` โดยไม่ส่ง Gmail อัตโนมัติ
+
+แนวคิดคือระบบต้อง fail visibly: รายการที่ประมวลผลไม่สำเร็จควรเห็นสถานะ ไม่ควรหายเงียบ
 
 ## 💬 Discussion
-
-เปรียบเทียบ:
 
 ```text
 Generative AI: Prompt → Response
@@ -317,42 +323,44 @@ AI Agent: Goal → Reason → Decision → Recommendation
 Agentic Workflow: Trigger → AI Reasoning → Decision → Tool → Action
 ```
 
-คำถาม:
-
-1. หากเอา Gemini ออกแล้วใช้ keyword rule อย่างเดียว ระบบยังเป็น Agentic AI หรือไม่?
-2. หาก AI จัด HIGH ผิด Alert จะสร้างผลกระทบอะไร?
-3. ควรเก็บ Manager override กลับมาเป็น feedback อย่างไร?
+1. เพราะเหตุใด Google Form เป็น Channel แต่ไม่ได้เป็น Agent?
+2. ถ้าใช้ `Add a Row` แทน `Update a Row` จะกระทบ audit trail อย่างไร?
+3. เหตุใด HIGH จึงควรแจ้งคน แต่ไม่ควรอนุมัติ action ที่มีผลกระทบสูงเอง?
+4. จะป้องกันการประมวลผลซ้ำเมื่อ Scenario retry ได้อย่างไร?
 
 ## Fallback without API
 
 หากสร้าง key ไม่ได้, quota เต็ม หรือ Make เชื่อม Gemini ไม่สำเร็จ:
 
-1. ใช้ Google AI Studio จาก Lab 1 วิเคราะห์คำร้องด้วยมือ
-2. คัดลอกเฉพาะ JSON จำลองจาก [prompts.md](prompts.md#fallback-json)
-3. ป้อน JSON เข้า Scenario หลังจุด AI หรือสาธิต mapping ด้วย Instructor scenario
-4. ทำ Router และ Google Sheets ต่อให้ครบ
+1. ให้ Google Form และ `Watch New Rows` ทำงานตามเดิม
+2. ใช้ Google AI Studio จาก Lab 1 วิเคราะห์คำร้องด้วยมือ หรือใช้ [Fallback JSON](prompts.md#fallback-json)
+3. ป้อน JSON เข้า Scenario หลังจุด AI หรือใช้ Instructor scenario
+4. ทำ Parse JSON, Router และ Update Row ต่อให้ครบ
+5. ไม่แชร์ API key ของผู้สอน
 
 ```text
-Input → AI (manual) → Decision → Action
+Google Form → Sheet → AI (manual/prepared JSON)
+→ Router → Update Row → Optional HIGH Alert
 ```
 
-ผู้เรียนยังได้เรียนรู้ architecture แม้ connector ล้มเหลว
+ผู้เรียนยังได้เรียนรู้ architecture แม้ AI connector ล้มเหลว
 
 ## Free-tier Reminder
 
 - Make Free มี credit และ scheduling limits; ตรวจ [Make Pricing](https://www.make.com/en/pricing)
 - Gemini Free Tier มี model/rate limits; ไม่รับประกันว่าจะรองรับ 50 accounts พร้อมกัน
-- ปิด Scenario schedule หลังทดสอบเพื่อไม่ใช้ credits ต่อ
+- จำกัดการทดสอบและปิด Scenario schedule หลังจบ
 - Lab ผ่านเมื่อเห็น decision และ action ไม่จำเป็นต้องเปิดระบบ production
 
 ## 🏁 Completed
 
-- [ ] สร้าง Business Request Log
+- [ ] สร้าง Google Form และเชื่อม response sheet
+- [ ] `Watch New Rows` อ่าน response ใหม่ได้
 - [ ] เก็บ API key ใน connection อย่างปลอดภัย หรือใช้ fallback
-- [ ] Gemini ตอบ valid JSON
-- [ ] Router มี 3 routes
-- [ ] ทุก request บันทึกใน Sheet
-- [ ] HIGH มี low-risk alert
+- [ ] Gemini ตอบ valid JSON และ Parse ได้
+- [ ] Router มี HIGH และ MEDIUM/LOW routes
+- [ ] ทั้ง 2 routes อัปเดตแถวเดิมด้วย `Row number`
+- [ ] Gmail ทำงานเฉพาะ HIGH หรือใช้ status marker fallback
 - [ ] ทดสอบ HIGH, MEDIUM และ LOW แล้ว
 
 ---

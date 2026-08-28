@@ -12,7 +12,7 @@
 - [ ] ทดสอบ [Google AI Studio](https://aistudio.google.com/) ด้วยบัญชีประเภทเดียวกับผู้เรียน
 - [ ] ทดสอบว่ามองเห็นพื้นที่ System Instructions
 - [ ] ทดสอบ Make account creation/verification
-- [ ] ทดสอบ Google Sheets, Google Docs, Google Drive และ Gmail
+- [ ] ทดสอบ Google Forms, Google Sheets, Google Docs, Google Drive และ Gmail
 - [ ] ตรวจว่าบัญชีตัวอย่างสร้าง Gemini API key แบบ free tier ได้โดยไม่เปิด billing
 - [ ] ตรวจ restrictions ของบัญชีโรงเรียน/องค์กรและประเทศ
 - [ ] ไม่ใช้ instructor API key ร่วมกันทั้งห้อง
@@ -23,6 +23,8 @@
 
 - [ ] ทดสอบ connection ไป Gemini ด้วย key สำหรับ demo
 - [ ] ทดสอบ Google Sheets read/write
+- [ ] ทดสอบ Form → response sheet → `Watch New Rows` และเห็น `Row number`
+- [ ] ทดสอบ `Update a Row` ทั้ง HIGH และ MEDIUM/LOW โดยไม่เกิดแถวซ้ำ
 - [ ] ทดสอบ Router/filters ด้วย exact Priority values
 - [ ] ทดสอบการอ่านหลาย rows และ aggregate request data
 - [ ] ทดสอบ document generation path ที่บัญชีปัจจุบันรองรับ
@@ -52,6 +54,7 @@
 - [ ] ส่ง [Glossary คำศัพท์พื้นฐาน](../01-introduction/glossary.md) เป็น pre-read และเตรียมอธิบาย Agent, Skill, Tool, Connector, MCP, Workflow, Guardrail
 - [ ] ตรวจ Previous / Home / Next navigation
 - [ ] เตรียม [Sample Requests](sample-requests.md) อย่างน้อย 20 รายการ
+- [ ] เตรียม Google Form และ linked response sheet สำหรับ Lab 2 fallback
 - [ ] เตรียมสำเนา sample data ใน Sheet ของผู้สอน
 - [ ] เตรียม fallback JSON จาก [Lab 2 Prompts](../03-build-agentic-workflow/prompts.md#fallback-json)
 - [ ] เตรียม fallback management report จาก [Lab 3 Prompts](../04-generate-management-report/prompts.md)
@@ -89,14 +92,14 @@
 - [ ] Sign in Google AI Studio และ Make ด้วย demo account
 - [ ] ตรวจว่า model ที่เลือกยังมี free-tier access
 - [ ] Run Lab 1 test case หนึ่งรายการ
-- [ ] Run Lab 2 HIGH request end-to-end
-- [ ] ตรวจ row ใน Business Request Log
+- [ ] Submit Google Form แล้ว Run Lab 2 HIGH request end-to-end
+- [ ] ตรวจว่า response row ใน Business Request Log ถูกอัปเดตโดยไม่สร้างแถวซ้ำ
 - [ ] Run Lab 3 ด้วย sample data
 - [ ] เปิด PDF จาก Drive
 - [ ] ส่ง Gmail ถึงตนเองและเปิด attachment
 - [ ] ตรวจ Make credit/quota dashboard
 - [ ] เปิด Manus และตรวจว่า Instructor fallback task ยังเข้าถึงได้
-- [ ] เปิด browser tabs: repository, AI Studio, Make, Sheets, Drive, Gmail, Manus
+- [ ] เปิด browser tabs: repository, AI Studio, Forms, Make, Sheets, Drive, Gmail, Manus
 - [ ] เปิด troubleshooting และ fallback files
 - [ ] ลบผล demo เก่าที่อาจทำให้ผู้เรียนสับสน แต่ไม่ลบ audit ที่ต้องเก็บ
 
@@ -135,7 +138,9 @@
 | Make credits low | dashboard ใกล้ limit | จำกัด 3 runs ปิด schedule | Use recorded run/sample output |
 | Slow Wi‑Fi | หน้าโหลดช้า/timeouts | จับคู่ ลด tabs หยุด simultaneous runs | Instructor-led walkthrough |
 | Google account restrictions | OAuth blocked | ใช้บัญชีที่สถาบันอนุญาต | Manual copy/paste path |
+| Form/Watch Rows ไม่ทำงาน | Form ไม่ได้ link Sheet, เลือก tab/start point ผิด | link Sheet และกด `Run once` ก่อน Submit | Prepared response bundle |
 | Sheets connection fail | file/columns ไม่แสดง | refresh headers/connection | Paste rows manually |
+| Update Row ผิดแถว/เกิดแถวซ้ำ | ใช้ Add Row หรือไม่ได้ map `Row number` | ใช้ Update Row และ map row number จาก trigger | Update prepared row ด้วยมือ |
 | Gmail authorization fail | OAuth denied | ใช้ email ตนเอง/ตรวจ permission | Save Drive link only |
 | PDF generation fail | ได้ text/link ไม่ใช่ PDF | ตรวจ export/binary path | Google Docs manual export |
 | 50 API keys พร้อมกัน | throttling/verification delay | stagger 5 กลุ่ม | แชร์ผลผ่าน projector ไม่แชร์ key |
@@ -151,7 +156,8 @@
 ### Level A — Full Hands-on
 
 ```text
-Input → Make → Gemini → Router → Sheet → Report → PDF → Drive → Gmail
+Google Form → Sheet → Make → Gemini → JSON → Router
+→ Update Row/HIGH Alert → Report → PDF → Drive → Report Email
 ```
 
 ### Level B — AI Manual, Workflow Hands-on
