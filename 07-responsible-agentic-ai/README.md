@@ -18,6 +18,22 @@ More possible value
 More need for boundaries, monitoring and accountability
 ```
 
+## Guardrail ไม่ใช่ Prompt หนึ่งบรรทัด
+
+Guardrail คือ controls หลายชั้นที่จำกัด ตรวจจับ อนุมัติ หยุด และช่วยกู้คืนเมื่อระบบผิดพลาด ส่วน Business Rule บอกว่า “ควรตัดสินอย่างไร” เช่นเกณฑ์ HIGH/MEDIUM/LOW กฎหนึ่งข้ออาจเป็นทั้ง decision rule และส่วนหนึ่งของ guardrail แต่ระบบยังต้องมี controls ชั้นอื่น
+
+| ชั้นของ Guardrail | ควบคุมอะไร | ตัวอย่างใน Workshop |
+|---|---|---|
+| Input | ข้อมูลใดเข้าได้และ field ใดจำเป็น | ใช้ simulated data และ Request ID |
+| Instructions / Rules | ขอบเขตและเกณฑ์การตัดสิน | ห้ามให้ HIGH จากคำว่า urgent เพียงอย่างเดียว |
+| Output Validation | รูปแบบ ค่า และจำนวนถูกต้องหรือไม่ | JSON schema, allowed priorities และ count check |
+| Tool / Connector Permission | ระบบใดและ Action ใดเข้าถึงได้ | เขียนเฉพาะ Sheet ทดสอบ; Lab 4 ไม่มี external connector |
+| Approval Gate | จุดใดต้องหยุดรอคน | HIGH, sensitive และ high-impact decisions |
+| Monitoring / Audit | ตรวจย้อนหลังและพบความผิดปกติ | request ID, route, version, override และ error |
+| Stop / Recovery | เมื่อใดต้องหยุด retry หรือใช้ fallback | parse fail, quota fail, duplicate และ manual fallback |
+
+ดังนั้น “ใส่ข้อห้ามใน Prompt” เป็นเพียงชั้นเดียว ไม่ใช่การรับประกันความปลอดภัย ดูนิยามเต็มที่ [Guardrail ใน Glossary](../01-introduction/glossary.md#guardrail)
+
 ## 1. Human-in-the-loop
 
 Human-in-the-loop (การให้มนุษย์ตรวจหรืออนุมัติในจุดสำคัญ) ไม่ได้หมายถึงให้คนตรวจทุกอย่าง แต่ต้องวาง gate ตามผลกระทบ

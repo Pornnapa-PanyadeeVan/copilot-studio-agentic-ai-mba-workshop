@@ -30,6 +30,14 @@ Action / Record
 Google Sheets
 ```
 
+### Tool, Connector และ Workflow ใน Lab นี้
+
+- **Tool/Action:** ความสามารถที่ใช้ทำงาน เช่นเพิ่มแถวใน Google Sheets
+- **Connector:** connection พร้อม authentication และ permission ที่อนุญาตให้ Make เข้าถึง Gemini หรือ Google Sheets
+- **Workflow:** ลำดับที่ Make ประสาน Trigger → Gemini → Router → Action
+
+Connector ทำให้ระบบ “เข้าถึงได้” แต่ไม่ได้ตัดสินว่าควรทำอะไร และไม่ได้แปลว่าควรให้ทุก permission ใช้เฉพาะ Sheet ทดสอบตามหลัก Least Privilege ดูเพิ่มที่ [Connector ใน Glossary](../01-introduction/glossary.md#connector)
+
 ## Timebox
 
 | นาที | งาน |

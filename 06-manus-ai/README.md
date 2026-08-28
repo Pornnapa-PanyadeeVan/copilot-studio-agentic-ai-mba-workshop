@@ -43,6 +43,14 @@ Human Review
 
 > จุดประสงค์คือเปรียบเทียบ **Human-designed Workflow** กับ **Goal-based Agent execution** ไม่ใช่พิสูจน์ว่าเครื่องมือหนึ่งดีกว่าอีกเครื่องมือในทุกกรณี
 
+### Skill, Connector และ Guardrail ใน Lab 4
+
+- ไม่ต้องสร้าง Manus **Skill**: Prompt + business rules + dataset ทำหน้าที่เป็น bounded task instructions ก่อน หากใช้ซ้ำในองค์กรจึงค่อยจัด playbook ที่ผ่านการทดสอบเป็น Skill
+- ไม่ใช้ **Connector**: Agent อ่านเฉพาะไฟล์แนบและสร้าง artifacts ใน workspace ไม่เชื่อม Sheet, Gmail, LINE หรือระบบภายนอก
+- มี **Guardrails** หลายชั้น: ข้อมูลจำลอง, ห้าม browse, ห้าม external action, บังคับ allowed values, ตรวจจำนวน rows และให้ Human Review
+
+คำว่า Skill อาจมีชื่อและรูปแบบต่างกันในแต่ละแพลตฟอร์ม ดูนิยามกลางที่ [Skill](../01-introduction/glossary.md#skill), [Connector](../01-introduction/glossary.md#connector) และ [Guardrail](../01-introduction/glossary.md#guardrail)
+
 ## เปรียบเทียบโจทย์เดิม
 
 | Lab 2–3: Make + Gemini | Lab 4: Manus Agent |

@@ -6,12 +6,39 @@
 
 ⏱ **Estimated Time**  20 นาที
 
+📖 **Reference**  [คำศัพท์พื้นฐาน Agentic AI: Agent, Skill, Tool, Connector, Workflow และ Guardrail](glossary.md)
+
 ## Learning Path
 
 ```text
 Generative AI → AI Agent → Agent + Rules → Workflow → Decision → Action
 → Data / Memory → Management Report → Insight → Human Decision → Agentic AI
 ```
+
+## คำศัพท์หลัก 6 คำ
+
+| คำศัพท์ | หน้าที่ในระบบ | เปรียบเทียบกับองค์กร |
+|---|---|---|
+| **Agent** | ทำงานสู่ Goal และตัดสินใจว่าจะทำอะไรต่อ | ผู้รับผิดชอบงาน |
+| **Skill** | วิธีทำงานหรือ Playbook ที่นำกลับมาใช้ซ้ำ | SOP |
+| **Tool** | ความสามารถที่ใช้ทำงานหนึ่งอย่าง | เครื่องมือทำงาน |
+| **Connector** | เชื่อมระบบพร้อม authentication และ permission | ประตูพร้อมบัตรผ่าน |
+| **Workflow** | ประสานลำดับ Trigger → Decision → Action | Process map |
+| **Guardrail** | จำกัด ตรวจ อนุมัติ หยุด และเก็บหลักฐาน | Policy + Control |
+
+> **Agent decides. Skill guides. Tool does. Connector grants access. Workflow coordinates. Guardrail limits and checks.**
+
+ดูนิยาม ตัวอย่าง และ Quick Check เพิ่มเติมใน [Glossary](glossary.md)
+
+## Timebox
+
+| นาที | เนื้อหา |
+|---:|---|
+| 0–4 | Generative AI → AI Agent → Agentic AI |
+| 4–9 | Agent, Skill, Tool, Connector, Workflow, Guardrail |
+| 9–14 | Autonomy Spectrum และ Make vs Manus |
+| 14–18 | Business Request Management + Managerial AI |
+| 18–20 | Discussion และ Checkpoint |
 
 ## 1. Generative AI คืออะไร
 
@@ -182,6 +209,7 @@ Data → Information → Insight → Decision → Action
 ## ✅ Checkpoint
 
 - [ ] อธิบาย Generative AI, Agent, Workflow และ Agentic AI ด้วยคำของตนเองได้
+- [ ] แยก Agent, Skill, Tool, Connector, Workflow และ Guardrail ได้
 - [ ] ยกตัวอย่าง Decision และ Action อย่างละหนึ่งตัวอย่าง
 - [ ] อธิบายว่า autonomy เป็น spectrum ได้
 - [ ] แยก Operational AI กับ Managerial AI ได้

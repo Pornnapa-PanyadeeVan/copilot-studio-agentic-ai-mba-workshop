@@ -28,15 +28,16 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 
 เมื่อจบ Workshop ผู้เรียนจะสามารถ:
 
-1. แยกความแตกต่างระหว่าง Generative AI, AI Agent, Agent + Tools, Workflow และ Agentic AI
-2. อธิบายว่า autonomy (ระดับความเป็นอิสระ) เป็นสเปกตรัม ไม่ใช่มีหรือไม่มีเพียงสองสถานะ
-3. สร้าง `Business Request Assistant` ด้วย System Instructions ใน Google AI Studio
-4. ใช้ Business Rules เพื่อจัดลำดับ `HIGH`, `MEDIUM`, `LOW` จากผลกระทบจริง
-5. เชื่อม Trigger → Gemini → Decision Router → Action → Google Sheets ใน Make
-6. เปลี่ยน Request History ให้เป็น Management Insight และส่งรายงาน PDF
-7. ให้ Manus Agent รับ Goal เดียวกับ Lab 2–3 แล้ววางแผน วิเคราะห์ และสร้าง deliverables โดยไม่ประกอบ Workflow
-8. เปรียบเทียบ Human-designed Workflow กับ Goal-based Autonomous Agent
-9. กำหนด Human-in-the-loop, permission, audit trail และ fallback ที่เหมาะสม
+1. แยกความแตกต่างระหว่าง Generative AI, AI Agent, Workflow และ Agentic AI
+2. อธิบาย Agent, Skill, Tool, Connector, Workflow และ Guardrail ด้วยตัวอย่างธุรกิจได้
+3. อธิบายว่า autonomy (ระดับความเป็นอิสระ) เป็นสเปกตรัม ไม่ใช่มีหรือไม่มีเพียงสองสถานะ
+4. สร้าง `Business Request Assistant` ด้วย System Instructions ใน Google AI Studio
+5. ใช้ Business Rules เพื่อจัดลำดับ `HIGH`, `MEDIUM`, `LOW` จากผลกระทบจริง
+6. เชื่อม Trigger → Gemini → Decision Router → Action → Google Sheets ใน Make
+7. เปลี่ยน Request History ให้เป็น Management Insight และส่งรายงาน PDF
+8. ให้ Manus Agent รับ Goal เดียวกับ Lab 2–3 แล้ววางแผน วิเคราะห์ และสร้าง deliverables โดยไม่ประกอบ Workflow
+9. เปรียบเทียบ Human-designed Workflow กับ Goal-based Autonomous Agent
+10. กำหนด Guardrails, Human-in-the-loop, permission, audit trail และ fallback ที่เหมาะสม
 
 ## เส้นทางการเรียนรู้
 
@@ -130,7 +131,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 
 | เวลา | กิจกรรม | ผลลัพธ์ |
 |---|---|---|
-| 00:00–00:20 | [Introduction](01-introduction/README.md) | เข้าใจ Generative AI → AI Agent → Agentic AI |
+| 00:00–00:20 | [Introduction](01-introduction/README.md) | เข้าใจ Agentic AI และคำศัพท์พื้นฐาน 6 คำ |
 | 00:20–00:50 | [Lab 1: AI Agent](02-build-ai-agent/README.md) | Agent วิเคราะห์และจัด Priority |
 | 00:50–01:30 | [Lab 2: Agentic Workflow](03-build-agentic-workflow/README.md) | Make เปลี่ยน AI decision เป็น Action และเก็บข้อมูล |
 | 01:30–01:40 | Break | พัก 10 นาที |
@@ -208,7 +209,9 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 
 ## เริ่ม Workshop
 
-1. [Introduction — แนวคิดและ Autonomy Spectrum](01-introduction/README.md)
+อ่านก่อนหรือเปิดเป็น reference: [คำศัพท์พื้นฐาน Agentic AI — Agent, Skill, Tool, Connector, Workflow และ Guardrail](01-introduction/glossary.md)
+
+1. [Introduction — แนวคิด คำศัพท์พื้นฐาน และ Autonomy Spectrum](01-introduction/README.md)
 2. [Lab 1 — Google AI Studio Agent](02-build-ai-agent/README.md) · [Prompts](02-build-ai-agent/prompts.md)
 3. [Lab 2 — Make Agentic Workflow](03-build-agentic-workflow/README.md) · [Prompts](03-build-agentic-workflow/prompts.md)
 4. [Lab 3 — Managerial AI: Report, PDF และ Email](04-generate-management-report/README.md) · [Prompts](04-generate-management-report/prompts.md)
