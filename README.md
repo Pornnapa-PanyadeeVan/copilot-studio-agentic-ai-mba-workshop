@@ -39,47 +39,36 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 9. เปรียบเทียบ Human-designed Workflow กับ Goal-based Autonomous Agent
 10. กำหนด Guardrails, Human-in-the-loop, permission, audit trail และ fallback ที่เหมาะสม
 
-## เส้นทางการเรียนรู้
+## Mental Model: AI Agent → Agentic AI System
 
-ลำดับนี้แสดง progression ของ Workshop ไม่ใช่ลำดับ runtime; ในระบบจริง Workflow หรือ Agent execution อาจครอบ Trigger, Reasoning, Decision, Tools และ Actions ทั้งชุด
+คำศัพท์ทั้งหมดอยู่ใน end-to-end path เดียวกัน โดยมี AI Agent เป็นแกนกลาง:
 
 ```text
-Generative AI
+Business Goal
 ↓
-AI Agent
+AI Agent: Guidance + Context → Observe → Reason → Decide
 ↓
-Agent + Business Rules
+Execution: Human-designed Workflow OR Agent-planned Execution
 ↓
-Decision
+Capabilities: Local Tool OR Connector / API OR MCP
 ↓
-Workflow + Tools / Connectors
+Action / Artifact
 ↓
-Action
-↓
-Data / Memory
-↓
-Management Report
-↓
-Insight
-↓
-Human Decision
-↓
-Agentic AI
+Validation → Human Review → Feedback → Data / Memory
+                                      ↺ New Context
 ```
 
-| แนวคิด | ทำอะไร |
-|---|---|
-| Generative AI | สร้างเนื้อหาจาก Prompt |
-| AI Agent | ทำงานสู่ Goal โดยใช้อินสตรักชันและการให้เหตุผล |
-| Agent + Tools | เรียกความสามารถเพื่ออ่าน คำนวณ สร้างชิ้นงาน หรือทำ Action |
-| Connector | เชื่อมและจัดการ authentication/permission กับระบบภายนอก |
-| MCP | มาตรฐานที่ AI application ใช้เข้าถึง Resources, Prompts และ Tools จาก MCP Server |
-| Workflow | เชื่อมขั้นตอนของกระบวนการธุรกิจ |
-| Decision | ผล AI กำหนดสิ่งที่จะเกิดขึ้นถัดไป |
-| Action | ระบบลงมือทำงาน เช่น บันทึก ส่ง หรือแจ้งเตือน |
-| Agentic AI | รวม Goal, Reasoning, Tools, Decisions, Actions, Workflow, Data, Feedback และ Human Oversight |
+Guardrails ครอบทุกช่วงของ Path ตั้งแต่ input, instructions และ permissions ไปจนถึง validation, approval, audit และ stop/recovery
 
-> Workflow อัตโนมัติทุกชนิดไม่ใช่ Agentic AI เสมอไป หากไม่มี Goal, AI reasoning หรือ decision ที่มีความหมาย ระบบนั้นอาจเป็นเพียง automation แบบกำหนดกฎล่วงหน้า
+| ชั้นใน Agentic AI System | องค์ประกอบ |
+|---|---|
+| Agent Core | Goal, Instructions, Skill, Context, Reasoning, Decision |
+| Execution Coordination | Human-designed Workflow หรือ Agent-planned Execution |
+| Capability Access | Tools, native Connectors/APIs หรือ MCP Servers |
+| Outcomes | Actions, Artifacts และ Data / Memory |
+| Control and Learning | Guardrails, Validation, Human Oversight, Audit Trail และ Feedback |
+
+> Workflow ตามกฎคงที่อาจเป็น Automation แต่ยังไม่จำเป็นต้องเป็น Agentic AI และ AI Agent ไม่จำเป็นต้องมี Connector หรือ MCP เสมอไป
 
 ## สถาปัตยกรรมหลัก
 
@@ -129,7 +118,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 
 | เวลา | กิจกรรม | ผลลัพธ์ |
 |---|---|---|
-| 00:00–00:20 | [Introduction](01-introduction/README.md) | เข้าใจ Agentic AI และคำศัพท์พื้นฐาน 6 คำ |
+| 00:00–00:20 | [Introduction](01-introduction/README.md) | เข้าใจ end-to-end Agentic AI Path และคำศัพท์พื้นฐาน |
 | 00:20–00:50 | [Lab 1: AI Agent](02-build-ai-agent/README.md) | Agent วิเคราะห์และจัด Priority |
 | 00:50–01:30 | [Lab 2: Agentic Workflow](03-build-agentic-workflow/README.md) | Make เปลี่ยน AI decision เป็น Action และเก็บข้อมูล |
 | 01:30–01:40 | Break | พัก 10 นาที |

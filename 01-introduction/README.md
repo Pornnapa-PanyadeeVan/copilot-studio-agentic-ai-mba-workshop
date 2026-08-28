@@ -8,53 +8,45 @@
 
 📖 **Reference**  [คำศัพท์พื้นฐาน Agentic AI: Agent, Skill, Tool, Connector, MCP, Workflow และ Guardrail](glossary.md)
 
-## Learning Path
+## Mental Model: AI Agent → Agentic AI System
 
 ```text
-Generative AI → AI Agent → Agent + Rules → Decision → Workflow + Tools / Connectors → Action
-→ Data / Memory → Management Report → Insight → Human Decision → Agentic AI
+Business Goal
+↓
+AI Agent
+├─ Guidance: Instructions + Skill + Business Rules
+├─ Context: Input + Data / Memory
+└─ Agent Loop: Observe → Reason → Decide
+                              ↓
+Execution Coordination
+├─ Human-designed Workflow
+└─ Agent-planned Execution
+↓
+Capability Access
+├─ Local Tool
+├─ Tool → Connector / API → External System
+└─ MCP Client → MCP Server → Resources / Prompts / Tools
+↓
+Action / Artifact
+↓
+Validation → Human Review → Feedback → Data / Memory
+                                      ↺ New Context
 ```
 
-## คำศัพท์หลัก 6 คำ
+**Guardrails ครอบทุกช่วงของเส้นทาง:** Input rules, instructions, permissions, output validation, approval gates, audit trail และ stop/recovery conditions
 
-| คำศัพท์ | หน้าที่ในระบบ | เปรียบเทียบกับองค์กร |
-|---|---|---|
-| **Agent** | ทำงานสู่ Goal และตัดสินใจว่าจะทำอะไรต่อ | ผู้รับผิดชอบงาน |
-| **Skill** | วิธีทำงานหรือ Playbook ที่นำกลับมาใช้ซ้ำ | SOP |
-| **Tool** | ความสามารถที่ใช้ทำงานหนึ่งอย่าง | เครื่องมือทำงาน |
-| **Connector** | เชื่อมระบบพร้อม authentication และ permission | ประตูพร้อมบัตรผ่าน |
-| **Workflow** | ประสานลำดับ Trigger → Decision → Action | Process map |
-| **Guardrail** | จำกัด ตรวจ อนุมัติ หยุด และเก็บหลักฐาน | Policy + Control |
+> **Agent decides. Skill guides. Tool does. Connector grants access. MCP standardizes access. Workflow coordinates. Guardrail limits and checks.**
 
-> **Agent decides. Skill guides. Tool does. Connector grants access. Workflow coordinates. Guardrail limits and checks.**
-
-ดูนิยาม ตัวอย่าง และ Quick Check เพิ่มเติมใน [Glossary](glossary.md)
-
-### แล้ว MCP อยู่ตรงไหน
-
-MCP หรือ Model Context Protocol เป็นมาตรฐานเปิดที่ช่วยให้ AI application เชื่อมกับ context และความสามารถจากระบบภายนอกในรูปแบบเดียวกัน
-
-```text
-AI Application (MCP Host)
-↓
-MCP Client
-↓
-MCP Server
-├─ Resources: ข้อมูลและ context
-├─ Prompts: reusable templates
-└─ Tools: ฟังก์ชันที่ Model เรียกใช้
-```
-
-**Connector** เป็นคำกว้างสำหรับ integration และสิทธิ์เข้าถึงระบบ ส่วน **MCP** เป็น protocol เฉพาะรูปแบบหนึ่ง Connector ไม่จำเป็นต้องใช้ MCP และ MCP ไม่ได้แทน Workflow หรือ Guardrail
+ดูนิยามและ Quick Check เพิ่มเติมใน [Glossary](glossary.md)
 
 ## Timebox
 
 | นาที | เนื้อหา |
 |---:|---|
-| 0–4 | Generative AI → AI Agent → Agentic AI |
-| 4–9 | Agent, Skill, Tool, Connector, MCP, Workflow, Guardrail |
-| 9–14 | Autonomy Spectrum และ Make vs Manus |
-| 14–18 | Business Request Management + Managerial AI |
+| 0–4 | Generative AI ต่างจาก AI Agent อย่างไร |
+| 4–11 | End-to-end Agentic AI Path และคำศัพท์พื้นฐาน |
+| 11–15 | Autonomy Spectrum และ Make vs Manus |
+| 15–18 | Business Request Management + Managerial AI |
 | 18–20 | Discussion และ Checkpoint |
 
 ## 1. Generative AI คืออะไร
@@ -71,77 +63,41 @@ Response
 
 ตัวอย่าง: “ช่วยสรุปข้อร้องเรียนลูกค้านี้” ระบบตอบเป็นข้อความแล้วหยุด
 
-## 2. AI Agent คืออะไร
+## 2. AI Agent → Agentic AI: เส้นทางเดียวกัน
 
-AI Agent (ตัวแทน AI ที่ทำงานสู่เป้าหมาย) มี Goal, Instructions, Context และ Reasoning เพื่อเลือกคำตอบหรือข้อเสนอแนะที่สอดคล้องกับเป้าหมาย
+**AI Agent คือแกนกลาง** ที่รับ Business Goal ใช้ Guidance และ Context เพื่อ Observe → Reason → Decide จากนั้นอาจหยุดที่ Recommendation หรือทำงานต่อผ่าน Tools
 
-```text
-Goal
-↓
-Observe Input
-↓
-Apply Instructions and Rules
-↓
-Reason
-↓
-Decide
-↓
-Recommend
-```
+**Agentic AI System คือภาพ end-to-end** ที่เชื่อม Agent core เข้ากับ execution coordination, capability access, actions, data, feedback, human oversight และ guardrails เพื่อบรรลุ Business Goal
 
-ใน Workshop นี้ Agent จะวิเคราะห์คำร้อง จัด Priority และแนะนำการดำเนินการ แต่ใน Lab 1 ยังไม่สั่งระบบอื่น
+| ช่วงใน Path | Component | คำถามธุรกิจ | ตัวอย่าง Workshop |
+|---:|---|---|---|
+| 1 | Goal | ต้องการผลลัพธ์อะไร | จัดลำดับคำร้องอย่างสม่ำเสมอ |
+| 2 | Instructions / Skill / Rules | Agent ควรทำงานอย่างไร | Triage playbook และ Priority rules |
+| 3 | Context / Data / Memory | ใช้ข้อมูลอะไร | Request text และ Request History |
+| 4 | Reasoning | ประเมินหลักฐานอย่างไร | ตรวจ customer, financial, operational impact |
+| 5 | Decision | เลือกอะไรต่อ | `Priority = HIGH` |
+| 6 | Workflow หรือ Agent Plan | ใครประสานลำดับ execution | Make Scenario หรือ Manus execution plan |
+| 7 | Tool | ต้องใช้ความสามารถอะไร | Parse JSON, `Add a row`, create report |
+| 8 | Connector / API / MCP | เข้าถึง capability ภายนอกอย่างไร | Make connection หรือ MCP Server |
+| 9 | Action / Artifact | เกิดผลลัพธ์จริงอะไร | บันทึก Sheet, alert หรือ PDF report |
+| 10 | Validation / Human Review | ผลถูกต้องและอนุมัติได้หรือไม่ | Count check และ Manager approval |
+| 11 | Feedback / Audit / Memory | เรียนรู้และตรวจย้อนหลังอย่างไร | Override reason, run log และ Request History |
 
-## 3. จาก Decision สู่ Action: Workflow, Tools, Connectors และ MCP
+Tool ไม่จำเป็นต้องเชื่อมระบบภายนอก เช่น calculator หรือ parser ก็เป็น Tool ได้ เมื่อ Tool ต้องเข้าระบบภายนอก Connector จะจัดการ integration, authentication และ permission ส่วน MCP เป็น protocol ที่ AI application ใช้ค้นพบและเรียก Resources, Prompts หรือ Tools จาก MCP Server
 
-Workflow หรือ Agent execution เป็นกรอบที่ประสานลำดับตั้งแต่รับ Input ไปจนถึง Feedback ภายในกรอบนั้น Decision จะเลือกเส้นทางถัดไป แล้วระบบจึงเรียก Tool ซึ่งอาจทำงานในเครื่อง เข้าระบบภายนอกผ่าน Connector/API หรือรับ capability ผ่าน MCP
+Guardrails ไม่ใช่ขั้นตอนสุดท้าย แต่ครอบทุกช่วงของ Path เช่นห้ามข้อมูลจริง จำกัด allowed values, allowlist tools, ใช้ least privilege, บังคับ Human Approval และกำหนด stop/fallback
 
-```text
-Workflow / Agent Execution
-├─ Trigger / Input
-├─ Agent Reasoning
-├─ Decision
-├─ Capability Path
-│  ├─ Local Tool → Result / Artifact
-│  ├─ Tool / Action → Connector / API → External System
-│  └─ MCP Client → MCP Server → Resource / Prompt / Tool
-├─ Action / Data / Audit Trail
-└─ Human Review / Feedback
-```
+ใน Workshop นี้:
 
-| องค์ประกอบ | คำถามธุรกิจ | ตัวอย่าง |
-|---|---|---|
-| Trigger (เหตุการณ์เริ่มต้น) | งานเริ่มเมื่อใด | มีคำร้องใหม่ |
-| Decision (การตัดสินใจ) | อะไรกำหนดขั้นตอนถัดไป | Priority = HIGH |
-| Workflow (ลำดับกระบวนการ) | ขั้นตอนเชื่อมกันอย่างไร | รับ → วิเคราะห์ → route → เก็บ |
-| Tool (ความสามารถที่เรียกใช้) | ระบบทำอะไรได้ | คำนวณ, parse JSON, `Add a row` |
-| Connector (การเชื่อมและสิทธิ์) | เข้าถึงระบบใดได้ | Google Sheets connection + OAuth |
-| MCP (มาตรฐานการเชื่อม context/capability) | Host ค้นพบอะไรจาก Server | Resources, Prompts, Tools |
-| Action (การลงมือทำ) | ระบบทำอะไรจริง | เพิ่มแถวและส่ง alert |
-| Data / Memory | ระบบจำอะไรไว้ | Request Log |
-| Feedback | รู้ได้อย่างไรว่าผลดี | Manager ตรวจและแก้ classification |
+- **Lab 1:** Agent core จบที่ Decision + Recommendation
+- **Lab 2–3:** Make Workflow ประสาน Agent reasoning, native connectors, actions, data และ report
+- **Lab 4:** Manus Agent วางแผน execution และสร้าง artifacts โดยไม่ประกอบ Workflow หรือเชื่อมระบบภายนอก
 
-> **Decision เลือกสิ่งถัดไป; Workflow ประสานลำดับ; Tool เพิ่มความสามารถ; Connector ให้การเข้าถึง; MCP กำหนดมาตรฐานการเชื่อม; Action เปลี่ยนสถานะจริง**
-
-Tool ไม่จำเป็นต้องเชื่อมระบบภายนอก เช่น calculator, parser หรือ file generator ก็เป็น Tool ได้ เมื่อ Tool ต้องอ่านหรือเปลี่ยนข้อมูลภายนอก Connector จะจัดการ connection, authentication และ permission ส่วน MCP เป็น protocol อีกแนวทางหนึ่งที่ AI application ใช้ค้นพบและเรียก Resources, Prompts หรือ Tools จาก MCP Server
-
-การมี Tool, Connector หรือ MCP ไม่ได้แปลว่าควรใช้ทุก Action ต้องจำกัด permission, validate output และกำหนด approval ตามความเสี่ยง ใน Workshop นี้ Lab 2 ใช้ Make Workflow และ native connectors ส่วน Lab 4 ให้ Agent วางแผน execution โดยไม่สร้าง Workflow และไม่ใช้ Connector หรือ MCP Server
-
-> Automation ที่ทำ `ถ้า field = X ให้ส่ง email` ตามกฎคงที่ อาจเป็น Workflow Automation แต่ยังไม่จำเป็นต้องเป็น Agentic AI
-
-## 4. Agentic AI คืออะไร
-
-Agentic AI ผสาน:
-
-```text
-Goal + Reasoning + Tools + Decision + Action
-+ Workflow + Data + Feedback + Human Oversight
-```
-
-เพื่อบรรลุ Business Goal ไม่ใช่เพียงสร้างข้อความ
+> Workflow ที่ส่ง email ตามกฎคงที่อาจเป็น Automation แต่ยังไม่จำเป็นต้องเป็น Agentic AI และ Agent ที่ไม่มี Connector/MCP ก็ยังเป็น Agent ได้
 
 > **Agentic AI is not a product name. It is a way of designing AI-enabled business systems.**
 
-## 5. Autonomy Spectrum
+## 3. Autonomy Spectrum
 
 Autonomy (ระดับความเป็นอิสระ) ควรมองเป็นสเปกตรัม:
 
@@ -168,7 +124,7 @@ Workshop จะให้ผู้เรียนแก้โจทย์ Busines
 
 ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ส่วน Lab 4 จะให้ Manus Agent รับ Goal และ dataset เดียวกันแล้ววางแผนทำ triage กับ management report โดยไม่สร้าง Workflow ผู้เรียนต้องสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด boundary, approval, evidence และ validation เพิ่มขึ้นอย่างไร
 
-## 6. Business Request Management
+## 4. Business Request Management
 
 องค์กรได้รับคำร้องจากลูกค้าหรือพนักงาน Agent ต้อง:
 
@@ -209,7 +165,7 @@ Read → Summarize → Classify → Explain → Recommend
 
 ควรเป็น LOW หากไม่มี customer, financial, operational, compliance หรือ time impact ที่สำคัญ
 
-## 7. Operational AI กับ Managerial AI
+## 5. Operational AI กับ Managerial AI
 
 > **Operational AI:** “What should we do with this request?”
 

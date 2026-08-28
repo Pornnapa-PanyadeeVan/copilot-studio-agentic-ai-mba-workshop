@@ -2,20 +2,21 @@
 
 [← Introduction](README.md) · [Home](../README.md) · [Next: Lab 1 →](../02-build-ai-agent/README.md)
 
-ใช้หน้านี้เป็น pre-read หรือ reference ระหว่าง Workshop ไม่ต้องท่องจำทุกคำ ให้จำความสัมพันธ์หลักก่อน:
+ใช้หน้านี้เป็น pre-read หรือ reference ระหว่าง Workshop ไม่ต้องท่องจำทุกคำ ให้จำว่าองค์ประกอบทั้งหมดอยู่ใน end-to-end Agentic AI Path เดียวกัน:
 
 ```text
 Business Goal
 ↓
-Agent ใช้ Reasoning เพื่อตัดสินใจ
+AI Agent: Guidance + Context → Observe → Reason → Decide
 ↓
-เลือกใช้ Skill / Playbook
+Execution: Human-designed Workflow OR Agent-planned Execution
 ↓
-เรียก Tool ผ่าน Connector ที่ได้รับอนุญาต
+Capabilities: Local Tool OR Connector / API OR MCP
 ↓
-เกิด Action, Data หรือ Artifact
+Action / Artifact
 ↓
-Human ตรวจผลและให้ Feedback
+Validation → Human Review → Feedback → Data / Memory
+                                      ↺ New Context
 ```
 
 Guardrails ครอบทุกชั้น:
@@ -41,7 +42,7 @@ Input Rules
 | **Workflow** | ลำดับขั้นตอนที่เชื่อม Trigger, Decision และ Action | Process map |
 | **Guardrail** | ขอบเขต ตัวตรวจ การอนุมัติ และกลไกหยุดระบบ | Policy + Control + Approval gate |
 
-> **Agent decides. Skill guides. Tool does. Connector grants access. Workflow coordinates. Guardrail limits and checks.**
+> **Agent decides. Skill guides. Tool does. Connector grants access. MCP standardizes access. Workflow coordinates. Guardrail limits and checks.**
 
 ## A–Z Glossary
 
