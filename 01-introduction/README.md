@@ -8,44 +8,14 @@
 
 📖 **Reference**  [คำศัพท์พื้นฐาน Agentic AI: Agent, Skill, Tool, Connector, MCP, Workflow และ Guardrail](glossary.md)
 
-## Mental Model: AI Agent → Agentic AI System
-
-```text
-Business Goal
-↓
-AI Agent
-├─ Guidance: Instructions + Skill + Business Rules
-├─ Context: Input + Data / Memory
-└─ Agent Loop: Observe → Reason → Decide
-                              ↓
-Execution Coordination
-├─ Human-designed Workflow
-└─ Agent-planned Execution
-↓
-Capability Access
-├─ Local Tool
-├─ Tool → Connector / API → External System
-└─ MCP Client → MCP Server → Resources / Prompts / Tools
-↓
-Action / Artifact
-↓
-Validation → Human Review → Feedback → Data / Memory
-                                      ↺ New Context
-```
-
-**Guardrails ครอบทุกช่วงของเส้นทาง:** Input rules, instructions, permissions, output validation, approval gates, audit trail และ stop/recovery conditions
-
-> **Agent decides. Skill guides. Tool does. Connector grants access. MCP standardizes access. Workflow coordinates. Guardrail limits and checks.**
-
-ดูนิยามและ Quick Check เพิ่มเติมใน [Glossary](glossary.md)
-
 ## Timebox
 
 | นาที | เนื้อหา |
 |---:|---|
-| 0–4 | Generative AI ต่างจาก AI Agent อย่างไร |
-| 4–11 | End-to-end Agentic AI Path และคำศัพท์พื้นฐาน |
-| 11–15 | Autonomy Spectrum และ Make vs Manus |
+| 0–4 | 1. Generative AI คืออะไร |
+| 4–8 | 2. AI Agent คืออะไร |
+| 8–12 | 3. Agentic AI คืออะไร + คำศัพท์ในระบบ |
+| 12–15 | Autonomy Spectrum และ Make vs Manus |
 | 15–18 | Business Request Management + Managerial AI |
 | 18–20 | Discussion และ Checkpoint |
 
@@ -63,41 +33,86 @@ Response
 
 ตัวอย่าง: “ช่วยสรุปข้อร้องเรียนลูกค้านี้” ระบบตอบเป็นข้อความแล้วหยุด
 
-## 2. AI Agent → Agentic AI: เส้นทางเดียวกัน
+## 2. AI Agent คืออะไร
 
-**AI Agent คือแกนกลาง** ที่รับ Business Goal ใช้ Guidance และ Context เพื่อ Observe → Reason → Decide จากนั้นอาจหยุดที่ Recommendation หรือทำงานต่อผ่าน Tools
+AI Agent คือระบบ AI ที่ได้รับ **Goal** แล้วใช้ Guidance และ Context เพื่อสังเกต ให้เหตุผล และตัดสินใจว่าจะทำอะไรต่อ Agent อาจจบที่ Recommendation หรือเรียก Tool เพื่อทำงานต่อก็ได้
 
-**Agentic AI System คือภาพ end-to-end** ที่เชื่อม Agent core เข้ากับ execution coordination, capability access, actions, data, feedback, human oversight และ guardrails เพื่อบรรลุ Business Goal
+```text
+Business Goal
+↓
+AI Agent
+├─ Guidance: Instructions + Skill + Business Rules
+├─ Context: Input + Data / Memory
+└─ Agent Loop: Observe → Reason → Decide
+                              ↓
+                    Recommend OR Use Tool
+```
 
-| ช่วงใน Path | Component | คำถามธุรกิจ | ตัวอย่าง Workshop |
-|---:|---|---|---|
-| 1 | Goal | ต้องการผลลัพธ์อะไร | จัดลำดับคำร้องอย่างสม่ำเสมอ |
-| 2 | Instructions / Skill / Rules | Agent ควรทำงานอย่างไร | Triage playbook และ Priority rules |
-| 3 | Context / Data / Memory | ใช้ข้อมูลอะไร | Request text และ Request History |
-| 4 | Reasoning | ประเมินหลักฐานอย่างไร | ตรวจ customer, financial, operational impact |
-| 5 | Decision | เลือกอะไรต่อ | `Priority = HIGH` |
-| 6 | Workflow หรือ Agent Plan | ใครประสานลำดับ execution | Make Scenario หรือ Manus execution plan |
-| 7 | Tool | ต้องใช้ความสามารถอะไร | Parse JSON, `Add a row`, create report |
-| 8 | Connector / API / MCP | เข้าถึง capability ภายนอกอย่างไร | Make connection หรือ MCP Server |
-| 9 | Action / Artifact | เกิดผลลัพธ์จริงอะไร | บันทึก Sheet, alert หรือ PDF report |
-| 10 | Validation / Human Review | ผลถูกต้องและอนุมัติได้หรือไม่ | Count check และ Manager approval |
-| 11 | Feedback / Audit / Memory | เรียนรู้และตรวจย้อนหลังอย่างไร | Override reason, run log และ Request History |
+| องค์ประกอบของ Agent | หน้าที่ | ตัวอย่าง Lab 1 |
+|---|---|---|
+| Goal | กำหนดผลลัพธ์ที่ต้องการ | จัดลำดับคำร้องอย่างสม่ำเสมอ |
+| Instructions | กำหนด Role, behavior และ output | Business Request Assistant |
+| Skill / Playbook | วิธีทำงานที่นำกลับมาใช้ซ้ำ | Triage method + validation checklist |
+| Context | ข้อมูลที่ใช้ประกอบการตัดสินใจ | Request text และ Priority rules |
+| Reasoning | ประเมินหลักฐานและผลกระทบ | Customer, financial, operational impact |
+| Decision | เลือกข้อสรุปหรือขั้นตอนถัดไป | `Priority = HIGH` |
+| Tool (ถ้ามี) | เพิ่มความสามารถเฉพาะงาน | Calculator, parser หรือ file generator |
 
-Tool ไม่จำเป็นต้องเชื่อมระบบภายนอก เช่น calculator หรือ parser ก็เป็น Tool ได้ เมื่อ Tool ต้องเข้าระบบภายนอก Connector จะจัดการ integration, authentication และ permission ส่วน MCP เป็น protocol ที่ AI application ใช้ค้นพบและเรียก Resources, Prompts หรือ Tools จาก MCP Server
+ใน **Lab 1** Agent จะทำถึง Decision + Recommendation ใน Google AI Studio แต่ยังไม่เชื่อมระบบภายนอก จึงไม่ต้องมี Connector หรือ MCP
 
-Guardrails ไม่ใช่ขั้นตอนสุดท้าย แต่ครอบทุกช่วงของ Path เช่นห้ามข้อมูลจริง จำกัด allowed values, allowlist tools, ใช้ least privilege, บังคับ Human Approval และกำหนด stop/fallback
+## 3. Agentic AI คืออะไร
+
+Agentic AI คือการออกแบบระบบ end-to-end ที่นำ AI Agent ไปเชื่อมกับ execution, tools, actions, data, feedback, human oversight และ guardrails เพื่อบรรลุ Business Goal ไม่ใช่เพียงสร้างคำตอบ
+
+```text
+Business Goal
+↓
+AI Agent: Observe → Reason → Decide
+↓
+Execution Coordination
+├─ Human-designed Workflow
+└─ Agent-planned Execution
+↓
+Capability Access
+├─ Local Tool
+├─ Tool → Connector / API → External System
+└─ MCP Client → MCP Server → Resources / Prompts / Tools
+↓
+Action / Artifact
+↓
+Validation → Human Review → Feedback → Data / Memory
+                                      ↺ New Context
+```
+
+| คำศัพท์ใน Agentic AI System | อยู่ตรงไหนและทำอะไร | ตัวอย่าง Workshop |
+|---|---|---|
+| Workflow / Agent Plan | ประสานลำดับ execution | Make Scenario หรือ Manus execution plan |
+| Tool | ความสามารถที่ระบบเรียกใช้ | Parse JSON, `Add a row`, create report |
+| Connector / API | เชื่อมระบบพร้อม authentication และ permission | Make เชื่อม Gemini หรือ Google Sheets |
+| MCP | มาตรฐานที่ Host ใช้ค้นพบ Resources, Prompts และ Tools จาก Server | แนวคิดประกอบ; Labs หลักไม่ติดตั้ง MCP Server |
+| Action / Artifact | เปลี่ยนสถานะจริงหรือสร้างชิ้นงาน | บันทึก Sheet, alert หรือ PDF report |
+| Data / Memory | เก็บข้อมูลเพื่อใช้ภายหลัง | Request History |
+| Feedback / Audit | ตรวจผล เรียนรู้ และตรวจย้อนหลัง | Manager override และ run log |
+| Guardrail | จำกัด ตรวจ อนุมัติ หยุด และกู้คืน | Allowed values, least privilege, approval, fallback |
+
+**Guardrails ครอบทุกช่วงของระบบ** ตั้งแต่ input, instructions และ permissions ไปจนถึง output validation, approval gates, audit trail และ stop/recovery conditions
+
+Connector เป็นคำกว้างสำหรับ product integration ส่วน MCP เป็น protocol เฉพาะรูปแบบหนึ่ง Connector ไม่จำเป็นต้องใช้ MCP และ MCP ไม่ได้แทน Workflow หรือ Guardrail
 
 ใน Workshop นี้:
 
-- **Lab 1:** Agent core จบที่ Decision + Recommendation
 - **Lab 2–3:** Make Workflow ประสาน Agent reasoning, native connectors, actions, data และ report
 - **Lab 4:** Manus Agent วางแผน execution และสร้าง artifacts โดยไม่ประกอบ Workflow หรือเชื่อมระบบภายนอก
+
+> **Agent decides. Skill guides. Tool does. Connector grants access. MCP standardizes access. Workflow coordinates. Guardrail limits and checks.**
 
 > Workflow ที่ส่ง email ตามกฎคงที่อาจเป็น Automation แต่ยังไม่จำเป็นต้องเป็น Agentic AI และ Agent ที่ไม่มี Connector/MCP ก็ยังเป็น Agent ได้
 
 > **Agentic AI is not a product name. It is a way of designing AI-enabled business systems.**
 
-## 3. Autonomy Spectrum
+ดูนิยามและ Quick Check เพิ่มเติมใน [Glossary](glossary.md)
+
+## 4. Autonomy Spectrum
 
 Autonomy (ระดับความเป็นอิสระ) ควรมองเป็นสเปกตรัม:
 
@@ -124,7 +139,7 @@ Workshop จะให้ผู้เรียนแก้โจทย์ Busines
 
 ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ส่วน Lab 4 จะให้ Manus Agent รับ Goal และ dataset เดียวกันแล้ววางแผนทำ triage กับ management report โดยไม่สร้าง Workflow ผู้เรียนต้องสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด boundary, approval, evidence และ validation เพิ่มขึ้นอย่างไร
 
-## 4. Business Request Management
+## 5. Business Request Management
 
 องค์กรได้รับคำร้องจากลูกค้าหรือพนักงาน Agent ต้อง:
 
@@ -165,7 +180,7 @@ Read → Summarize → Classify → Explain → Recommend
 
 ควรเป็น LOW หากไม่มี customer, financial, operational, compliance หรือ time impact ที่สำคัญ
 
-## 5. Operational AI กับ Managerial AI
+## 6. Operational AI กับ Managerial AI
 
 > **Operational AI:** “What should we do with this request?”
 

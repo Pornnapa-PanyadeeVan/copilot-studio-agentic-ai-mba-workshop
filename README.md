@@ -39,34 +39,45 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 9. เปรียบเทียบ Human-designed Workflow กับ Goal-based Autonomous Agent
 10. กำหนด Guardrails, Human-in-the-loop, permission, audit trail และ fallback ที่เหมาะสม
 
-## Mental Model: AI Agent → Agentic AI System
+## จาก Generative AI → AI Agent → Agentic AI
 
-คำศัพท์ทั้งหมดอยู่ใน end-to-end path เดียวกัน โดยมี AI Agent เป็นแกนกลาง:
+### 1. Generative AI
+
+```text
+Prompt → Generate → Response
+```
+
+สร้างเนื้อหาแล้วหยุด เช่นสรุปข้อความหรือร่างคำตอบ
+
+### 2. AI Agent
 
 ```text
 Business Goal
 ↓
-AI Agent: Guidance + Context → Observe → Reason → Decide
+Instructions + Skill + Context
 ↓
-Execution: Human-designed Workflow OR Agent-planned Execution
+Observe → Reason → Decide
 ↓
-Capabilities: Local Tool OR Connector / API OR MCP
-↓
-Action / Artifact
-↓
-Validation → Human Review → Feedback → Data / Memory
-                                      ↺ New Context
+Recommend OR Use Tool
 ```
 
-Guardrails ครอบทุกช่วงของ Path ตั้งแต่ input, instructions และ permissions ไปจนถึง validation, approval, audit และ stop/recovery
+AI Agent ทำงานสู่ Goal และเลือกสิ่งที่จะเกิดขึ้นถัดไป โดยไม่จำเป็นต้องเชื่อมระบบภายนอกเสมอไป
 
-| ชั้นใน Agentic AI System | องค์ประกอบ |
-|---|---|
-| Agent Core | Goal, Instructions, Skill, Context, Reasoning, Decision |
-| Execution Coordination | Human-designed Workflow หรือ Agent-planned Execution |
-| Capability Access | Tools, native Connectors/APIs หรือ MCP Servers |
-| Outcomes | Actions, Artifacts และ Data / Memory |
-| Control and Learning | Guardrails, Validation, Human Oversight, Audit Trail และ Feedback |
+### 3. Agentic AI
+
+```text
+AI Agent
+↓
+Workflow OR Agent-planned Execution
+↓
+Capability Access
+├─ Tool → Connector / API → External System
+└─ MCP → Resources / Prompts / Tools
+↓
+Action / Artifact → Data / Memory → Feedback
+```
+
+Agentic AI เชื่อม Agent เข้ากับ execution, capabilities, actions, data และ feedback ส่วน Guardrails ครอบทุกช่วงตั้งแต่ input และ permissions ไปจนถึง validation, approval, audit และ stop/recovery
 
 > Workflow ตามกฎคงที่อาจเป็น Automation แต่ยังไม่จำเป็นต้องเป็น Agentic AI และ AI Agent ไม่จำเป็นต้องมี Connector หรือ MCP เสมอไป
 
