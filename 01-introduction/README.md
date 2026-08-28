@@ -91,16 +91,31 @@ Recommend
 
 ใน Workshop นี้ Agent จะวิเคราะห์คำร้อง จัด Priority และแนะนำการดำเนินการ แต่ใน Lab 1 ยังไม่สั่งระบบอื่น
 
-## 3. Agent + Tools
+## 3. Agent + Tools, Connectors และ MCP
 
-Tool (เครื่องมือที่ Agent หรือ Workflow เรียกใช้) ทำให้ผลวิเคราะห์เชื่อมไปยังระบบจริง เช่น:
+**Tool** คือความสามารถที่ Agent หรือ Workflow เรียกใช้เพื่อทำงานหนึ่งอย่าง Tool ไม่จำเป็นต้องเชื่อมระบบภายนอก เช่น calculator, parser หรือ file generator ก็เป็น Tool ได้
 
-- Google Sheets เพื่อเก็บ Request History
-- Gmail เพื่อส่ง Alert/Report
-- Google Drive เพื่อเก็บ PDF
-- LINE OA เพื่อรับข้อความจากช่องทางลูกค้า
+เมื่อ Tool ต้องอ่านหรือเปลี่ยนข้อมูลในระบบภายนอก **Connector** จะรับผิดชอบการเชื่อมต่อ authentication และ permission ส่วน **MCP** เป็นอีกแนวทางหนึ่งที่กำหนดมาตรฐานให้ AI application ค้นพบและเรียก Resources, Prompts หรือ Tools จาก MCP Server
 
-ความสามารถใช้ Tool เพิ่มประโยชน์และเพิ่มความเสี่ยง จึงต้องจำกัด permission และกำหนด approval
+```text
+Agent / Workflow
+├─ Local Tool → Calculate / Parse / Create File
+├─ Native Tool → Connector / API → Google Sheets / Gmail / Drive
+└─ MCP Client → MCP Server → Resources / Prompts / Tools
+```
+
+| สิ่งที่เห็นในระบบ | จัดเป็นอะไร | หน้าที่ |
+|---|---|---|
+| `Add a row` | Tool / Action | เพิ่มข้อมูลหนึ่งแถว |
+| Google Sheets connection + OAuth | Connector | ให้ Make เข้าถึง Sheet ตามสิทธิ์ |
+| Make Scenario | Workflow / Orchestrator | กำหนดว่าเรียกขั้นตอนใด เมื่อไร |
+| MCP Server สำหรับฐานข้อมูล | MCP Server | เปิด Resources/Tools ตามมาตรฐาน MCP |
+
+ดังนั้นประโยคที่แม่นยำกว่าคือ:
+
+> **Tool เพิ่มความสามารถ ส่วน Connector ทำให้ Tool เข้าถึงระบบภายนอกได้; MCP เป็นมาตรฐานอีกแบบสำหรับเปิด context และ capabilities ให้ AI application**
+
+การมี Tool หรือ Connector ไม่ได้แปลว่าควรใช้ทุก Action ต้องจำกัด permission, validate output และกำหนด approval ตามความเสี่ยง ใน Workshop นี้ Lab 2 ใช้ native connectors ของ Make ส่วน Lab 4 ไม่ใช้ Connector หรือ MCP Server
 
 ## 4. Workflow, Decision และ Action
 

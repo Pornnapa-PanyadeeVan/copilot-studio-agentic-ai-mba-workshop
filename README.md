@@ -69,7 +69,9 @@ Agentic AI
 |---|---|
 | Generative AI | สร้างเนื้อหาจาก Prompt |
 | AI Agent | ทำงานสู่ Goal โดยใช้อินสตรักชันและการให้เหตุผล |
-| Agent + Tools | ติดต่อหรือสั่งงานระบบภายนอกได้ |
+| Agent + Tools | เรียกความสามารถเพื่ออ่าน คำนวณ สร้างชิ้นงาน หรือทำ Action |
+| Connector | เชื่อมและจัดการ authentication/permission กับระบบภายนอก |
+| MCP | มาตรฐานที่ AI application ใช้เข้าถึง Resources, Prompts และ Tools จาก MCP Server |
 | Workflow | เชื่อมขั้นตอนของกระบวนการธุรกิจ |
 | Decision | ผล AI กำหนดสิ่งที่จะเกิดขึ้นถัดไป |
 | Action | ระบบลงมือทำงาน เช่น บันทึก ส่ง หรือแจ้งเตือน |
