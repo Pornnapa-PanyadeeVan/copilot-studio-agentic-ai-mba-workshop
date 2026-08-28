@@ -133,13 +133,13 @@ Management Insight
 
 > Manager correction จะกลับไปปรับ rule/process อย่างไร?
 
-## 8. Management Report
+## 8. Management Follow-up Report
 
 **Management question:**
 
-> What are all these cases telling us about the business?
+> What must management understand, decide, and follow up for each HIGH case?
 
-**Report sections / recurring patterns:**
+**Report sections / evidence / owner / target time / status:**
 
 >
 

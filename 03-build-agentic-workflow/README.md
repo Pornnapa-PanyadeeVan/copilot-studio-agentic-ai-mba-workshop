@@ -77,10 +77,11 @@ Connector ทำให้ระบบเข้าถึงบริการไ�
 1. สร้าง Google Form ชื่อ `Business Request Intake — Workshop`
 2. เพิ่มคำอธิบายว่า `ใช้ข้อมูลจำลองเท่านั้น ห้ามกรอกข้อมูลจริงหรือข้อมูลลับ`
 3. ปิดการเก็บ email address ถ้าไม่จำเป็น
-4. สร้างคำถามและเปิด `Required` ทั้ง 3 ข้อ:
+4. สร้างคำถามและเปิด `Required` ทั้ง 4 ข้อ:
 
 | Question | Type | Example |
 |---|---|---|
+| Request ID | Short answer | `BR-001` |
 | Requester | Short answer | `Demo Customer` |
 | Department | Dropdown | `Sales`, `Marketing`, `Finance`, `HR`, `Operations`, `IT`, `Customer Service` |
 | Request | Paragraph | `ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้...` |
@@ -89,7 +90,7 @@ Connector ทำให้ระบบเข้าถึงบริการไ�
 
 💡 **Why This Matters**  Form เป็น Channel/Input ที่กำหนดโครงสร้างข้อมูลก่อนเข้า Workflow แต่ตัว Form เองไม่ใช่ Agent
 
-✅ **Checkpoint**  เปิด Preview แล้วเห็น 3 คำถาม แต่ยังไม่ต้องกด Submit
+✅ **Checkpoint**  เปิด Preview แล้วเห็น 4 คำถาม รวม Request ID แต่ยังไม่ต้องกด Submit
 
 ## 📌 Step 2 — Link Form Responses to Google Sheets
 
@@ -97,10 +98,11 @@ Connector ทำให้ระบบเข้าถึงบริการไ�
 2. เลือก `Link to Sheets` หรือ `Select destination for responses` ตาม UI ที่เห็น ([Google Forms Help](https://support.google.com/docs/answer/2917686))
 3. สร้าง Spreadsheet ใหม่ชื่อ `Business Request Log`
 4. เปิด tab ที่ Google Forms สร้างให้ เช่น `Form Responses 1`
-5. คง 4 headers แรกไว้ แล้วเพิ่ม result columns ทางขวาให้ครบ:
+5. คง 5 headers แรกไว้ แล้วเพิ่ม result/tracking columns ทางขวาให้ครบ:
 
 ```text
 Timestamp
+Request ID
 Requester
 Department
 Request
@@ -109,13 +111,16 @@ Priority
 Reason
 Recommended Action
 Processing Status
+Report Status
+Report Link
+Follow-up Status
 ```
 
-> อย่าเปลี่ยนชื่อหรือลบคอลัมน์คำตอบ 4 ช่องแรกหลังเชื่อม Form แล้ว หากแก้คำถามใน Form ให้กลับมา refresh field mapping ใน Make
+> อย่าเปลี่ยนชื่อหรือลบคอลัมน์คำตอบ 5 ช่องแรกหลังเชื่อม Form แล้ว หากแก้คำถามใน Form ให้กลับมา refresh field mapping ใน Make
 
-💡 **Why This Matters**  Google Sheets เป็นทั้ง response log, audit trail และ Request History ที่จะใช้ต่อใน Lab 3
+💡 **Why This Matters**  Google Sheets ทำหน้าที่เป็น business data storage และ follow-up tracker แบบง่าย HIGH row จะส่งต่อให้ Lab 3 สร้าง Situation & Follow-up PDF ไม่ใช่ long-term production database
 
-✅ **Checkpoint**  Sheet มี 9 columns และ `Summary` ถึง `Processing Status` ยังว่าง
+✅ **Checkpoint**  Sheet มี 13 columns และ `Summary` ถึง `Follow-up Status` ยังว่าง
 
 ⚠️ **Common Problem**  Make มองไม่เห็น columns หาก header ว่างหรือซ้ำ ให้แก้ header แล้ว refresh/reselect data structure ใน connection
 
@@ -160,7 +165,7 @@ Google Sheets → Watch New Rows
 
 1. กด `Run once` ใน Make ให้ Scenario รอแถวใหม่
 2. กลับไป Google Form แล้ว Submit ข้อมูลทดสอบ 1 รายการ
-3. ตรวจ output bundle ว่ามี `Row number`, `Timestamp`, `Requester`, `Department` และ `Request`
+3. ตรวจ output bundle ว่ามี `Row number`, `Timestamp`, `Request ID`, `Requester`, `Department` และ `Request`
 
 > `Watch New Rows` เป็น scheduled trigger ไม่ใช่ instant webhook เมื่อเปิด schedule จริงอาจมีช่วงเวลารอตาม plan ของ Make สำหรับ Workshop ใช้ `Run once` ได้
 
@@ -171,6 +176,8 @@ Google Sheets → Watch New Rows
 ⚠️ **Common Problem**  ถ้า Make ไม่พบแถว ให้กด `Run once` ก่อน Submit รายการใหม่ ตรวจชื่อ tab และ starting point อย่า Submit ซ้ำรัว ๆ
 
 ## 📌 Step 5 — Analyze the Request with Gemini
+
+📋 **Prompt**  เปิด [Business Request JSON Prompt](prompts.md#business-request-json-prompt) แล้ว map fields จาก `Watch New Rows` ตามคำอธิบาย
 
 1. เพิ่ม `Google Gemini AI — Simple Text Prompt` ต่อจาก `Watch New Rows`
 2. สร้าง connection ด้วย API key ของตนเอง
@@ -248,6 +255,7 @@ priority Equal to LOW
 |---|---|
 | Row number | `Row number` จาก `Watch New Rows` |
 | Timestamp | `Timestamp` จาก `Watch New Rows` |
+| Request ID | `Request ID` จาก `Watch New Rows` |
 | Requester | `Requester` จาก `Watch New Rows` |
 | Department | `Department` จาก `Watch New Rows` |
 | Request | `Request` จาก `Watch New Rows` |
@@ -256,12 +264,12 @@ priority Equal to LOW
 | Reason | `reason` จาก `Parse JSON` |
 | Recommended Action | `recommended_action` จาก `Parse JSON` |
 
-ตั้ง `Processing Status` ให้ต่างกันตาม route:
+ตั้งค่า processing/tracking fields ตาม route:
 
-| Route | Processing Status |
-|---|---|
-| HIGH | `HIGH — HUMAN REVIEW REQUIRED` |
-| MEDIUM/LOW | `TRIAGED` |
+| Route | Processing Status | Report Status | Report Link | Follow-up Status |
+|---|---|---|---|---|
+| HIGH | `HIGH — HUMAN REVIEW REQUIRED` | `NOT STARTED` | เว้นว่าง | `OPEN` |
+| MEDIUM/LOW | `TRIAGED` | `NOT REQUIRED` | เว้นว่าง | `NOT REQUIRED` |
 
 > ต้องใช้ `Update a Row` และ map `Row number` จาก trigger เพื่อเขียนผลกลับแถวที่ Form สร้างไว้ ห้ามใช้ `Add a Row` ในขั้นนี้ เพราะจะสร้างแถวซ้ำ
 
@@ -270,6 +278,10 @@ priority Equal to LOW
 ✅ **Checkpoint**  Submit Form 1 ครั้งแล้ว Sheet ยังมีเพียง 1 response row และมีผลวิเคราะห์ครบในแถวเดียวกัน
 
 ## 📌 Step 9 — Send Gmail Only for HIGH
+
+HIGH row ที่มี `Report Status = NOT STARTED` และ `Follow-up Status = OPEN` คือ input ของ [Lab 3: HIGH Priority Situation & Follow-up PDF](../04-generate-management-report/README.md)
+
+💡 **Why This Matters**  Workflow ทำ Real Action แล้ว แต่ Action ถูกจำกัดให้ reversible และ low-risk
 
 หลัง `Update a Row` ใน Route 1 เพิ่ม `Gmail — Send an Email`
 
@@ -302,6 +314,10 @@ priority Equal to LOW
 - [ ] ทุก row มี Summary, Priority, Reason และ Recommended Action
 - [ ] HIGH email ถูกส่งเพียง 1 ฉบับถึงตนเอง
 - [ ] Route filters ไม่ทับกัน
+- [ ] Sheet มี 13 fields ที่ถูกต้อง
+- [ ] HIGH row มี `Report Status = NOT STARTED` และ `Follow-up Status = OPEN`
+- [ ] Request ID ไม่ซ้ำและใช้ค้นหา row เดิมได้
+- [ ] ไม่มี request ซ้ำจากการกด Run หลายครั้ง
 - [ ] ไม่มี API key ใน input/output history ที่แชร์กับผู้อื่น
 - [ ] ปิด Scenario schedule หลัง Lab
 
@@ -361,6 +377,7 @@ Google Form → Sheet → AI (manual/prepared JSON)
 - [ ] Router มี HIGH และ MEDIUM/LOW routes
 - [ ] ทั้ง 2 routes อัปเดตแถวเดิมด้วย `Row number`
 - [ ] Gmail ทำงานเฉพาะ HIGH หรือใช้ status marker fallback
+- [ ] HIGH row พร้อมเป็น input ของ Lab 3
 - [ ] ทดสอบ HIGH, MEDIUM และ LOW แล้ว
 
 ---

@@ -26,7 +26,7 @@ Guardrail คือ controls หลายชั้นที่จำกัด �
 |---|---|---|
 | Input | ข้อมูลใดเข้าได้และ field ใดจำเป็น | ใช้ simulated data และ Request ID |
 | Instructions / Rules | ขอบเขตและเกณฑ์การตัดสิน | ห้ามให้ HIGH จากคำว่า urgent เพียงอย่างเดียว |
-| Output Validation | รูปแบบ ค่า และจำนวนถูกต้องหรือไม่ | JSON schema, allowed priorities และ count check |
+| Output Validation | รูปแบบ ค่า และจำนวนถูกต้องหรือไม่ | JSON schema, allowed priorities และ HIGH report count = HIGH rows |
 | Tool / Connector / MCP Permission | ระบบใดและ Action ใดเข้าถึงได้ | เขียนเฉพาะ Sheet ทดสอบ; ใช้ MCP Server ที่เชื่อถือได้; Lab 4 ไม่มี external connection |
 | Approval Gate | จุดใดต้องหยุดรอคน | HIGH, sensitive และ high-impact decisions |
 | Monitoring / Audit | ตรวจย้อนหลังและพบความผิดปกติ | request ID, route, version, override และ error |
@@ -43,7 +43,7 @@ Human-in-the-loop (การให้มนุษย์ตรวจหรือ�
 | บันทึกข้อมูลจำลองลง Sheet | ✓ | | |
 | ติดป้าย Priority เบื้องต้น | ✓ | ✓ | เมื่อ confidence ต่ำ/impact สูง |
 | ส่ง alert ถึงเจ้าของงาน | ✓ | | |
-| ส่ง weekly internal report | | ✓ | ✓ หากข้อมูลจริง/วงกว้าง |
+| สร้าง DRAFT HIGH follow-up report | ✓ | ✓ | ต้อง approve ก่อนเผยแพร่/มอบหมายจริง |
 | อนุมัติการจ่ายเงิน | | ✓ | ✓ |
 | ลงโทษ/ประเมินพนักงาน | | ✓ | ✓ |
 | ตัดสิน legal/compliance | | ✓ | ✓ |
@@ -68,7 +68,7 @@ Controls:
 
 - แยก `observed fact` ออกจาก `hypothesis`
 - บังคับให้ระบุ missing information
-- ตรวจ count ด้วย Sheet/Workflow เมื่อทำได้
+- ตรวจว่า HIGH report count เท่ากับ HIGH rows และไม่มี report สำหรับ MEDIUM/LOW
 - ห้าม AI สร้าง policy, SLA หรือ financial figure ที่ไม่มีใน input
 - ให้ Human Review สำหรับ claim ที่มีผลกระทบสูง
 
@@ -111,7 +111,7 @@ Automation bias คือการเชื่อ AI มากเกินไป
 | Connection | สิทธิ์ที่ Lab ต้องใช้ | ไม่ควรเปิดโดยไม่จำเป็น |
 |---|---|---|
 | Google Sheets | อ่าน/เขียน Sheet ทดสอบ | Drive ทั้งหมดหรือไฟล์ธุรกิจจริง |
-| Google Drive | สร้าง/เก็บ report folder | แชร์สาธารณะอัตโนมัติ |
+| Google Drive | เก็บ DRAFT report ใน restricted folder | แชร์สาธารณะอัตโนมัติ |
 | Gmail | ส่งอีเมลทดสอบถึงตนเอง | อ่าน/ส่งแทน mailbox องค์กรวงกว้าง |
 | LINE OA demo | รับ/ตอบข้อความ demo | production customer channel |
 
@@ -124,7 +124,7 @@ Automation bias คือการเชื่อ AI มากเกินไป
 - Prompt/rule/model version
 - AI summary, priority, reason และ recommendation
 - Route และ Action ที่ทำจริง
-- สำหรับ Manus: execution plan, source Request IDs, artifact version และ validation summary
+- สำหรับ Manus: execution plan, source Request IDs, HIGH report/index count, artifact version และ validation summary
 - Error/retry
 - Human approver, override และเหตุผล
 
@@ -160,7 +160,7 @@ Audit trail ไม่ควรกลายเป็นที่เก็บข�
 | สถานการณ์ | ตัวเลือกที่เหมาะเป็นจุดเริ่ม | เหตุผล |
 |---|---|---|
 | คำร้องเข้าทุก 5 นาที ต้องบันทึกและแจ้งเตือนซ้ำได้ | Make Workflow | เส้นทางและ Action ต้องคาดการณ์/monitor ได้ |
-| วิเคราะห์ dataset one-off และสร้าง executive report | Manus Agent | Goal-based multi-step analysis ลด setup ของ Workflow |
+| Triage dataset one-off และสร้าง HIGH-case reports | Manus Agent | Goal-based multi-step analysis ลด setup ของ Workflow |
 | งานมี financial/legal/employee decision | Assist + Human Approval | ไม่ควรให้ระบบใดตัดสินขั้นสุดท้ายเอง |
 | ต้องรับข้อมูลอัตโนมัติ แล้วให้ Agent วิเคราะห์เคสซับซ้อน | Hybrid | Workflow คุม Trigger/permissions; Agent ทำ bounded reasoning |
 
@@ -199,7 +199,7 @@ Make performs approved action
 1. “Agentic AI ต่างจาก chatbot เพราะ…”
 2. “Action ที่ AI ทำอัตโนมัติได้ใน use case ของฉันคือ…”
 3. “Action ที่ต้องมี Human Approval คือ…”
-4. “Management Insight ที่จะเกิดจากข้อมูลสะสมคือ…”
+4. “ข้อมูลที่ Manager ต้องยืนยันก่อนเปลี่ยน HIGH case จาก OPEN คือ…”
 5. “โจทย์ของฉันควรใช้ Make, Manus หรือ Hybrid เพราะ…”
 
 ## 🏁 Completed

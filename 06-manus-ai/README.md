@@ -2,7 +2,7 @@
 
 [← Previous: LINE OA Demo](../05-line-oa-demo/README.md) · [Home](../README.md) · [Next: Responsible AI →](../07-responsible-agentic-ai/README.md)
 
-🎯 **Goal**  ให้ Manus Agent รับ Business Goal และ dataset เดียวกับ Lab 2–3 แล้ววางแผนทำ Request Triage และ Management Report แบบ end-to-end โดยผู้เรียนไม่ประกอบ Workflow ทีละ module
+🎯 **Goal**  ให้ Manus Agent triage dataset แล้วสร้าง DRAFT Situation & Follow-up Report สำหรับทุก HIGH case แบบ end-to-end โดยผู้เรียนไม่ประกอบ Workflow ทีละ module
 
 ⏱ **Estimated Time**  30 นาที
 
@@ -25,9 +25,9 @@ Classify Requests
 ↓
 Validate Counts
 ↓
-Find Patterns and Risks
+Select HIGH Cases
 ↓
-Create Triage + Management Report Artifacts
+Create HIGH Situation Reports + Follow-up Index
 ↓
 Human Review
 ```
@@ -48,7 +48,7 @@ Human Review
 - ไม่ต้องสร้าง Manus **Skill**: Prompt + business rules + dataset ทำหน้าที่เป็น bounded task instructions ก่อน หากใช้ซ้ำในองค์กรจึงค่อยจัด playbook ที่ผ่านการทดสอบเป็น Skill
 - ไม่ใช้ **Connector**: Agent อ่านเฉพาะไฟล์แนบและสร้าง artifacts ใน workspace ไม่เชื่อม Sheet, Gmail, LINE หรือระบบภายนอก
 - ไม่ติดตั้ง **MCP Server**: Lab นี้ไม่ต้องเปิด Tools/Resources จากระบบภายนอกผ่าน MCP
-- มี **Guardrails** หลายชั้น: ข้อมูลจำลอง, ห้าม browse, ห้าม external action, บังคับ allowed values, ตรวจจำนวน rows และให้ Human Review
+- มี **Guardrails** หลายชั้น: ข้อมูลจำลอง, ห้าม browse, ห้าม external action, allowed priorities, HIGH-report count validation, DRAFT labels และ Human Review
 
 คำว่า Skill อาจมีชื่อและรูปแบบต่างกันในแต่ละแพลตฟอร์ม ดูนิยามกลางที่ [Skill](../01-introduction/glossary.md#skill), [Connector](../01-introduction/glossary.md#connector), [MCP](../01-introduction/glossary.md#mcp-model-context-protocol) และ [Guardrail](../01-introduction/glossary.md#guardrail)
 
@@ -68,7 +68,7 @@ Manus ระบุว่า Agent Mode ใช้ credits ตาม LLM tokens, v
 
 - ใช้ Agent Mode Lite ที่บัญชี Free แสดง
 - หนึ่ง task ต่อทีม ไม่ run ซ้ำโดยไม่จำเป็น
-- ใช้ dataset 14 records และห้าม external research
+- ใช้ dataset 4 records เดียวกับ Lab 2 และห้าม external research
 - ไม่กด paid upgrade เพื่อผ่าน Workshop
 - หาก credits/queue ไม่พอ ใช้ [Fallback](#fallback) ทันที
 
@@ -83,7 +83,7 @@ Manus ระบุว่า Agent Mode ใช้ credits ตาม LLM tokens, v
 | 9–12 | Upload dataset และตรวจขอบเขต |
 | 12–20 | Run bounded task |
 | 20–25 | Validate Request Triage |
-| 25–28 | Validate Management Report |
+| 25–28 | Validate HIGH Reports + Follow-up Index |
 | 28–30 | Compare, discuss และเลือก architecture |
 
 ## ก่อนเริ่ม
@@ -101,8 +101,8 @@ Manus ระบุว่า Agent Mode ใช้ credits ตาม LLM tokens, v
 
 ```text
 ช่วยผู้จัดการจัดลำดับคำร้องทางธุรกิจอย่างสม่ำเสมอ
-และเปลี่ยนประวัติคำร้องให้เป็น insight สำหรับการตัดสินใจ
-โดยยังคง Human Review สำหรับกรณีข้อมูลไม่พอหรือผลกระทบสูง
+และสร้างร่างรายงานสถานการณ์พร้อมรายการติดตามสำหรับทุก HIGH case
+โดยไม่ทำ external action และยังคง Human Review ก่อนมอบหมายหรือดำเนินการ
 ```
 
 💡 **Why This Matters**  Workflow เริ่มจาก Trigger แต่ Agent task เริ่มจาก Goal + constraints + deliverables หาก Goal คลุมเครือ Agent อาจทำงานมากเกินหรือนอกขอบเขต
@@ -131,13 +131,13 @@ Manus ระบุว่า Agent Mode ใช้ credits ตาม LLM tokens, v
 templates/manus-lab-input.md
 ```
 
-ไฟล์มี 14 คำร้องจำลองจาก Sales, Marketing, Finance, HR, Operations, IT และ Customer Service โดยไม่มี Expected Priority
+ไฟล์มี 4 คำร้องจำลองชุดเดียวกับ Lab 2: HIGH, MEDIUM, LOW และ anti-keyword โดยไม่มี Expected Priority
 
-หลัง upload ถาม Manus หรือดู file preview ว่าอ่านได้ 14 records หรือไม่ แต่อย่าเริ่ม task แยกเพื่อประหยัด credits หาก UI แสดง preview ได้อยู่แล้ว
+หลัง upload ถาม Manus หรือดู file preview ว่าอ่านได้ 4 records หรือไม่ แต่อย่าเริ่ม task แยกเพื่อประหยัด credits หาก UI แสดง preview ได้อยู่แล้ว
 
 💡 **Why This Matters**  ใช้ evidence เดียวกับโจทย์ Lab 2–3 ทำให้เปรียบเทียบวิธี orchestration ได้ยุติธรรม
 
-✅ **Checkpoint**  File name ถูกต้อง จำนวน records = 14 และไม่มีข้อมูลจริง
+✅ **Checkpoint**  File name ถูกต้อง จำนวน records = 4 และไม่มีข้อมูลจริง
 
 ## 📌 Step 4 — Run One Bounded Agent Task
 
@@ -150,9 +150,9 @@ You are a Business Request Management Agent.
 
 Your goal is to analyze the attached simulated business-request dataset,
 prioritize each request using business-impact rules,
-and turn the request history into a concise management report.
+and create a draft Situation & Follow-up Report for every HIGH request.
 
-This is a bounded analysis task.
+This is a bounded analysis and artifact-creation task.
 
 Do NOT create a workflow, automation, Make scenario, scheduled task,
 application, integration, webhook, email, message, or external action.
@@ -197,30 +197,46 @@ LOW:
 Do not classify HIGH only because the request contains words such as
 urgent, ASAP, immediately, or as soon as possible.
 
-Create two deliverables in Thai:
+Create three deliverables in Thai:
 
 Deliverable 1: Request Triage
 - A table with Request ID, Department, Summary, Priority, Reason,
   Recommended Action, Human Review, and Missing Information.
 - Include exactly one row for every input record.
 
-Deliverable 2: Weekly Management Report
-- Executive Summary
-- Total Requests
-- Priority Distribution
-- Key Issues
-- Recurring Patterns
-- Departments Requiring Attention
-- Business Risks
-- Recommended Management Actions
-- Human Review Required
-- Data Limitations
+Deliverable 2: HIGH Priority Situation & Follow-up Reports
+- Create exactly one DRAFT report for every HIGH Request ID.
+- Do not create reports for MEDIUM or LOW requests.
+- Use a separate artifact per HIGH case when supported;
+  otherwise use clearly separated sections in one artifact.
+- Include: DRAFT/Human Review banner, Request ID, Situation Overview,
+  evidence-based impact, Why HIGH, Immediate Attention,
+  Follow-up table, Decisions/Approvals, Missing Information,
+  and Human Review Sign-off.
+- Follow-up table columns:
+  Item | Proposed Owner | Target Time | Status | Evidence/Source
+- Unknown owner = Manager to assign.
+- Unknown time = Manager to confirm.
+- Status = OPEN or PENDING VALIDATION; never RESOLVED.
+- Do not invent facts, amounts, root causes, owners, deadlines, SLAs,
+  policies, actions already taken, or resolution status.
+- Use "ไม่พบในข้อมูลต้นทาง" for unsupported information.
+
+Deliverable 3: HIGH Follow-up Index
+- Request ID
+- Report/Artifact Name
+- Report Status = DRAFT — HUMAN REVIEW REQUIRED
+- Follow-up Status = OPEN
+- Owner = Manager to assign
+- Target Time = Manager to confirm
 
 Validate that:
 - the triage row count equals the input record count;
 - HIGH + MEDIUM + LOW equals the total;
-- every management claim cites supporting Request IDs;
-- observed facts are separated from hypotheses;
+- HIGH report count equals the number of HIGH triage rows;
+- every HIGH Request ID has exactly one report and one index row;
+- no MEDIUM or LOW Request ID has a HIGH report;
+- every report claim is supported by its source record;
 - no external action was performed.
 
 End with a short Validation Summary.
@@ -248,7 +264,7 @@ End with a short Validation Summary.
 
 ### 🧪 Test
 
-- [ ] มี 14 rows และ Request IDs ไม่หาย/ซ้ำ
+- [ ] มี 4 rows และ Request IDs ไม่หาย/ซ้ำ
 - [ ] Priority มีเพียง `HIGH`, `MEDIUM`, `LOW`
 - [ ] คำว่า urgent/ASAP ไม่ทำให้ HIGH โดยอัตโนมัติ
 - [ ] Payment/system outage cases อ้าง customer/revenue/operations impact
@@ -261,22 +277,25 @@ End with a short Validation Summary.
 
 ✅ **Checkpoint**  ทีมระบุอย่างน้อยหนึ่ง decision ที่เห็นด้วยและหนึ่ง decision ที่ต้องทบทวน
 
-## 📌 Step 6 — Validate Managerial AI Output
+## 📌 Step 6 — Validate HIGH Reports and Follow-up Index
 
 ### 🧪 Test
 
-- [ ] Total Requests = 14
-- [ ] Priority Distribution รวมได้ 14
-- [ ] รายงานหา pattern ข้ามหลาย requests ไม่ไล่สรุปทีละรายการอย่างเดียว
-- [ ] ทุก Key Issue/Pattern อ้าง Request IDs ที่รองรับ
-- [ ] แยก Fact กับ Hypothesis
-- [ ] มี Departments Requiring Attention และ Business Risks
-- [ ] High-impact recommendation อยู่ใต้ Human Review
-- [ ] มี Data Limitations เพราะ dataset เล็กและเป็นข้อมูลจำลอง
+- [ ] Total Requests = 4
+- [ ] `HIGH + MEDIUM + LOW = 4`
+- [ ] ตาม Business Rules มี HIGH report สำหรับ `BR-001` เพียงรายการเดียว
+- [ ] จำนวน HIGH reports เท่ากับจำนวน HIGH rows ใน triage
+- [ ] HIGH Request ID แต่ละรายการมี report และ index row อย่างละหนึ่ง
+- [ ] ไม่มี MEDIUM/LOW request ถูกสร้างเป็น HIGH report
+- [ ] ทุก report มี DRAFT/Human Review banner และ source Request ID
+- [ ] ทุก impact claim มี source evidence; ช่องที่ขาดใช้ `ไม่พบในข้อมูลต้นทาง`
+- [ ] Unknown owner/time ใช้ `Manager to assign` / `Manager to confirm`
+- [ ] Follow-up Status เป็น `OPEN` หรือ `PENDING VALIDATION` ไม่ใช่ `RESOLVED`
+- [ ] ไม่มีข้อความที่อ้างว่าได้ทำ external action แล้ว
 
-💡 **Why This Matters**  นี่คือโจทย์ Lab 3 ในรูปแบบ Agent task: Operational decisions ถูกยกระดับเป็น Managerial Insight โดยไม่สร้าง report workflow
+💡 **Why This Matters**  นี่คือโจทย์ Lab 3 ในรูปแบบ Agent task: Agent สร้าง follow-up artifacts ให้ทุก HIGH case โดยไม่ประกอบ report workflow แต่ Human ยังต้องยืนยันข้อเท็จจริง owner และ target time
 
-✅ **Checkpoint**  Manager สามารถย้อนจาก insight ไปยัง source Request IDs ได้
+✅ **Checkpoint**  Manager สามารถย้อนจาก report และ follow-up index ไปยัง HIGH source record ทุกกรณีได้
 
 ## 📌 Step 7 — Compare Architecture
 
@@ -298,16 +317,16 @@ End with a short Validation Summary.
 ### 💬 Discussion
 
 1. ถ้าต้องประมวลผลคำร้องทุก 5 นาที ควรใช้ Make หรือ Manus task?
-2. ถ้าต้องวิเคราะห์ dataset one-off และสร้าง report สำหรับผู้บริหาร ควรใช้แบบใด?
+2. ถ้าต้อง triage dataset one-off และสร้าง report ให้ HIGH cases ควรใช้แบบใด?
 3. Manus ทำ “งานมากกว่าในคำสั่งเดียว” แต่เราควบคุมและ audit ได้เท่ากับ Workflow หรือไม่?
-4. ถ้า Manus สร้าง report ได้โดยไม่ทำ external action ระบบนี้เป็น Agentic AI หรือไม่? เพราะอะไร?
+4. ถ้า Manus สร้าง HIGH reports ได้โดยไม่ทำ external action ระบบนี้เป็น Agentic AI หรือไม่? เพราะอะไร?
 5. Architecture แบบ hybrid จะใช้ Manus กับ Make ร่วมกันอย่างไรโดยไม่เพิ่ม risk เกินจำเป็น?
 
 ## Fallback
 
 ### Fallback A — Instructor Agent Run
 
-ผู้สอนเปิด task ที่ทำสำเร็จล่วงหน้า ให้ผู้เรียนตรวจ plan, triage, report และ validation โดยไม่ใช้ credits ของผู้เรียน
+ผู้สอนเปิด task ที่ทำสำเร็จล่วงหน้า ให้ผู้เรียนตรวจ plan, triage, HIGH reports, follow-up index และ validation โดยไม่ใช้ credits ของผู้เรียน
 
 ### Fallback B — Chat Mode Comparison
 
@@ -319,16 +338,16 @@ End with a short Validation Summary.
 
 ### Fallback C — Manual Team Simulation
 
-ทีมแบ่งบทบาท Planner, Triage Analyst, Management Analyst และ Reviewer แล้วทำตาม 5-step plan บน sample data จากนั้นเปรียบเทียบกับ Make
+ทีมแบ่งบทบาท Planner, Triage Analyst, HIGH Report Analyst และ Reviewer แล้วทำตาม 5-step plan บน sample data จากนั้นเปรียบเทียบกับ Make
 
 > Fallback ต้องรักษา Learning Objective เรื่อง orchestration choice ไม่จำเป็นต้องซื้อ credits
 
 ## 🏁 Completed
 
 - [ ] ระบุความต่างระหว่าง Workflow กับ Goal-based Agent ได้
-- [ ] Upload dataset จำลอง 14 records
+- [ ] Upload dataset จำลอง 4 records
 - [ ] Run หนึ่ง bounded Agent task หรือใช้ Instructor fallback
-- [ ] ตรวจ Request Triage และ Management Report
+- [ ] ตรวจ Request Triage, HIGH Situation Reports และ Follow-up Index
 - [ ] ยืนยันว่าไม่มี Workflow หรือ external action ถูกสร้าง
 - [ ] เติม architecture comparison
 - [ ] เลือกได้ว่า use case ใดเหมาะกับ Make, Manus หรือ Hybrid

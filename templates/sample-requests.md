@@ -8,7 +8,7 @@
 
 - Lab 1: เลือก 3 core cases และ 2 optional cases เพื่อทดสอบ Business Rules
 - Lab 2: Submit ผ่าน Google Form โดยเลือก HIGH/MEDIUM/LOW อย่างละ 1 รายการ
-- Lab 3: ใช้ 10–20 rows โดยเลือกหลาย department และเก็บ themes ซ้ำ
+- Lab 3: ใช้ HIGH row หนึ่งรายการจาก Lab 2; แนะนำข้อมูลแถว `01` โดยกรอก Request ID เป็น `BR-001`
 - Lab 4: ใช้ไฟล์ [manus-lab-input.md](manus-lab-input.md) ซึ่งตัด Expected Priority ออกเพื่อทดสอบ Agent อย่างยุติธรรม
 - `AMBIGUOUS` หมายถึงข้อมูลยังไม่พอ ผู้เรียนต้องระบุ missing information ก่อนตัดสิน ไม่ใช่ Priority ที่ส่งเข้า Router
 
@@ -54,22 +54,26 @@
 | LOW | 15 | เห็น routine information |
 | Anti-keyword | 03 | ทดสอบว่าคำว่า “ด่วน” ไม่ทำให้ HIGH |
 
-## Suggested Lab 3 Set
+## Suggested Lab 3 HIGH Cases
 
-ใช้ ID `01, 02, 05, 06, 09, 10, 13, 14, 17, 18, 21, 22, 25, 26` เพื่อเห็น:
+เลือกเพียงหนึ่งรายการเพื่อสร้าง Situation & Follow-up PDF:
 
-- Payment failures ซ้ำใน Sales, Finance และ Customer Service
-- Customer complaints/reputation ใน Marketing, Operations และ Customer Service
-- IT/system access issues
-- Management/urgent reports หลาย department
-- HIGH concentration ที่ payment/system disruption
+| แนะนำ | ID | เหตุผลที่เหมาะกับ Lab 3 |
+|---|---:|---|
+| Preferred | 01 | Customer + revenue + time impact ชัด และต่อจาก Suggested Lab 2 Set |
+| Alternative | 06 | Reputation risk; เหมาะกับการอภิปราย evidence กับ hypothesis |
+| Alternative | 09 | Payment outage หลายช่องทาง; เห็น operational + financial impact |
+| Alternative | 13 | Payroll/compliance; ต้องเน้น Human Approval |
+| Alternative | 17 | Operational outage; owner/target time ยังต้องยืนยัน |
+| Alternative | 21 | Core ERP disruption หลายสาขา |
+| Alternative | 25 | ลูกค้าถูกตัดเงินแต่ไม่มี order; high-impact follow-up ชัด |
 
 ## Discussion Questions
 
-1. Pattern ใดเป็น symptom และ pattern ใดอาจเป็น root cause?
-2. Department ที่มี HIGH มากที่สุดต้องการ resource หรือ process change ใด?
-3. จำนวน rows เท่านี้เพียงพอสำหรับข้อสรุปเชิงสถิติหรือไม่?
-4. Insight ใดเป็น evidence และ insight ใดเป็น hypothesis ที่ต้องสอบสวนต่อ?
+1. ข้อความใดเป็น source evidence และข้อความใดเป็น hypothesis?
+2. ข้อมูลใดยังขาดก่อน Manager มอบหมาย owner หรือยืนยัน target time?
+3. Recommendation ใดทำได้ทันที และข้อใดต้องมี approval?
+4. ใครมีสิทธิ์เปลี่ยน Follow-up Status จาก OPEN เป็น RESOLVED?
 
 ---
 

@@ -121,7 +121,7 @@ Autonomy (ระดับความเป็นอิสระ) ควรม�
 | 0: Manual | คนทำทุกขั้นตอน | อ่านและจัด Priority เอง | ตัดสินใจทั้งหมด |
 | 1: Assist | AI สร้างคำแนะนำ | Lab 1 | คนตรวจและลงมือทำ |
 | 2: Conditional Action | Workflow ทำ Action ที่ความเสี่ยงต่ำ | Lab 2 บันทึก Sheet | คนตรวจ HIGH |
-| 3: Bounded Autonomy | ระบบเลือกและทำหลายขั้นตอนภายในขอบเขต | สร้าง/ส่ง weekly report | คนกำหนด policy และ exception |
+| 3: Bounded Autonomy | ระบบเลือกและทำหลายขั้นตอนภายในขอบเขต | สร้าง HIGH follow-up draft + PDF | คนยืนยัน owner, target time และ status |
 | 4: Higher Autonomy | ระบบวางแผนและเลือก tools กว้างขึ้น | Optional agent comparison | ต้องมี guardrails และ monitoring เข้มขึ้น |
 
 “อัตโนมัติมากกว่า” ไม่ได้แปลว่า “ดีกว่า” เสมอไป ระดับที่เหมาะสมขึ้นกับ impact, reversibility, data sensitivity และ accountability
@@ -137,7 +137,7 @@ Workshop จะให้ผู้เรียนแก้โจทย์ Busines
 | เปลี่ยน process ต้องแก้ workflow | Agent อาจปรับแผนตาม context |
 | เหมาะกับงานซ้ำและ policy ชัด | เหมาะกับงานสำรวจ/วางแผนที่ขอบเขตชัดและตรวจสอบได้ |
 
-ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ส่วน Lab 4 จะให้ Manus Agent รับ Goal และ dataset เดียวกันแล้ววางแผนทำ triage กับ management report โดยไม่สร้าง Workflow ผู้เรียนต้องสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด boundary, approval, evidence และ validation เพิ่มขึ้นอย่างไร
+ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ตั้งแต่ triage จนถึง HIGH Situation & Follow-up PDF ส่วน Lab 4 จะให้ Manus Agent รับ Goal และ dataset เดียวกันแล้วทำ triage กับ HIGH-case reports โดยไม่สร้าง Workflow ผู้เรียนต้องสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด boundary, approval, evidence และ validation เพิ่มขึ้นอย่างไร
 
 ## 5. Business Request Management
 
@@ -184,7 +184,7 @@ Read → Summarize → Classify → Explain → Recommend
 
 > **Operational AI:** “What should we do with this request?”
 
-> **Managerial AI:** “What are all these requests telling us about the business?”
+> **Managerial AI:** “What must management understand, decide, and follow up for this HIGH situation?”
 
 เชื่อมกับ Management Information Systems (MIS):
 
@@ -196,9 +196,9 @@ Data → Information → Insight → Decision → Action
 |---|---|
 | Data | คำร้องแต่ละรายการ |
 | Information | Summary + Priority |
-| Insight | รูปแบบซ้ำ ความเสี่ยง และหน่วยงานที่ต้องสนใจ |
-| Decision Support | Management recommendation |
-| Action | แก้ process, จัดสรรคน, อนุมัติหรือ escalate |
+| Insight | ผลกระทบที่มีหลักฐาน ความเสี่ยง และข้อมูลที่ยังขาด |
+| Decision Support | สิ่งที่ต้อง attention, assign owner และ confirm target time |
+| Action | ติดตามสถานะ อนุมัติ หรือ escalate โดยมนุษย์ |
 
 ## 💬 Discussion
 

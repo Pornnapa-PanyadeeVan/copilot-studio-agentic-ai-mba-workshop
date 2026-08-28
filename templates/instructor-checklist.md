@@ -26,7 +26,7 @@
 - [ ] ทดสอบ Form → response sheet → `Watch New Rows` และเห็น `Row number`
 - [ ] ทดสอบ `Update a Row` ทั้ง HIGH และ MEDIUM/LOW โดยไม่เกิดแถวซ้ำ
 - [ ] ทดสอบ Router/filters ด้วย exact Priority values
-- [ ] ทดสอบการอ่านหลาย rows และ aggregate request data
+- [ ] ทดสอบค้นหา/update HIGH row ด้วย Request ID และ follow-up fields
 - [ ] ทดสอบ document generation path ที่บัญชีปัจจุบันรองรับ
 - [ ] ทดสอบ PDF export/conversion
 - [ ] ทดสอบ Google Drive upload/save
@@ -41,8 +41,8 @@
 - [ ] ตรวจ [Manus Pricing](https://manus.im/pricing) และ [Credit Rules](https://help.manus.im/en/articles/11711097-what-are-the-rules-for-credits-consumption-and-how-can-i-obtain-them)
 - [ ] ยืนยันว่าไม่มี Lab บังคับ paid model, paid Make feature, Manus paid mode หรือ Cloud Billing
 - [ ] จำกัด Lab 2 คนละ 3–5 Gemini requests
-- [ ] จำกัด Lab 3 dataset 10–20 rows
-- [ ] Lab 4 ใช้ dataset 14 rows, ไม่ browse web และรันหนึ่ง Manus Agent task ต่อทีม
+- [ ] Lab 3 ใช้ HIGH row จำลองเพียงหนึ่งรายการต่อทีม
+- [ ] Lab 4 ใช้ dataset 4 rows, ไม่ browse web และรันหนึ่ง Manus Agent task ต่อทีม
 - [ ] วางแผนกระจายเวลาสร้าง API keys ไม่ให้ 50 คนทำพร้อมกันวินาทีเดียว
 - [ ] เตรียม quota/rate-limit fallback
 
@@ -57,9 +57,9 @@
 - [ ] เตรียม Google Form และ linked response sheet สำหรับ Lab 2 fallback
 - [ ] เตรียมสำเนา sample data ใน Sheet ของผู้สอน
 - [ ] เตรียม fallback JSON จาก [Lab 2 Prompts](../03-build-agentic-workflow/prompts.md#fallback-json)
-- [ ] เตรียม fallback management report จาก [Lab 3 Prompts](../04-generate-management-report/prompts.md)
+- [ ] เตรียม fallback HIGH case และ Situation Report จาก [Lab 3 Prompts](../04-generate-management-report/prompts.md)
 - [ ] เตรียม [Manus Lab Input](manus-lab-input.md) และ [Lab 4 Prompts](../06-manus-ai/prompts.md)
-- [ ] Run Manus task ล่วงหน้าและเก็บ Instructor fallback ที่เห็น plan, triage, report และ validation
+- [ ] Run Manus task ล่วงหน้าและเก็บ Instructor fallback ที่เห็น plan, triage, HIGH reports, follow-up index และ validation
 - [ ] เตรียม blank Google Doc และ Drive folders สำหรับ fallback
 - [ ] เตรียม PDF ตัวอย่างที่ไม่มีข้อมูลจริง
 - [ ] เตรียม architecture comparison สำหรับ 13–17 ทีม
@@ -94,7 +94,7 @@
 - [ ] Run Lab 1 test case หนึ่งรายการ
 - [ ] Submit Google Form แล้ว Run Lab 2 HIGH request end-to-end
 - [ ] ตรวจว่า response row ใน Business Request Log ถูกอัปเดตโดยไม่สร้างแถวซ้ำ
-- [ ] Run Lab 3 ด้วย sample data
+- [ ] Run Lab 3 ต่อด้วย HIGH sample Request ID `BR-001` และตรวจว่า PDF ยังเป็น DRAFT
 - [ ] เปิด PDF จาก Drive
 - [ ] ส่ง Gmail ถึงตนเองและเปิด attachment
 - [ ] ตรวจ Make credit/quota dashboard
@@ -119,7 +119,7 @@
 - [ ] 00:50 หยุด Lab 1 และเริ่ม Lab 2
 - [ ] 01:15 ผู้ที่ API ยังไม่ผ่านเปลี่ยนเป็น fallback JSON
 - [ ] 01:30 พัก 10 นาที
-- [ ] 01:40 เริ่ม Lab 3 ด้วย sample data ทันที
+- [ ] 01:40 เริ่ม Lab 3 ด้วย HIGH row จาก Lab 2 หรือ fallback Request ID `BR-001` ทันที
 - [ ] 01:55 ผู้ที่ PDF connector ไม่ผ่านใช้ manual document fallback
 - [ ] 02:05 เริ่ม LINE OA Instructor Demo
 - [ ] 02:15 เริ่ม Lab 4 Manus พร้อมกันเป็นทีม
@@ -144,7 +144,7 @@
 | Gmail authorization fail | OAuth denied | ใช้ email ตนเอง/ตรวจ permission | Save Drive link only |
 | PDF generation fail | ได้ text/link ไม่ใช่ PDF | ตรวจ export/binary path | Google Docs manual export |
 | 50 API keys พร้อมกัน | throttling/verification delay | stagger 5 กลุ่ม | แชร์ผลผ่าน projector ไม่แชร์ key |
-| Manus credits ไม่พอ | Task start ไม่ได้/credit warning | หนึ่ง task ต่อทีม, dataset 14 rows, no web research | Instructor completed run |
+| Manus credits ไม่พอ | Task start ไม่ได้/credit warning | หนึ่ง task ต่อทีม, dataset 4 rows, no web research | Instructor completed run |
 | Manus queue ยาว | Estimated wait เกิน Lab time | ตรวจล่วงหน้าและ stagger teams | Recorded run + manual validation |
 | Manus ทำงานนอกขอบเขต | เสนอ app/workflow/external action | ใช้ boundary correction prompt และหยุด task หากจำเป็น | วิเคราะห์ artifacts ที่เตรียมไว้ |
 | Sensitive data ถูก paste | พบชื่อ/email จริง | หยุด run และลบจาก workspace/history ตาม policy | ใช้ sample dataset ใหม่ |
@@ -157,7 +157,8 @@
 
 ```text
 Google Form → Sheet → Make → Gemini → JSON → Router
-→ Update Row/HIGH Alert → Report → PDF → Drive → Report Email
+→ Update Row/HIGH Alert → if HIGH → DRAFT Situation Report
+→ PDF → Restricted Drive → OPEN Tracker → Human Review
 ```
 
 ### Level B — AI Manual, Workflow Hands-on
@@ -169,14 +170,14 @@ Input → Google AI Studio → Copy JSON → Make Router → Sheet
 ### Level C — Prepared Output
 
 ```text
-Prepared JSON → Make Router → Sheet → Prepared report data
+Prepared JSON → Make Router → HIGH row → Prepared DRAFT report
 ```
 
 ### Level D — Manual Simulation
 
 ```text
 Input card → Team applies AI rules → Decision card → Action card
-→ Prepared data → Management insight discussion
+→ HIGH case card → Follow-up report + Human Review discussion
 ```
 
 > Workshop ต้องสำเร็จได้แม้ automation connectors fail ผู้เรียนยังต้องอธิบาย Goal, Reasoning, Decision, Action, Data และ Human Oversight
@@ -190,7 +191,7 @@ Instructor completed Agent task
 ↓ unavailable
 Chat Mode comparison
 ↓ unavailable
-Team simulates Planner → Triage → Managerial Analyst → Reviewer
+Team simulates Planner → Triage → HIGH Report Analyst → Reviewer
 ```
 
 Learning Objective คือการเปรียบเทียบ orchestration ไม่ใช่การใช้ credits ให้หมด

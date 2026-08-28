@@ -24,6 +24,8 @@ Gemini
 Priority Decision
 ↓
 Reply / Record / Alert
+↓ if HIGH
+Situation Report + OPEN Follow-up (Lab 3 pattern)
 ```
 
 ## Key Teaching Point
@@ -77,7 +79,7 @@ recommended_action
 ### 3. Decide — Router
 
 ```text
-HIGH → Record + alert + human review message
+HIGH → Record + alert + Follow-up Status OPEN + Lab 3 report handoff
 MEDIUM → Record + normal acknowledgement
 LOW → Record + self-service acknowledgement
 ```
@@ -93,7 +95,7 @@ LOW → Record + self-service acknowledgement
 หมายเหตุ: ข้อความนี้เป็นการสาธิต ไม่ใช่คำยืนยันการแก้ไขหรือการอนุมัติ
 ```
 
-บันทึก Request Log และส่ง HIGH alert ไปยังช่องทาง demo ของผู้สอน
+บันทึก Request Log และส่ง HIGH alert ไปยังช่องทาง demo ของผู้สอน ใน production design HIGH row ควรส่งต่อ control แบบ Lab 3 เพื่อสร้าง DRAFT report และติดตามสถานะ `OPEN`; Demo 10 นาทีไม่ต้องสร้าง PDF ซ้ำ
 
 ## Security Notes
 
@@ -132,6 +134,7 @@ Channel เปลี่ยนได้ แต่ Agentic AI architecture ยั�
 - [ ] อธิบายได้ว่า LINE OA เป็น Channel
 - [ ] ไม่มี secret หรือข้อมูลจริงปรากฏ
 - [ ] Human Review ยังอยู่ใน HIGH route
+- [ ] อธิบายได้ว่า HIGH case ส่งต่อ Situation Report + OPEN follow-up ได้
 
 ---
 

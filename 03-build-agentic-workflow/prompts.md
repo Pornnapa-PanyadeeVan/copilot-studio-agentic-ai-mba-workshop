@@ -6,7 +6,7 @@
 
 ## Business Request JSON Prompt
 
-Map ค่า `{{REQUESTER}}`, `{{DEPARTMENT}}` และ `{{BUSINESS_REQUEST}}` จาก output ของ `Google Sheets — Watch New Rows`
+Map ค่า `{{REQUESTER}}`, `{{DEPARTMENT}}` และ `{{BUSINESS_REQUEST}}` จาก output ของ `Google Sheets — Watch New Rows` ส่วน `Request ID` ให้เก็บและ map กลับแถวเดิมโดยไม่ให้ AI เปลี่ยนค่า
 
 ```text
 You are a Business Request Assistant.
@@ -69,6 +69,7 @@ Submit ผ่าน Google Form ทีละรายการหลัง Make 
 ### HIGH
 
 ```text
+Request ID: BR-001
 Requester: Demo Customer
 Department: Customer Service
 Request: ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้ และอาจยกเลิกคำสั่งซื้อหากแก้ไม่ทันวันนี้
@@ -79,11 +80,14 @@ Expected:
 ```text
 Route 1 → Update a Row → Gmail
 Processing Status = HIGH — HUMAN REVIEW REQUIRED
+Report Status = NOT STARTED
+Follow-up Status = OPEN
 ```
 
 ### MEDIUM
 
 ```text
+Request ID: BR-002
 Requester: Demo Marketing Manager
 Department: Marketing
 Request: ต้องการรายงานผลแคมเปญเพื่อประชุมผู้บริหารในอีกสี่วัน ขณะนี้งานการตลาดยังดำเนินต่อได้
@@ -94,12 +98,15 @@ Expected:
 ```text
 Route 2 → Update a Row
 Processing Status = TRIAGED
+Report Status = NOT REQUIRED
+Follow-up Status = NOT REQUIRED
 No email
 ```
 
 ### LOW
 
 ```text
+Request ID: BR-003
 Requester: Demo Employee
 Department: HR
 Request: ขอทราบขั้นตอนเปลี่ยนรูป Profile ในระบบประชุมออนไลน์ ไม่มี deadline และไม่กระทบงานปัจจุบัน
@@ -110,12 +117,15 @@ Expected:
 ```text
 Route 2 → Update a Row
 Processing Status = TRIAGED
+Report Status = NOT REQUIRED
+Follow-up Status = NOT REQUIRED
 No email
 ```
 
 ### Anti-keyword Test
 
 ```text
+Request ID: BR-004
 Requester: Demo Employee
 Department: HR
 Request: ด่วนมาก ASAP กรุณาส่งคู่มือการตั้งค่าธีมสีของระบบ ไม่มีลูกค้า รายได้ หรือ operations ได้รับผลกระทบ
@@ -188,7 +198,7 @@ LOW
 **Subject**
 
 ```text
-[TEST] HIGH Priority Business Request — Human Review Required
+[TEST][HIGH] {{REQUEST_ID}} — Human Review Required
 ```
 
 **Body**
@@ -196,6 +206,7 @@ LOW
 ```text
 นี่คือการแจ้งเตือนจาก Workshop ด้วยข้อมูลจำลอง
 
+Request ID: {{REQUEST_ID}}
 ผู้ร้อง: {{REQUESTER}}
 หน่วยงาน: {{DEPARTMENT}}
 คำร้อง: {{BUSINESS_REQUEST}}
@@ -203,8 +214,10 @@ LOW
 Priority: {{PRIORITY}}
 เหตุผล: {{REASON}}
 การดำเนินการที่แนะนำ: {{RECOMMENDED_ACTION}}
+Report Status: NOT STARTED
+Follow-up Status: OPEN
 
-โปรดตรวจสอบข้อเท็จจริงก่อนดำเนินการ
+โปรดตรวจสอบข้อเท็จจริง และใช้ Request ID เดิมสร้าง Situation & Follow-up PDF ใน Lab 3
 ```
 
 ## Sheet Alert Marker Fallback

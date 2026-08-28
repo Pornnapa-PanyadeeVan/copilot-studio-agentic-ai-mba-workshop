@@ -114,6 +114,24 @@
 | **Quick Fix** | ใช้ `Update a Row`; map `Row number` และ Form fields จาก `Watch New Rows`; map ผล AI จาก `Parse JSON` แล้วทดสอบ 1 response |
 | **Instructor Fallback** | อัปเดต prepared row ด้วยมือและตรวจ mapping table ใน Lab 2 |
 
+## Scenario runs but Sheet fields are missing
+
+| | |
+|---|---|
+| **Problem** | Scenario ผ่านแต่ไม่มี row หรือ row อยู่ผิด Sheet |
+| **Likely Cause** | Action ไม่ได้ run, route ไม่ match, เลือก Spreadsheet/Sheet ผิด, header changed หรือ permission |
+| **Quick Fix** | เปิด run history ตาม bundle, ตรวจ selected file/tab และ refresh column mapping |
+| **Instructor Fallback** | อัปเดต prepared row ด้วยตนเองและให้ผู้เรียนวาด mapping Form/AI fields → 13 Sheet columns |
+
+## Lab 3 cannot find or update the HIGH row
+
+| | |
+|---|---|
+| **Problem** | สร้าง PDF ได้แต่ Report Link/Follow-up Status ไม่อัปเดตใน row เดิม |
+| **Likely Cause** | Request ID ว่าง/ซ้ำ, ค้นหาผิด Sheet, ใช้ add-row แทน update-row หรือ row number mapping หาย |
+| **Quick Fix** | ค้นด้วย exact Request ID, ตรวจว่า Priority = HIGH แล้ว map `Report Status`, `Report Link`, `Follow-up Status` ไปยัง update action |
+| **Instructor Fallback** | อัปเดตสาม fields ด้วยตนเองเป็น `DRAFT — HUMAN REVIEW REQUIRED`, filename/link และ `OPEN`; ห้ามสร้าง duplicate row |
+
 ## Gmail connection unavailable
 
 | | |
@@ -138,17 +156,17 @@
 |---|---|
 | **Problem** | หา folder ไม่พบ, upload denied หรือ link เปิดไม่ได้ |
 | **Likely Cause** | ผิด account/Drive, folder ownership, insufficient scope หรือ shared-drive restriction |
-| **Quick Fix** | ใช้ My Drive ของตนเอง สร้าง `Agentic-AI-Reports/Weekly-Reports` และ reconnect |
+| **Quick Fix** | ใช้ My Drive ของตนเอง สร้าง `Agentic-AI-Reports/HIGH-Follow-up` และ reconnect |
 | **Instructor Fallback** | เก็บ PDF local ชั่วคราวและบันทึก intended Drive path ใน worksheet; ไม่เปิด public sharing |
 
-## Report only summarizes individual requests
+## HIGH report invents facts or says RESOLVED
 
 | | |
 |---|---|
-| **Problem** | รายงานไล่สรุป Record 1, 2, 3 แต่ไม่มี pattern/risk/insight |
-| **Likely Cause** | Dataset เล็ก, ไม่มี theme ซ้ำ หรือ Prompt ไม่เน้น cross-record analysis |
-| **Quick Fix** | ใช้ 10–20 sample rows ที่มี repeated themes และย้ำ `NOT to summarize each request separately` |
-| **Instructor Fallback** | ใช้ Suggested Lab 3 Set ใน [sample data](../templates/sample-requests.md#suggested-lab-3-set) แล้วอภิปราย pattern ด้วยมือ |
+| **Problem** | Report แต่ง root cause/owner/deadline หรือใช้สถานะ RESOLVED ทั้งที่ source ไม่ยืนยัน |
+| **Likely Cause** | Source fields ไม่ครบ, Prompt ไม่บังคับ evidence หรือ AI เติมช่องว่างให้ดูสมบูรณ์ |
+| **Quick Fix** | ใช้ [Correction Prompt](../04-generate-management-report/prompts.md#correction-prompt), แทนข้อมูลที่ขาดด้วย `ไม่พบในข้อมูลต้นทาง` และคง `OPEN` |
+| **Instructor Fallback** | ใช้ [Fallback HIGH Case](../04-generate-management-report/prompts.md#fallback-high-case), ตรวจด้วย checklist และสร้าง DRAFT PDF ด้วยมือ |
 
 ## Workflow does not run
 
@@ -192,7 +210,7 @@
 |---|---|
 | **Problem** | Credits ไม่พอ, task อยู่ใน queue นาน หรือระบบเสนอ upgrade |
 | **Likely Cause** | Task complexity, daily/monthly credit rules, concurrent demand หรือ Free-plan limit |
-| **Quick Fix** | หนึ่ง task ต่อทีม ใช้ dataset 14 rows, no web research และ compact prompt; อย่า run ซ้ำโดยไม่ตรวจผลเดิม |
+| **Quick Fix** | หนึ่ง task ต่อทีม ใช้ dataset 4 rows, no web research และ compact prompt; อย่า run ซ้ำโดยไม่ตรวจผลเดิม |
 | **Instructor Fallback** | ใช้ recorded/completed Instructor run แล้วให้ทีม validate triage/report ด้วย source Request IDs |
 
 ## Manus cannot read the uploaded dataset
@@ -201,7 +219,7 @@
 |---|---|
 | **Problem** | Agent ไม่เห็นไฟล์, อ่านจำนวน records ผิด หรือข้าม Request IDs |
 | **Likely Cause** | Upload ไม่สมบูรณ์, file context ไม่ถูกแนบ, table parsing หรือ task เริ่มก่อน upload เสร็จ |
-| **Quick Fix** | ตรวจว่า `manus-lab-input.md` ปรากฏใน task และระบุให้ preserve 14 Request IDs โดยไม่เริ่ม task ใหม่ถ้าแก้ใน session เดิมได้ |
+| **Quick Fix** | ตรวจว่า `manus-lab-input.md` ปรากฏใน task และระบุให้ preserve 4 Request IDs โดยไม่เริ่ม task ใหม่ถ้าแก้ใน session เดิมได้ |
 | **Instructor Fallback** | Paste dataset บางส่วนหรือใช้ Instructor task; ให้ทีมตรวจ row count และ missing IDs ด้วยตนเอง |
 
 ## Manus proposes a workflow or external action
@@ -213,11 +231,11 @@
 | **Quick Fix** | ใช้ [Boundary Correction Prompt](../06-manus-ai/prompts.md#boundary-correction-prompt) และหยุด task หากกำลังจะทำ external action |
 | **Instructor Fallback** | ใช้ prepared artifacts ที่ analysis-only แล้วอภิปรายว่าทำไม boundary เป็นส่วนหนึ่งของ Agent design |
 
-## Manus triage or report fails validation
+## Manus triage or HIGH reports fail validation
 
 | | |
 |---|---|
-| **Problem** | Row count ไม่ใช่ 14, total ไม่ตรง, Priority ผิด schema, pattern ไม่มี Request IDs หรืออ้างว่าทำ Action แล้ว |
+| **Problem** | Row count ไม่ใช่ 4, HIGH report count ไม่ตรง HIGH rows, report ซ้ำ/หาย, แต่ง facts หรืออ้างว่าทำ Action แล้ว |
 | **Likely Cause** | Agent ข้าม record, dataset context หาย, hallucination หรือ validation ไม่ถูกทำ |
 | **Quick Fix** | ตรวจด้วย checklist ใน Lab 4; ใช้ Validation Prompt เฉพาะเมื่อ credits พอ หรือแก้/annotate ด้วยมือ |
 | **Instructor Fallback** | ให้ทีมทำ reviewer role ระบุ fail points และเปรียบเทียบกับ deterministic validation ใน Make |

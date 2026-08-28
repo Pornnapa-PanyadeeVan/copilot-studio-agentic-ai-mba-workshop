@@ -249,7 +249,7 @@ Skill อาจประกอบด้วย:
 
 | Component | ตัวอย่าง |
 |---|---|
-| Goal | ช่วย Manager จัดลำดับคำร้องและเห็นปัญหาซ้ำ |
+| Goal | ช่วย Manager จัดลำดับคำร้องและติดตาม HIGH situations |
 | Agent | Business Request Assistant |
 | Skill | Playbook สำหรับสรุป จัด Priority และตรวจผล |
 | Tool | Analyze text, add row, create report |
@@ -258,7 +258,7 @@ Skill อาจประกอบด้วย:
 | Workflow | Input → Gemini → JSON → Router → Sheet/Alert |
 | Guardrail | ใช้ข้อมูลจำลอง, 3 Priority values, anti-urgent rule, Human Review |
 | Memory | Business Request Log |
-| Artifact | Weekly Management Report PDF |
+| Artifact | DRAFT HIGH Situation & Follow-up PDF |
 | Audit Trail | Request ID, reason, route, timestamp, approver |
 | Feedback | Manager override และเหตุผล |
 

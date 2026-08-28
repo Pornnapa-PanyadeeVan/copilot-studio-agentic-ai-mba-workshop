@@ -1,6 +1,6 @@
 # Build Your First Agentic AI for Business
 
-**From Generative AI to AI Agent, Workflow, Decision, Action, and Management Report**
+**From Generative AI to AI Agent, Workflow, Decision, Action, and HIGH Priority Follow-up**
 
 Workshop เชิงปฏิบัติการ 3 ชั่วโมงสำหรับนักศึกษา MBA เพื่อเข้าใจและออกแบบ **Agentic AI (ระบบ AI ที่ทำงานสู่เป้าหมายผ่านการให้เหตุผล เครื่องมือ การตัดสินใจ และการลงมือทำ)** โดยไม่ต้องเขียนโปรแกรมและไม่พึ่ง Microsoft Copilot Studio
 
@@ -34,8 +34,8 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 4. สร้าง `Business Request Assistant` ด้วย System Instructions ใน Google AI Studio
 5. ใช้ Business Rules เพื่อจัดลำดับ `HIGH`, `MEDIUM`, `LOW` จากผลกระทบจริง
 6. เชื่อม Google Form → Google Sheets → Gemini → Decision Router → Update Row/Alert ใน Make
-7. เปลี่ยน Request History ให้เป็น Management Insight และส่งรายงาน PDF
-8. ให้ Manus Agent รับ Goal เดียวกับ Lab 2–3 แล้ววางแผน วิเคราะห์ และสร้าง deliverables โดยไม่ประกอบ Workflow
+7. นำ HIGH route ไปสร้าง Situation & Follow-up PDF พร้อมสถานะ `OPEN` และ Human Review
+8. ให้ Manus Agent รับ Goal เดียวกับ Lab 2–3 แล้วทำ triage และสร้าง HIGH-case report โดยไม่ประกอบ Workflow
 9. เปรียบเทียบ Human-designed Workflow กับ Goal-based Autonomous Agent
 10. กำหนด Guardrails, Human-in-the-loop, permission, audit trail และ fallback ที่เหมาะสม
 
@@ -93,18 +93,14 @@ Make Workflow / Orchestrator
 ├─ Priority Decision / Router
 ├─ Tool + Connector
 └─ Action → Update Google Sheets / HIGH Alert
-↓
-Request History
-↓
-Management Analysis
-↓
-PDF Report
-↓
-Google Drive
-↓
-Email
-↓
-Human Decision
+              ↓
+         If Priority = HIGH
+              ↓
+Situation & Follow-up Report → Validate → DRAFT PDF
+              ↓
+Report Link + Follow-up Status = OPEN
+              ↓
+Human Review / Assign Owner / Confirm Target Time
 ```
 
 ## สองวิธีแก้โจทย์เดียวกัน
@@ -119,9 +115,9 @@ Human designs       Human defines Goal,
 every module        Rules and Deliverables
         │                 │
 Gemini → Router     Agent plans and executes
-→ Sheet → Report    analysis in its workspace
+→ HIGH PDF          triage + HIGH reports
         │                 │
-Real Workflow       Triage + Insight + Report
+Real Workflow       Triage + Follow-up Reports
 and Actions         without building Workflow
 ```
 
@@ -135,9 +131,9 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 | 00:20–00:50 | [Lab 1: AI Agent](02-build-ai-agent/README.md) | Agent วิเคราะห์และจัด Priority |
 | 00:50–01:30 | [Lab 2: Agentic Workflow](03-build-agentic-workflow/README.md) | Form → Sheet → AI decision → Update Row/Alert |
 | 01:30–01:40 | Break | พัก 10 นาที |
-| 01:40–02:05 | [Lab 3: Managerial AI](04-generate-management-report/README.md) | Request History → Insight → PDF/Email |
+| 01:40–02:05 | [Lab 3: Managerial AI](04-generate-management-report/README.md) | HIGH case → Situation & Follow-up PDF → OPEN tracker |
 | 02:05–02:15 | [LINE OA Demo](05-line-oa-demo/README.md) | เห็น Channel → Agentic Workflow |
-| 02:15–02:45 | [Lab 4: Manus AI](06-manus-ai/README.md) | ทำโจทย์ Lab 2+3 แบบ Goal-based Agent โดยไม่สร้าง Workflow |
+| 02:15–02:45 | [Lab 4: Manus AI](06-manus-ai/README.md) | Triage + HIGH reports แบบ Goal-based Agent โดยไม่สร้าง Workflow |
 | 02:45–03:00 | [Responsible Agentic AI](07-responsible-agentic-ai/README.md) + Compare + Wrap-up | Human oversight และเลือก architecture ให้เหมาะกับงาน |
 
 กิจกรรมหลังชั้นเรียน: [Optional MBA Agentic AI Challenge](08-optional-mba-challenge/README.md)
@@ -187,14 +183,14 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 | เครื่องมือ | ใช้ทำอะไร | หมายเหตุ |
 |---|---|---|
 | [Google AI Studio](https://aistudio.google.com/) | ทดลอง Prompt และ System Instructions | Lab 1 ใช้โดยไม่ต้องคัดลอก API key |
-| [Gemini API](https://ai.google.dev/gemini-api/docs) | วิเคราะห์คำร้องและสร้างรายงานจาก Make | ใช้ key ของผู้เรียน; free tier มี rate limits |
+| [Gemini API](https://ai.google.dev/gemini-api/docs) | วิเคราะห์คำร้องและร่าง HIGH situation report จาก Make | ใช้ key ของผู้เรียน; free tier มี rate limits |
 | [Make](https://www.make.com/) | Workflow Orchestrator (ตัวประสานขั้นตอนงาน) | Free plan มี credit/feature limits และอาจเปลี่ยนได้ |
 | Google Forms | ช่องทางรับ Business Request ใน Lab 2 | ไม่เก็บ email หากไม่จำเป็น และใช้ข้อมูลจำลอง |
 | Google Sheets | Form response log, ผล AI และข้อมูลสะสม | ใช้ข้อมูลจำลอง |
 | Google Docs / Drive | สร้างและเก็บรายงาน | Permission ต้องอนุญาตให้ Make ตามที่ใช้จริง |
 | Gmail | ส่งรายงานถึงอีเมลของผู้เรียนเอง | ใช้ `[Your Email]` ในคู่มือเสมอ |
 | LINE OA | Channel สำหรับ instructor demo | ผู้สอนเตรียมล่วงหน้า; ผู้เรียนไม่ต้องสร้างบัญชี |
-| [Manus](https://manus.im/) | Goal-based Agent สำหรับทำ triage + management report โดยไม่ประกอบ Workflow | Lab 4 ใช้ Agent Mode Lite เท่าที่ Free plan/credits เปิดให้ |
+| [Manus](https://manus.im/) | Goal-based Agent สำหรับทำ triage + HIGH-case reports โดยไม่ประกอบ Workflow | Lab 4 ใช้ Agent Mode Lite เท่าที่ Free plan/credits เปิดให้ |
 
 ## Free-tier และความเป็นส่วนตัว
 
@@ -215,7 +211,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 1. [Introduction — แนวคิด คำศัพท์พื้นฐาน และ Autonomy Spectrum](01-introduction/README.md)
 2. [Lab 1 — Google AI Studio Agent](02-build-ai-agent/README.md) · [Prompts](02-build-ai-agent/prompts.md)
 3. [Lab 2 — Make Agentic Workflow](03-build-agentic-workflow/README.md) · [Prompts](03-build-agentic-workflow/prompts.md)
-4. [Lab 3 — Managerial AI: Report, PDF และ Email](04-generate-management-report/README.md) · [Prompts](04-generate-management-report/prompts.md)
+4. [Lab 3 — Managerial AI: HIGH Situation & Follow-up PDF](04-generate-management-report/README.md) · [Prompts](04-generate-management-report/prompts.md)
 5. [LINE OA Instructor Demo](05-line-oa-demo/README.md)
 6. [Lab 4 — Manus AI: Lab 2+3 without Workflow](06-manus-ai/README.md) · [Prompts](06-manus-ai/prompts.md)
 7. [Responsible Agentic AI + Architecture Comparison](07-responsible-agentic-ai/README.md)
@@ -229,17 +225,17 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 - AI Agent ที่ใช้ System Instructions และทดสอบ Business Rules แล้ว
 - Google Form ที่เชื่อมกับ response sheet
 - Make scenario ที่ Watch New Rows, เรียก Gemini, route ตาม Priority และอัปเดตแถวเดิม
-- Request Log ที่มี HIGH, MEDIUM และ LOW อย่างน้อยประเภทละหนึ่งรายการโดยไม่มีแถวซ้ำ
-- Weekly Management Report ที่มองหารูปแบบข้ามหลายคำร้อง
-- PDF บน Google Drive และอีเมลทดสอบถึงตนเอง หรือ fallback artifact ที่เทียบเท่า
-- Manus task ที่สร้าง Request Triage และ Management Report จาก Goal เดียว โดยไม่สร้าง Workflow
+- Request Log ที่มี HIGH, MEDIUM และ LOW อย่างน้อยประเภทละหนึ่งรายการ พร้อม Request ID และ follow-up fields
+- ร่าง HIGH Priority Situation & Follow-up Report ที่อ้าง source evidence
+- DRAFT PDF แบบ restricted และ HIGH row ที่มี `Follow-up Status = OPEN`
+- Manus task ที่สร้าง Request Triage และ HIGH-case reports จาก Goal เดียว โดยไม่สร้าง Workflow
 - ตารางเปรียบเทียบ Make Workflow กับ Manus Agent พร้อมข้อเสนอว่าเมื่อใดควรใช้แบบใด
 
 ## คำถามสรุป
 
 > **Operational AI asks:** “What should we do with this request?”
 >
-> **Managerial AI asks:** “What are all these requests telling us about the business?”
+> **Managerial AI asks:** “What must management understand, decide, and follow up for this HIGH situation?”
 
 ---
 

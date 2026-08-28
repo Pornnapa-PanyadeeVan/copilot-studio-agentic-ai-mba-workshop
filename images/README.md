@@ -20,21 +20,22 @@ Repository นี้ไม่สร้าง screenshot ปลอม เพร�
 | `01-ai-studio-start.png` | Google AI Studio | พื้นที่เริ่ม prompt โดยไม่มีข้อมูลส่วนตัว | Lab 1 Step 1 |
 | `02-system-instructions.png` | Google AI Studio | System Instructions area | Lab 1 Step 3 |
 | `03-agent-test-output.png` | Google AI Studio | Summary, Priority, Reason, Action | Lab 1 test |
-| `04-ai-studio-api-key-redacted.png` | API key page | จุดสร้าง key โดยปิดค่าของ key | Lab 2 Step 2 |
-| `05-sheet-columns.png` | Google Forms + Sheets | Form questions และ 9 columns ของ Business Request Log | Lab 2 Steps 1–2 |
-| `06-make-new-scenario.png` | Make | Scenario canvas | Lab 2 Step 3 |
-| `07-make-gemini-connection.png` | Make | Connection dialog โดยไม่เห็น key | Lab 2 Step 4 |
-| `08-make-json-output.png` | Make run history | JSON 4 fields | Lab 2 Step 5 |
+| `04-ai-studio-api-key-redacted.png` | API key page | จุดสร้าง key โดยปิดค่าของ key | Lab 2 Step 3 |
+| `05-sheet-columns.png` | Google Forms + Sheets | Form questions และ 13 columns ของ Business Request Log | Lab 2 Steps 1–2 |
+| `06-make-new-scenario.png` | Make | Scenario canvas | Lab 2 Step 4 |
+| `07-make-gemini-connection.png` | Make | Connection dialog โดยไม่เห็น key | Lab 2 Step 5 |
+| `08-make-json-output.png` | Make run history | JSON 4 fields | Lab 2 Steps 5–6 |
 | `09-make-router.png` | Make | HIGH และ MEDIUM/LOW routes | Lab 2 Step 7 |
-| `10-sheet-result.png` | Google Sheets | Form response และ AI result ในแถวเดียวกัน | Lab 2 checkpoint |
-| `11-report-flow.png` | Make | Read → Gemini → Document → PDF → Drive → Gmail | Lab 3 overview |
-| `12-management-report.png` | Google Docs/PDF | Section headings ของ report | Lab 3 checkpoint |
-| `13-drive-report.png` | Google Drive | Weekly-Reports folder และไฟล์จำลอง | Lab 3 Step 6 |
-| `14-email-test.png` | Gmail | อีเมลถึงตนเอง ไม่มี address จริง | Lab 3 Step 7 |
+| `10-sheet-result.png` | Google Sheets | Form response, AI result และ follow-up fields ในแถวเดียวกัน | Lab 2 checkpoint |
+| `11-report-flow.png` | Make | HIGH row → Gemini → Validate → PDF → Tracker | Lab 3 overview |
+| `12-high-situation-report.png` | Google Docs/PDF | DRAFT banner, evidence, follow-up table, Human Review | Lab 3 checkpoint |
+| `13-drive-report.png` | Google Drive | HIGH-Follow-up folder และไฟล์ DRAFT จำลอง | Lab 3 Step 6 |
+| `14-email-test.png` | Gmail | `[DRAFT][HIGH]` email ถึงตนเอง ไม่มี address จริง | Lab 3 Step 8 |
 | `15-line-demo.png` | LINE OA + Make | Channel → Webhook → Make | Instructor demo |
 | `16-manus-agent-mode.png` | Manus | Agent Mode/credit notice โดยปิด account details | Lab 4 Step 2 |
-| `17-manus-dataset-upload.png` | Manus | `manus-lab-input.md` และจำนวน 14 records | Lab 4 Step 3 |
-| `18-manus-task-artifacts.png` | Manus | Execution plan, triage และ report โดยไม่มีข้อมูลจริง | Lab 4 validation |
+| `17-manus-dataset-upload.png` | Manus | `manus-lab-input.md` และจำนวน 4 records | Lab 4 Step 3 |
+| `18-manus-high-reports.png` | Manus | HIGH report count = HIGH triage rows + Follow-up Index | Lab 4 Step 6 |
+| `19-manus-task-artifacts.png` | Manus | Execution plan, triage, HIGH reports และ index โดยไม่มีข้อมูลจริง | Lab 4 validation |
 
 ## รูปแบบ Caption
 

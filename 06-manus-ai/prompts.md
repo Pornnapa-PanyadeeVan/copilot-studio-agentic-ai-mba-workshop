@@ -9,26 +9,25 @@
 ```text
 You are a Business Request Management Agent.
 
-Your goal is to analyze the attached simulated business-request dataset,
-prioritize each request using business-impact rules,
-and turn the request history into a concise management report.
+Your goal is to triage the attached simulated business requests
+and create a draft Situation & Follow-up Report for every request
+that you classify as HIGH.
 
-This is a bounded analysis task.
+This is a bounded analysis and artifact-creation task.
 
 Do NOT create a workflow, automation, Make scenario, scheduled task,
 application, integration, webhook, email, message, or external action.
-
 Do NOT browse the web or use external sources.
 Use only the attached file.
 
 First, present a concise execution plan with no more than 5 steps.
 Then execute the plan.
 
-For each request:
+For every request:
 1. Preserve the Request ID.
 2. Summarize it in one concise Thai sentence.
 3. Classify priority as exactly HIGH, MEDIUM, or LOW.
-4. Explain the business-impact reason briefly.
+4. Explain the business-impact reason using source evidence.
 5. Recommend the next business action.
 6. Set Human Review to YES when information is missing,
    the impact is high, or a sensitive decision may be involved.
@@ -58,38 +57,65 @@ LOW:
 Do not classify HIGH only because the request contains words such as
 urgent, ASAP, immediately, or as soon as possible.
 
-Create two deliverables in Thai:
+Create three deliverables in Thai:
 
 Deliverable 1: Request Triage
 - A table with Request ID, Department, Summary, Priority, Reason,
   Recommended Action, Human Review, and Missing Information.
 - Include exactly one row for every input record.
 
-Deliverable 2: Weekly Management Report
-- Executive Summary
-- Total Requests
-- Priority Distribution
-- Key Issues
-- Recurring Patterns
-- Departments Requiring Attention
-- Business Risks
-- Recommended Management Actions
-- Human Review Required
-- Data Limitations
+Deliverable 2: HIGH Priority Situation & Follow-up Reports
+- Create exactly one draft report for every Request ID classified as HIGH.
+- Do not create reports for MEDIUM or LOW requests.
+- Use a separate artifact/file per HIGH case when supported.
+  Otherwise use clearly separated report sections in one artifact.
+- Suggested filename:
+  DRAFT-HIGH-Situation-Report-[Request-ID]
+
+Each HIGH report must include:
+1. DRAFT — HIGH PRIORITY — HUMAN REVIEW REQUIRED
+2. Request ID, Department, Source Priority
+3. Situation Overview
+4. Evidence-based Business Impact:
+   Customer, Financial/Revenue, Operations,
+   Compliance/Reputation, Time Sensitivity
+5. Why HIGH
+6. Immediate Attention Required
+   Label all items as recommendations pending human confirmation.
+7. Follow-up table:
+   Follow-up Item | Proposed Owner | Target Time | Status | Evidence/Source
+   Use "Manager to assign" for unknown owners.
+   Use "Manager to confirm" for unknown target times.
+   Use OPEN or PENDING VALIDATION; never use RESOLVED.
+8. Decisions or Approvals Required
+9. Missing Information
+10. Human Review Sign-off
+
+Do not invent facts, counts, amounts, root causes, owner names,
+deadlines, resolution status, policies, or SLAs.
+Use "ไม่พบในข้อมูลต้นทาง" for unsupported information.
+
+Deliverable 3: HIGH Follow-up Index
+- Request ID
+- Report/Artifact Name
+- Report Status = DRAFT — HUMAN REVIEW REQUIRED
+- Follow-up Status = OPEN
+- Owner = Manager to assign
+- Target Time = Manager to confirm
 
 Validate that:
 - the triage row count equals the input record count;
 - HIGH + MEDIUM + LOW equals the total;
-- every management claim cites supporting Request IDs;
-- observed facts are separated from hypotheses;
+- the HIGH report count equals the number of HIGH triage rows;
+- every HIGH Request ID has exactly one report and one index row;
+- no MEDIUM or LOW Request ID has a HIGH report;
+- every report claim is supported by its source record;
 - no external action was performed.
 
 End with a short Validation Summary.
 ```
 
 ## Compact Prompt — Low-credit Fallback
-
-ใช้เมื่อ Instructor ต้องลดความซับซ้อน ไม่รับประกันจำนวน credits ที่ใช้:
 
 ```text
 Analyze only the attached simulated dataset.
@@ -103,18 +129,18 @@ Produce in Thai:
 1. One triage table with exactly one row per Request ID:
    ID, Department, Summary, HIGH/MEDIUM/LOW, Reason,
    Recommended Action, Human Review, Missing Information.
-2. One concise management report:
-   Total, Priority Distribution, Recurring Patterns,
-   Departments Requiring Attention, Risks, Actions,
-   Human Review, Data Limitations.
+2. For each HIGH row only, one concise DRAFT Situation & Follow-up Report:
+   Request ID, Situation, Evidence-based Impact, Why HIGH,
+   Immediate Attention, Follow-up Items, Missing Information,
+   Human Review. Unknown owner = Manager to assign.
+   Unknown time = Manager to confirm. Status = OPEN.
+3. One HIGH Follow-up Index.
 
-Validate row count, totals, and cite Request IDs for every pattern.
-Do not treat urgent words alone as HIGH.
+Validate row count and ensure HIGH report count equals HIGH row count.
+Do not treat urgent words alone as HIGH. Do not invent missing facts.
 ```
 
 ## Boundary Correction Prompt
-
-ใช้เมื่อ Agent เสนอทำสิ่งนอกขอบเขต:
 
 ```text
 Stop the proposed external or automation work.
@@ -126,13 +152,14 @@ webhook, email, message, or external action.
 
 Use only the attached simulated dataset.
 
-Complete only the Request Triage, Weekly Management Report,
-and Validation Summary.
+Complete only:
+1. Request Triage
+2. DRAFT HIGH Priority Situation & Follow-up Reports
+3. HIGH Follow-up Index
+4. Validation Summary
 ```
 
 ## Validation Prompt
-
-ใช้เฉพาะเมื่อ output ขาดส่วนสำคัญและทีมยังมี credits:
 
 ```text
 Validate the existing deliverables without starting a new analysis.
@@ -143,8 +170,13 @@ Check:
 - priorities outside HIGH, MEDIUM, LOW;
 - whether urgent words were incorrectly used as the only reason for HIGH;
 - HIGH + MEDIUM + LOW versus total;
-- claims without supporting Request IDs;
-- missing Human Review flags;
+- HIGH report count versus HIGH triage row count;
+- missing or duplicate HIGH reports;
+- any HIGH report created for a MEDIUM or LOW row;
+- claims without source evidence;
+- invented root cause, amount, owner, deadline, SLA, or resolution;
+- missing DRAFT/Human Review labels;
+- follow-up status other than OPEN/PENDING VALIDATION;
 - any statement that implies an external action was performed.
 
 Return only:
@@ -160,11 +192,10 @@ Respond in Thai.
 ทีมตอบด้วยตนเองเพื่อไม่เพิ่ม credits:
 
 ```text
-Which parts of the task were planned by humans?
+Which parts of triage and HIGH-report creation were planned by humans?
 Which parts were planned by the agent?
-What evidence supports each decision?
-What would make this task repeatable?
-What would require a deterministic workflow?
+What evidence supports each HIGH decision?
+How would a deterministic workflow create and track the same reports?
 What must remain under human approval?
 ```
 
