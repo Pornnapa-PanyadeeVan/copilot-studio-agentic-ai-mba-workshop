@@ -41,6 +41,8 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 
 ## เส้นทางการเรียนรู้
 
+ลำดับนี้แสดง progression ของ Workshop ไม่ใช่ลำดับ runtime; ในระบบจริง Workflow หรือ Agent execution อาจครอบ Trigger, Reasoning, Decision, Tools และ Actions ทั้งชุด
+
 ```text
 Generative AI
 ↓
@@ -48,9 +50,9 @@ AI Agent
 ↓
 Agent + Business Rules
 ↓
-Workflow
-↓
 Decision
+↓
+Workflow + Tools / Connectors
 ↓
 Action
 ↓
@@ -84,17 +86,11 @@ Agentic AI
 ```text
 Business Request
 ↓
-AI Agent
-↓
-Reason
-↓
-Priority Decision
-↓
-Workflow
-↓
-Action
-↓
-Google Sheets
+Make Workflow / Orchestrator
+├─ AI Agent / Gemini Reasoning
+├─ Priority Decision / Router
+├─ Tool + Connector
+└─ Action → Google Sheets
 ↓
 Request History
 ↓

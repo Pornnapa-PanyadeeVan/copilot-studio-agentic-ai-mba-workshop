@@ -11,7 +11,7 @@
 ## Learning Path
 
 ```text
-Generative AI → AI Agent → Agent + Rules → Workflow → Decision → Action
+Generative AI → AI Agent → Agent + Rules → Decision → Workflow + Tools / Connectors → Action
 → Data / Memory → Management Report → Insight → Human Decision → Agentic AI
 ```
 
@@ -91,46 +91,44 @@ Recommend
 
 ใน Workshop นี้ Agent จะวิเคราะห์คำร้อง จัด Priority และแนะนำการดำเนินการ แต่ใน Lab 1 ยังไม่สั่งระบบอื่น
 
-## 3. Agent + Tools, Connectors และ MCP
+## 3. จาก Decision สู่ Action: Workflow, Tools, Connectors และ MCP
 
-**Tool** คือความสามารถที่ Agent หรือ Workflow เรียกใช้เพื่อทำงานหนึ่งอย่าง Tool ไม่จำเป็นต้องเชื่อมระบบภายนอก เช่น calculator, parser หรือ file generator ก็เป็น Tool ได้
-
-เมื่อ Tool ต้องอ่านหรือเปลี่ยนข้อมูลในระบบภายนอก **Connector** จะรับผิดชอบการเชื่อมต่อ authentication และ permission ส่วน **MCP** เป็นอีกแนวทางหนึ่งที่กำหนดมาตรฐานให้ AI application ค้นพบและเรียก Resources, Prompts หรือ Tools จาก MCP Server
+Workflow หรือ Agent execution เป็นกรอบที่ประสานลำดับตั้งแต่รับ Input ไปจนถึง Feedback ภายในกรอบนั้น Decision จะเลือกเส้นทางถัดไป แล้วระบบจึงเรียก Tool ซึ่งอาจทำงานในเครื่อง เข้าระบบภายนอกผ่าน Connector/API หรือรับ capability ผ่าน MCP
 
 ```text
-Agent / Workflow
-├─ Local Tool → Calculate / Parse / Create File
-├─ Native Tool → Connector / API → Google Sheets / Gmail / Drive
-└─ MCP Client → MCP Server → Resources / Prompts / Tools
+Workflow / Agent Execution
+├─ Trigger / Input
+├─ Agent Reasoning
+├─ Decision
+├─ Capability Path
+│  ├─ Local Tool → Result / Artifact
+│  ├─ Tool / Action → Connector / API → External System
+│  └─ MCP Client → MCP Server → Resource / Prompt / Tool
+├─ Action / Data / Audit Trail
+└─ Human Review / Feedback
 ```
-
-| สิ่งที่เห็นในระบบ | จัดเป็นอะไร | หน้าที่ |
-|---|---|---|
-| `Add a row` | Tool / Action | เพิ่มข้อมูลหนึ่งแถว |
-| Google Sheets connection + OAuth | Connector | ให้ Make เข้าถึง Sheet ตามสิทธิ์ |
-| Make Scenario | Workflow / Orchestrator | กำหนดว่าเรียกขั้นตอนใด เมื่อไร |
-| MCP Server สำหรับฐานข้อมูล | MCP Server | เปิด Resources/Tools ตามมาตรฐาน MCP |
-
-ดังนั้นประโยคที่แม่นยำกว่าคือ:
-
-> **Tool เพิ่มความสามารถ ส่วน Connector ทำให้ Tool เข้าถึงระบบภายนอกได้; MCP เป็นมาตรฐานอีกแบบสำหรับเปิด context และ capabilities ให้ AI application**
-
-การมี Tool หรือ Connector ไม่ได้แปลว่าควรใช้ทุก Action ต้องจำกัด permission, validate output และกำหนด approval ตามความเสี่ยง ใน Workshop นี้ Lab 2 ใช้ native connectors ของ Make ส่วน Lab 4 ไม่ใช้ Connector หรือ MCP Server
-
-## 4. Workflow, Decision และ Action
 
 | องค์ประกอบ | คำถามธุรกิจ | ตัวอย่าง |
 |---|---|---|
 | Trigger (เหตุการณ์เริ่มต้น) | งานเริ่มเมื่อใด | มีคำร้องใหม่ |
-| Workflow (ลำดับกระบวนการ) | ขั้นตอนเชื่อมกันอย่างไร | รับ → วิเคราะห์ → route → เก็บ |
 | Decision (การตัดสินใจ) | อะไรกำหนดขั้นตอนถัดไป | Priority = HIGH |
+| Workflow (ลำดับกระบวนการ) | ขั้นตอนเชื่อมกันอย่างไร | รับ → วิเคราะห์ → route → เก็บ |
+| Tool (ความสามารถที่เรียกใช้) | ระบบทำอะไรได้ | คำนวณ, parse JSON, `Add a row` |
+| Connector (การเชื่อมและสิทธิ์) | เข้าถึงระบบใดได้ | Google Sheets connection + OAuth |
+| MCP (มาตรฐานการเชื่อม context/capability) | Host ค้นพบอะไรจาก Server | Resources, Prompts, Tools |
 | Action (การลงมือทำ) | ระบบทำอะไรจริง | เพิ่มแถวและส่ง alert |
 | Data / Memory | ระบบจำอะไรไว้ | Request Log |
 | Feedback | รู้ได้อย่างไรว่าผลดี | Manager ตรวจและแก้ classification |
 
+> **Decision เลือกสิ่งถัดไป; Workflow ประสานลำดับ; Tool เพิ่มความสามารถ; Connector ให้การเข้าถึง; MCP กำหนดมาตรฐานการเชื่อม; Action เปลี่ยนสถานะจริง**
+
+Tool ไม่จำเป็นต้องเชื่อมระบบภายนอก เช่น calculator, parser หรือ file generator ก็เป็น Tool ได้ เมื่อ Tool ต้องอ่านหรือเปลี่ยนข้อมูลภายนอก Connector จะจัดการ connection, authentication และ permission ส่วน MCP เป็น protocol อีกแนวทางหนึ่งที่ AI application ใช้ค้นพบและเรียก Resources, Prompts หรือ Tools จาก MCP Server
+
+การมี Tool, Connector หรือ MCP ไม่ได้แปลว่าควรใช้ทุก Action ต้องจำกัด permission, validate output และกำหนด approval ตามความเสี่ยง ใน Workshop นี้ Lab 2 ใช้ Make Workflow และ native connectors ส่วน Lab 4 ให้ Agent วางแผน execution โดยไม่สร้าง Workflow และไม่ใช้ Connector หรือ MCP Server
+
 > Automation ที่ทำ `ถ้า field = X ให้ส่ง email` ตามกฎคงที่ อาจเป็น Workflow Automation แต่ยังไม่จำเป็นต้องเป็น Agentic AI
 
-## 5. Agentic AI คืออะไร
+## 4. Agentic AI คืออะไร
 
 Agentic AI ผสาน:
 
@@ -143,7 +141,7 @@ Goal + Reasoning + Tools + Decision + Action
 
 > **Agentic AI is not a product name. It is a way of designing AI-enabled business systems.**
 
-## 6. Autonomy Spectrum
+## 5. Autonomy Spectrum
 
 Autonomy (ระดับความเป็นอิสระ) ควรมองเป็นสเปกตรัม:
 
@@ -170,7 +168,7 @@ Workshop จะให้ผู้เรียนแก้โจทย์ Busines
 
 ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ส่วน Lab 4 จะให้ Manus Agent รับ Goal และ dataset เดียวกันแล้ววางแผนทำ triage กับ management report โดยไม่สร้าง Workflow ผู้เรียนต้องสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด boundary, approval, evidence และ validation เพิ่มขึ้นอย่างไร
 
-## 7. Business Request Management
+## 6. Business Request Management
 
 องค์กรได้รับคำร้องจากลูกค้าหรือพนักงาน Agent ต้อง:
 
@@ -211,7 +209,7 @@ Read → Summarize → Classify → Explain → Recommend
 
 ควรเป็น LOW หากไม่มี customer, financial, operational, compliance หรือ time impact ที่สำคัญ
 
-## 8. Operational AI กับ Managerial AI
+## 7. Operational AI กับ Managerial AI
 
 > **Operational AI:** “What should we do with this request?”
 
