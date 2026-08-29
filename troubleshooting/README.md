@@ -236,9 +236,18 @@
 | | |
 |---|---|
 | **Problem** | Agent เริ่มแก้ไฟล์ก่อน Human Proceed, แก้ input หรือสร้างไฟล์นอก `outputs/` |
-| **Likely Cause** | Agent Behaviour ไม่รอ review, project scope กว้าง, prompt/plan ไม่ระบุ output allowlist หรือผู้ใช้ approve เร็วเกิน |
-| **Quick Fix** | Stop execution, reject/revert changes, ตั้ง review-driven policy, ใช้ dedicated folder และส่ง [Boundary Correction Prompt](../06-antigravity/prompts.md#boundary-correction-prompt) |
+| **Likely Cause** | Conversation อยู่ Fast Mode, Artifact Review/Agent Behaviour ไม่ได้ตั้ง Request Review, project scope กว้าง, prompt/plan ไม่ระบุ output allowlist หรือผู้ใช้ approve เร็วเกิน |
+| **Quick Fix** | Stop execution, reject/revert changes, เริ่ม conversation ใหม่ใน Planning Mode, ตั้ง Artifact Review และ Terminal เป็น Request Review, ใช้ dedicated folder แล้วส่ง [Boundary Correction Prompt](../06-antigravity/prompts.md#boundary-correction-prompt) |
 | **Instructor Fallback** | ใช้ prepared plan/file diff ให้ทีมระบุว่าจุดใดควรถูก reject ก่อนดำเนินการ |
+
+## Antigravity does not show Proceed or pauses in a different place
+
+| | |
+|---|---|
+| **Problem** | ไม่เห็น Proceed, Agent เริ่มทำต่อเอง หรือชื่อ Artifact/Review control ต่างจากคู่มือ |
+| **Likely Cause** | Fast Mode, Artifact Review = Always Proceed, project-specific settings สืบทอดค่า global หรือ UI rollout ต่างกัน |
+| **Quick Fix** | กด Stop ก่อนมี file changes, เปิด Project Settings, เลือก Planning Mode และ Request Review ที่ artifact/agent behaviour; เริ่ม conversation ใหม่และตรวจ Plan ก่อนส่ง approval |
+| **Instructor Fallback** | ใช้ Instructor Plan screenshot ให้ทีมทำ review checklist และตอบว่าจะ approve/reject เพราะเหตุใด |
 
 ## Antigravity proposes prohibited tools or external action
 

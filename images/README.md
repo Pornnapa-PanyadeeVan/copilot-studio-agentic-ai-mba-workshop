@@ -51,10 +51,22 @@ Repository นี้ไม่สร้าง screenshot ปลอม เพร�
 | `l3-12-complete-report-scenario.png` | Make | Scenario Lab 3 ครบทุก module และ Scheduling OFF | Lab 3 L3-12 |
 | `l3-13-final-pdf-and-tracker.png` | Google Drive + Sheets | PDF DRAFT และ BR-001 tracker ที่อัปเดตแล้ว | Lab 3 L3-13 |
 | `15-line-demo.png` | LINE OA + Make | Channel → Webhook → Make | Instructor demo |
-| `16-antigravity-project-settings.png` | Google Antigravity | Dedicated folder, project scope และ review/permission settings โดยปิด account details | Lab 4 Step 3 |
-| `17-antigravity-plan-review.png` | Google Antigravity | Implementation plan, task list และ Human Proceed gate | Lab 4 Step 4 |
-| `18-antigravity-output-files.png` | Google Antigravity | Local `outputs/`, HIGH report count = HIGH triage rows และ Follow-up Index | Lab 4 Steps 5–6 |
-| `19-antigravity-walkthrough.png` | Google Antigravity | File changes, validation summary และ walkthrough โดยไม่มีข้อมูลจริง | Lab 4 validation |
+| `l4-01-goal-and-team-roles.png` | Notes/worksheet | Goal, Operator, Reviewer และ no external action | Lab 4 L4-01 |
+| `l4-02-dedicated-project-folder.png` | Finder/File Explorer | Dedicated project ที่มี input/ และ outputs/ | Lab 4 L4-02 |
+| `l4-03-input-dataset-preview.png` | Text preview | BR-001 ถึง BR-004 และ simulated-data notice | Lab 4 L4-03 |
+| `l4-04-select-new-project.png` | Google Antigravity | Select Project → New Project | Lab 4 L4-04 |
+| `l4-05-add-one-project-folder.png` | Google Antigravity | Dedicated folder เพียงหนึ่งรายการ | Lab 4 L4-05 |
+| `l4-06-project-review-settings.png` | Google Antigravity | Planning/Request Review, terminal review และ isolation | Lab 4 L4-06 |
+| `l4-07-new-planning-conversation.png` | Google Antigravity | Project ที่ถูกเลือกและ Planning Mode | Lab 4 L4-07 |
+| `l4-08-bounded-task-prompt.png` | Google Antigravity | Project boundary, prohibited actions และ deliverables | Lab 4 L4-08 |
+| `l4-09-implementation-plan-review.png` | Google Antigravity Artifact | Plan, output allowlist และ Proceed gate | Lab 4 L4-09 |
+| `l4-10-task-list-before-execution.png` | Google Antigravity Artifact | Task List ไม่เกิน 5 ขั้นก่อน execution | Lab 4 L4-10 |
+| `l4-11-permission-review.png` | Google Antigravity | Permission dialog ที่อ่าน target/action ได้ | Lab 4 L4-11 |
+| `l4-12-task-progress-file-changes.png` | Google Antigravity | Task progress และ changes เฉพาะ outputs/ | Lab 4 L4-12 |
+| `l4-13-output-file-tree.png` | Google Antigravity | Output files หลัก 4 รายการ | Lab 4 L4-13 |
+| `l4-14-request-triage-results.png` | Markdown artifact | 4 Request IDs และผล HIGH/MEDIUM/LOW | Lab 4 L4-14 |
+| `l4-15-high-report-follow-up-index.png` | Markdown artifacts | BR-001 DRAFT report, OPEN status และ index | Lab 4 L4-15 |
+| `l4-16-validation-walkthrough.png` | Google Antigravity Artifact | Validation summary, Walkthrough และ Human Review | Lab 4 L4-16 |
 
 ## รูปแบบ Caption
 

@@ -72,6 +72,7 @@
 
 - [ ] ถ่าย screenshot ตาม [Screenshot Guide](../images/README.md)
 - [ ] ถ่าย Lab 2 ให้ครบ `L2-01` ถึง `L2-17` และ Lab 3 ให้ครบ `L3-01` ถึง `L3-13`
+- [ ] ถ่าย Lab 4 ให้ครบ `L4-01` ถึง `L4-16` โดยปิด account และ local path ที่ไม่จำเป็น
 - [ ] ปิด API key, email, IDs และ webhook URLs ในทุกภาพ
 - [ ] ใส่ `UI MAY VARY` และวันที่ถ่าย
 - [ ] ทดสอบ flow สดหนึ่งรอบ HIGH/MEDIUM/LOW
@@ -104,6 +105,8 @@
 - [ ] ส่ง Gmail ถึงตนเองและเปิด attachment
 - [ ] ตรวจ Make credit/quota dashboard
 - [ ] เปิด Antigravity และตรวจว่า Instructor fallback project/conversation ยังเข้าถึงได้
+- [ ] ตรวจ Project มี dedicated folder เดียว, Planning Mode, Artifact Review = Request Review และ Terminal = Request Review
+- [ ] เปิด Lab 4 artifacts: Implementation Plan, Task List, File Changes และ Walkthrough ให้พร้อมสาธิต
 - [ ] เปิด browser tabs: repository, AI Studio, Forms, Make, Sheets, Drive, Gmail และเปิด Antigravity desktop แยกไว้
 - [ ] เปิด troubleshooting และ fallback files
 - [ ] ลบผล demo เก่าที่อาจทำให้ผู้เรียนสับสน แต่ไม่ลบ audit ที่ต้องเก็บ

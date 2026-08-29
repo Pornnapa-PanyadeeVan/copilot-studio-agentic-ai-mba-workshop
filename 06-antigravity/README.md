@@ -1,4 +1,4 @@
-# 06 — Lab 4: Google Antigravity — Solve Lab 2 + Lab 3 without Building a Workflow
+# 06 — Lab 4: Google Antigravity — Solve Lab 2 + Lab 3 without Building a Workflow — Step by Step
 
 [← Previous: LINE OA Demo](../05-line-oa-demo/README.md) · [Home](../README.md) · [Next: Responsible AI →](../07-responsible-agentic-ai/README.md)
 
@@ -11,6 +11,14 @@
 🧰 **Tool**  [Google Antigravity 2.0](https://antigravity.google/) แบบ standalone desktop; Antigravity IDE/CLI/SDK ไม่จำเป็นสำหรับ Lab นี้
 
 ผู้เรียนไม่ต้องเขียน code เอง Core lab ใช้ conversation, project settings, plan review และ file artifacts
+
+## วิธีใช้คู่มือนี้
+
+แต่ละ Step บอกให้ครบว่า **คลิกที่ไหน → ตั้งค่าอะไร → ต้องเห็นอะไร → ถ่ายภาพตรงไหน** รหัส `L4-xx` เป็นตำแหน่ง screenshot ที่ผู้สอนนำภาพจริงมาใส่ภายหลังได้ ดูชื่อไฟล์ทั้งหมดที่ [Screenshot Guide](../images/README.md)
+
+คำเรียก UI อ้างอิงจาก [Getting Started with Google Antigravity](https://codelabs.developers.google.com/getting-started-google-antigravity), [Projects](https://antigravity.google/docs/projects/) และ [Artifact Review](https://antigravity.google/docs/artifact-review) ของ Google แต่ตำแหน่งเมนูอาจต่างตามระบบปฏิบัติการและ rollout
+
+> 📷 คู่มืออ่านและทำตามได้ก่อนมีภาพจริง ห้ามใช้ screenshot ที่เปิดเผย path ส่วนตัว, account, email หรือไฟล์งานจริง
 
 ## Antigravity ใน Lab นี้เป็น Agentic AI แบบใด
 
@@ -114,10 +122,16 @@ Antigravity มี individual tier ราคา $0 พร้อม basic weekly 
 - [ ] เปิด [Lab 4 Prompts](prompts.md)
 - [ ] สร้างโฟลเดอร์ใหม่ที่ไม่มีไฟล์ธุรกิจจริง
 - [ ] ยืนยันว่าจะไม่เปิด browser, schedule, MCP, Connector หรือ external action
+- [ ] ปิดหน้าต่างหรือ notification ที่อาจเปิดเผยข้อมูลส่วนตัวก่อนถ่าย screenshot
 
 ## 📌 Step 1 — Frame the Business Goal
 
-ให้ทีมเขียน Goal หนึ่งประโยคก่อนเปิด Agent:
+### Click / Do
+
+1. รวมทีม 3–4 คน
+2. เลือก Operator หนึ่งคนเป็นผู้ควบคุม Antigravity และกด approval
+3. เลือก Reviewer หนึ่งคนอ่าน Plan และ file changes โดย Reviewer ต้องไม่เป็นคนเดียวกับ Operator ถ้าจำนวนคนพอ
+4. เปิด Notes หรือกระดาษ แล้วให้ทีมเขียน Goal หนึ่งประโยคก่อนเปิด Agent:
 
 ```text
 ช่วยผู้จัดการจัดลำดับคำร้องทางธุรกิจอย่างสม่ำเสมอ
@@ -129,9 +143,18 @@ Antigravity มี individual tier ราคา $0 พร้อม basic weekly 
 
 ✅ **Checkpoint**  Goal ระบุ stakeholder, outcome, project boundary และ Human Review
 
+> 📷 **L4-01 — Goal and team roles**: ให้เห็น Goal, Operator, Reviewer และข้อห้าม external action โดยไม่เห็นชื่อจริง
+
 ## 📌 Step 2 — Prepare a Dedicated Local Project
 
-1. สร้างโฟลเดอร์ใหม่ชื่อ:
+### 2.1 Create the Folder Structure
+
+1. เปิด Finder บน macOS หรือ File Explorer บน Windows
+2. เลือกพื้นที่ local ที่ใช้สำหรับ Workshop และไม่มีไฟล์ธุรกิจจริง
+3. สร้างโฟลเดอร์ใหม่ชื่อ `lab4-antigravity-business-triage`
+4. เปิดโฟลเดอร์นี้ แล้วสร้างโฟลเดอร์ย่อย `input` และ `outputs`
+
+โครงสร้างต้องเป็น:
 
 ```text
 lab4-antigravity-business-triage/
@@ -139,14 +162,22 @@ lab4-antigravity-business-triage/
 └── outputs/
 ```
 
-2. Copy [antigravity-lab-input.md](../templates/antigravity-lab-input.md) ไปไว้เป็น:
+> 📷 **L4-02 — Dedicated project folder**: ให้เห็นเฉพาะโฟลเดอร์ `input/` และ `outputs/` ภายใต้ project folder
+
+### 2.2 Add the Simulated Dataset
+
+1. เปิด [antigravity-lab-input.md](../templates/antigravity-lab-input.md)
+2. Save a copy หรือคัดลอกเนื้อหาไปเป็นไฟล์:
 
 ```text
 input/business-requests.md
 ```
 
-3. อย่าวาง repository, Downloads, Desktop ทั้งหมด หรือโฟลเดอร์งานจริงเป็น project scope
+3. เปิดไฟล์แล้วตรวจว่ามี Request ID `BR-001` ถึง `BR-004` อย่างละหนึ่งรายการ
 4. ตรวจว่า `outputs/` ยังว่าง
+5. อย่าวาง repository, Downloads, Desktop ทั้งหมด หรือโฟลเดอร์งานจริงเป็น project scope
+
+> 📷 **L4-03 — Input dataset preview**: ให้เห็น path `input/business-requests.md`, BR-001 ถึง BR-004 และข้อความว่า simulated data
 
 💡 **Why This Matters**  Project folder คือ permission boundary และ context boundary ของ Agent ไม่ใช่เพียงที่เก็บไฟล์
 
@@ -156,16 +187,44 @@ input/business-requests.md
 
 ## 📌 Step 3 — Create a Review-driven Antigravity Project
 
-1. เปิด [Google Antigravity](https://antigravity.google/)
-2. เลือก `Select Project` → `New Project` หรือ function เทียบเท่าตาม UI
-3. Add เฉพาะโฟลเดอร์ `lab4-antigravity-business-triage`
-4. ตั้งชื่อ Project เช่น `MBA Lab 4 — Business Triage`
-5. เปิด Project Settings แล้วกำหนด:
-   - review/approval ก่อน Agent execute implementation plan;
-   - file access เฉพาะ project folder;
-   - terminal command ต้องขออนุมัติ;
-   - ไม่อนุญาต browser, external URLs, schedule หรือ MCP tools สำหรับ Lab นี้
-6. เริ่ม conversation ใหม่ใน project
+### 3.1 Create the Project
+
+1. เปิด Google Antigravity application ที่ติดตั้งไว้ ไม่ใช้ Antigravity IDE/CLI ใน Core lab
+2. Sign in ด้วยบัญชี Workshop ของทีม
+3. จากหน้าแรก คลิก `Select Project`
+4. เลือก `New Project`
+5. ในหน้าจอ Select folder(s) คลิก `Add Folder`
+6. เลือกเฉพาะโฟลเดอร์ `lab4-antigravity-business-triage`
+7. ตรวจรายการ folder ต้องมีเพียงหนึ่งรายการ แล้วกด `Next`
+8. ตั้งชื่อ Project `MBA Lab 4 — Business Triage`
+9. กด `Create`
+
+> 📷 **L4-04 — Select Project and New Project**: ให้เห็นจุดเริ่มสร้าง Project โดยปิด account detail
+
+> 📷 **L4-05 — Add one project folder**: ให้เห็นว่าเลือก dedicated folder เพียงหนึ่งรายการ ไม่ใช่ Desktop หรือ Downloads
+
+### 3.2 Configure Project Guardrails
+
+1. เปิด Project Settings ของ `MBA Lab 4 — Business Triage`
+2. ตรวจ Folder/Workspace list ว่ามีเฉพาะ dedicated folder
+3. ที่ execution/conversation mode เลือก `Planning Mode` ถ้า UI แสดงตัวเลือกนี้
+4. ที่ `Artifact Review Policy` หรือ `Agent Behaviour` เลือก `Request Review`
+5. ที่ `Terminal Command Auto Execution` เลือก `Request Review`
+6. เปิด Workspace Isolation/Strict Mode หรือ function ที่ปิด non-workspace file access หากบัญชีแสดง
+7. ไม่เพิ่ม URL allowlist, browser permission, Connector, MCP Server หรือ MCP Tool
+8. กด `Save` หรือปิด Settings เมื่อค่าถูกบันทึกแล้ว
+
+| Guardrail | ค่าที่ต้องการ |
+|---|---|
+| Project folders | Dedicated folder 1 รายการ |
+| Mode | Planning Mode |
+| Artifact review | Request Review |
+| Terminal commands | Request Review |
+| Non-workspace access | Disabled / Strict / Isolated |
+| Browser/URLs | ไม่ใช้ใน Lab |
+| MCP/Connector | ไม่เพิ่มและไม่อนุญาต |
+
+> 📷 **L4-06 — Project review and permission settings**: ให้เห็น Planning/Request Review, terminal review และ workspace isolation โดยปิด path ส่วนตัว
 
 > Antigravity project สามารถมี settings และ permissions แยกจาก global settings ได้ ผู้เรียนต้องตรวจ project-specific settings ไม่พึ่ง default โดยไม่อ่าน
 
@@ -173,13 +232,40 @@ input/business-requests.md
 
 ✅ **Checkpoint**  Agent เห็นเฉพาะ dedicated folder และทีมรู้ว่าจุดใดต้องกดอนุมัติ
 
-⚠️ **Common Problem**  หาก UI ไม่มีชื่อ `Review-driven` ให้เลือก preset/policy ที่ต้อง review plan, file changes และ terminal actions มากที่สุดที่บัญชีแสดง
+⚠️ **Common Problem**  หาก UI ไม่มีชื่อ `Planning Mode` หรือ `Request Review` ให้เลือก preset/policy ที่ต้อง review plan, artifacts, file changes และ terminal actions มากที่สุดที่บัญชีแสดง
 
 ## 📌 Step 4 — Submit the Bounded Goal and Review the Plan
 
 ใช้ [Primary Agent Task Prompt](prompts.md#primary-agent-task-prompt)
 
-### 📋 Copy This Prompt
+### 4.1 Start the Conversation
+
+1. กลับหน้า Project `MBA Lab 4 — Business Triage`
+2. กด `New conversation` หรือปุ่ม `+` ที่สร้าง conversation ใหม่
+3. ตรวจชื่อ Project ที่แสดงใน conversation ต้องเป็น `MBA Lab 4 — Business Triage`
+4. ตรวจ mode เป็น `Planning` ไม่ใช่ `Fast`
+5. ถ้ามีตัวเลือก model ให้ใช้ model ที่ individual tier เปิดให้ ไม่ซื้อ plan เพื่อผ่าน Lab
+6. ยังไม่แนบไฟล์อื่น เพราะ Agent อ่าน `input/business-requests.md` จาก project ได้
+
+> 📷 **L4-07 — New conversation in Planning Mode**: ให้เห็น Project ที่ถูกเลือก, conversation ใหม่ และ Planning Mode
+
+### 4.2 Submit the Task
+
+1. เปิด [Primary Agent Task Prompt](prompts.md#primary-agent-task-prompt) อีกหน้าต่าง
+2. Copy prompt ทั้ง block ตั้งแต่ `You are a bounded...` จนถึง validation requirement
+3. Paste ลงช่องสนทนาใน Antigravity
+4. อ่านบรรทัด boundary อีกครั้งก่อนส่ง:
+   - read only `input/business-requests.md`;
+   - write only `outputs/`;
+   - no web, Connector, MCP, package, schedule หรือ external action;
+   - show plan and wait for approval first
+5. กด Send หนึ่งครั้งและรอ Plan อย่าส่ง prompt ซ้ำระหว่าง Agent กำลังคิด
+
+> 📷 **L4-08 — Bounded task prompt**: ให้เห็น Project boundary, prohibited actions, required outputs และ approval gate โดยไม่เห็น account detail
+
+### 📋 Prompt Preview
+
+> ใช้ [Primary Agent Task Prompt](prompts.md#primary-agent-task-prompt) ฉบับเต็มในการทำ Lab จริง ส่วน block นี้เป็น preview สำหรับอธิบายโครงสร้างหน้าชั้นเรียน
 
 ```text
 You are a bounded Business Request Management Agent working inside one local project.
@@ -217,12 +303,29 @@ and confirming that no external action was performed.
 
 เมื่อ Agent แสดง plan/task list:
 
-- ตรวจว่าใช้เฉพาะ `input/business-requests.md`
-- ตรวจว่าเขียนเฉพาะ `outputs/`
-- ต้องไม่มี app, workflow, browser, schedule, MCP, external action หรือ package install
-- ตรวจว่า report count ผูกกับ HIGH count
-- ถ้าถูกต้องจึงกด `Proceed` หรือ approve ตาม UI
-- ถ้าไม่ถูกต้องให้ comment/edit plan หรือใช้ [Boundary Correction Prompt](prompts.md#boundary-correction-prompt)
+### 4.3 Review the Implementation Plan
+
+1. เปิด `Implementation Plan` จาก conversation หรือ Auxiliary/Artifacts pane
+2. ยังไม่กด `Proceed`
+3. ให้ Reviewer ตรวจทีละข้อ:
+
+- input มีเพียง `input/business-requests.md`
+- output ทั้งหมดอยู่ใต้ `outputs/`
+- plan มีไม่เกิน 5 ขั้น
+- มี triage ครบทุก Request ID
+- report count ผูกกับจำนวน HIGH cases
+- มี follow-up index และ validation summary
+- ไม่มี app, Make Workflow, browser, schedule, MCP, Connector, external action หรือ package install
+- PDF เป็น optional และต้องขออนุมัติก่อน terminal command
+
+4. เปิด `Task List` ถ้ามี และตรวจว่า task สอดคล้องกับ Plan
+5. ถ้า Plan ไม่ผ่าน ให้เปิด Plan แล้วใส่ comment หรือส่ง [Boundary Correction Prompt](prompts.md#boundary-correction-prompt)
+6. กด Submit comment แล้วรอ Plan ฉบับแก้
+7. กด `Proceed` เฉพาะเมื่อ checklist ผ่านทั้งหมด
+
+> 📷 **L4-09 — Implementation Plan review**: ให้เห็น input/output boundary, required deliverables และปุ่ม Proceed โดยยังไม่เปิดเผย path ส่วนตัว
+
+> 📷 **L4-10 — Task List before execution**: ให้เห็น task ไม่เกิน 5 ขั้นและสถานะก่อนเริ่มเขียนไฟล์
 
 💡 **Why This Matters**  Human Approval อยู่ก่อน Tool execution ไม่ใช่ตรวจเฉพาะผลลัพธ์หลัง Agent ทำเสร็จ
 
@@ -232,7 +335,9 @@ and confirming that no external action was performed.
 
 ## 📌 Step 5 — Observe Agent Execution and Artifacts
 
-ระหว่าง Agent ทำงาน ให้สังเกตเฉพาะ evidence ที่ UI แสดง ไม่ขอ hidden chain-of-thought:
+### 5.1 Approve Only In-scope Actions
+
+หลังทีมกด Proceed ให้สังเกตเฉพาะ evidence ที่ UI แสดง ไม่ขอ hidden chain-of-thought:
 
 - implementation plan และ task list
 - ไฟล์ที่ Agent อ่าน/สร้าง
@@ -241,13 +346,60 @@ and confirming that no external action was performed.
 - file diffs หรือ artifact review
 - validation result และ walkthrough
 
-อนุมัติเฉพาะ command ที่อ่าน/สร้างไฟล์ใน project และสอดคล้องกับ plan หาก Agent ขอ network, package install, URL, schedule หรือ access นอก project ให้ reject
+เมื่อมี permission dialog:
+
+1. อ่าน command/action และ target path ทุกครั้ง
+2. อนุมัติเฉพาะการอ่าน `input/business-requests.md` หรือเขียนไฟล์ที่อนุมัติไว้ใต้ `outputs/`
+3. หากเป็น terminal command สำหรับ optional PDF ต้องตรวจว่าใช้ capability ที่มีอยู่แล้วและไม่ติดตั้ง package
+4. Reject ทันทีหากขอ network, browser, URL, package install, schedule, MCP, Connector หรือ path นอก project
+5. หลัง Reject ให้ส่ง [Boundary Correction Prompt](prompts.md#boundary-correction-prompt) ถ้า Agent ยังต้องทำงานต่อ
+
+> 📷 **L4-11 — Permission review**: ใช้ตัวอย่าง permission ที่ปลอดภัยหรือ permission ที่ต้อง Reject โดยปิด full local path
+
+### 5.2 Monitor Task Progress
+
+1. เปิด Task List จาก Artifacts/Auxiliary pane
+2. ดูสถานะ task จาก pending → in progress → complete
+3. ตรวจ Source Files/File Changes หลัง Agent สร้างแต่ละไฟล์
+4. ห้ามกด Accept all โดยไม่เปิดรายชื่อไฟล์ก่อน
+5. ตรวจว่า `input/business-requests.md` ไม่มี diff
+6. ตรวจว่าทุกไฟล์ใหม่อยู่ใต้ `outputs/`
+
+ไฟล์ที่คาดหวัง:
+
+```text
+outputs/
+├── 01-request-triage.md
+├── DRAFT-HIGH-Situation-Report-BR-001.md
+├── 03-high-follow-up-index.md
+└── 04-validation-summary.md
+```
+
+อาจมี `.pdf` หรือ `.html` เพิ่มเฉพาะตามเงื่อนไข optional PDF ใน Prompt
+
+> 📷 **L4-12 — Task progress and file changes**: ให้เห็น Task List และไฟล์ใหม่เฉพาะใต้ outputs
+
+> 📷 **L4-13 — Output file tree**: ให้เห็นไฟล์หลัก 4 รายการและไม่มีไฟล์ HIGH report สำหรับ MEDIUM/LOW
 
 💡 **Why This Matters**  ความเป็น Agentic อยู่ที่ Goal → Plan → Tool Use → Artifact → Validation ภายในขอบเขต ไม่ได้วัดจากข้อความที่ดูฉลาดเพียงอย่างเดียว
 
 ✅ **Checkpoint**  มีไฟล์ใน `outputs/` โดย input file ไม่ถูกแก้และไม่มี external action
 
 ## 📌 Step 6 — Validate the Deliverables
+
+### 6.1 Open and Check Each File
+
+1. เปิด `01-request-triage.md` จาก Source Files หรือ file list
+2. นับ data rows ต้องได้ 4 และ Request ID ต้องเป็น BR-001 ถึง BR-004
+3. เปิด `DRAFT-HIGH-Situation-Report-BR-001.md`
+4. ตรวจ DRAFT banner, source evidence, missing information และ Human Review
+5. เปิด `03-high-follow-up-index.md` แล้วคลิก/ตรวจชื่อ report file ที่อ้างถึง
+6. เปิด `04-validation-summary.md` แล้วตรวจ counts, file list และ no external action statement
+7. ถ้าข้อใดไม่ผ่าน ใช้ [Validation Prompt](prompts.md#validation-prompt) หรือแก้ผ่าน reviewed change เท่านั้น
+
+> 📷 **L4-14 — Request triage results**: ให้เห็น 4 Request IDs, HIGH/MEDIUM/LOW และ BR-004 ที่ไม่ถูกยกเป็น HIGH เพราะ urgent keyword อย่างเดียว
+
+> 📷 **L4-15 — HIGH report and follow-up index**: ให้เห็น DRAFT banner, BR-001, OPEN status, Manager to assign/confirm และ index link
 
 ### 🧪 Test A — Request Triage
 
@@ -281,7 +433,25 @@ and confirming that no external action was performed.
 
 ✅ **Checkpoint**  ทีมย้อนจาก HIGH report ไปยัง source Request ID และ evidence ได้ทุก claim
 
+### 6.2 Review the Walkthrough
+
+1. เปิด `Walkthrough` จาก Artifacts pane หลัง Agent จบงาน
+2. เทียบ deliverables ใน Walkthrough กับไฟล์จริง
+3. ตรวจ validation result และ remaining Human Review items
+4. ตรวจว่า Agent ไม่อ้างว่าได้ส่ง email, แก้ระบบจริง หรือ RESOLVED case แล้ว
+5. เปิด File Changes/Review Changes เพื่อตรวจรายการสุดท้ายก่อน Accept
+6. ถ้าไฟล์และ validation ผ่าน จึง Accept/keep changes ตาม UI
+7. หากไม่ผ่าน ให้ Reject/Undo เฉพาะ changes ที่ผิด แล้วใช้ correction prompt
+
+> 📷 **L4-16 — Validation summary and Walkthrough**: ให้เห็น PASS/FAIL counts, file list, no external action และ remaining Human Review
+
 ## 📌 Step 7 — Compare Architecture
+
+1. วางหน้าจอ Lab 2–3 Make Flow คู่กับ Lab 4 Walkthrough
+2. ให้ทีมเติมตารางจากหลักฐานที่เห็นจริง ไม่ตอบจากความรู้สึก
+3. วงจุดที่ Human ออกแบบลำดับใน Make และจุดที่ Agent เสนอ Plan ใน Antigravity
+4. ระบุ approval gate และ audit evidence ของแต่ละแบบ
+5. เลือกว่าโจทย์ recurring, one-off หรือ hybrid เหมาะกับ architecture ใด
 
 | Criteria | Make Workflow — Lab 2+3 | Antigravity Agent — Lab 4 |
 |---|---|---|
