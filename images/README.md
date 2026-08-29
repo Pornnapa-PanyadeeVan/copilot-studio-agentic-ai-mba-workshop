@@ -32,10 +32,10 @@ Repository นี้ไม่สร้าง screenshot ปลอม เพร�
 | `13-drive-report.png` | Google Drive | HIGH-Follow-up folder และไฟล์ DRAFT จำลอง | Lab 3 Step 6 |
 | `14-email-test.png` | Gmail | `[DRAFT][HIGH]` email ถึงตนเอง ไม่มี address จริง | Lab 3 Step 8 |
 | `15-line-demo.png` | LINE OA + Make | Channel → Webhook → Make | Instructor demo |
-| `16-manus-agent-mode.png` | Manus | Agent Mode/credit notice โดยปิด account details | Lab 4 Step 2 |
-| `17-manus-dataset-upload.png` | Manus | `manus-lab-input.md` และจำนวน 4 records | Lab 4 Step 3 |
-| `18-manus-high-reports.png` | Manus | HIGH report count = HIGH triage rows + Follow-up Index | Lab 4 Step 6 |
-| `19-manus-task-artifacts.png` | Manus | Execution plan, triage, HIGH reports และ index โดยไม่มีข้อมูลจริง | Lab 4 validation |
+| `16-antigravity-project-settings.png` | Google Antigravity | Dedicated folder, project scope และ review/permission settings โดยปิด account details | Lab 4 Step 3 |
+| `17-antigravity-plan-review.png` | Google Antigravity | Implementation plan, task list และ Human Proceed gate | Lab 4 Step 4 |
+| `18-antigravity-output-files.png` | Google Antigravity | Local `outputs/`, HIGH report count = HIGH triage rows และ Follow-up Index | Lab 4 Steps 5–6 |
+| `19-antigravity-walkthrough.png` | Google Antigravity | File changes, validation summary และ walkthrough โดยไม่มีข้อมูลจริง | Lab 4 validation |
 
 ## รูปแบบ Caption
 

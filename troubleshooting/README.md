@@ -195,49 +195,58 @@
 | **Quick Fix** | หยุดใช้และ revoke/rotate key ทันที จากนั้นลบข้อมูลที่เปิดเผยตาม policy; อย่าคิดว่าการลบข้อความอย่างเดียวทำให้ key ปลอดภัย |
 | **Instructor Fallback** | ใช้ prepared output ต่อ ห้ามแจก key ใหม่แบบ shared key |
 
-## Cannot access Manus Agent Mode
+## Cannot install, open, or sign in to Antigravity
 
 | | |
 |---|---|
-| **Problem** | ไม่เห็น Agent Mode, เห็นเฉพาะ Chat Mode หรือบัญชีไม่เริ่ม task |
-| **Likely Cause** | Free-plan entitlement, account rollout, region, queue หรือ mode availability เปลี่ยน |
-| **Quick Fix** | ตรวจ mode/usage notice ที่บัญชีแสดงและใช้ Agent Mode Lite หาก available; ไม่เปิด paid mode เพื่อผ่าน Lab |
-| **Instructor Fallback** | เปิด Instructor completed task หรือใช้ Chat Mode เพื่อเปรียบเทียบข้อจำกัด แล้วทำ architecture discussion ต่อ |
+| **Problem** | App เปิดไม่ได้, OS ไม่รองรับ, Sign in ไม่ผ่าน หรือไม่มีสิทธิ์ใช้ Agent |
+| **Likely Cause** | ยังไม่ติดตั้งล่วงหน้า, OS requirement, account/admin/region restriction หรือ rollout/version ต่างกัน |
+| **Quick Fix** | ตรวจ [Download requirements](https://antigravity.google/download), version และ Google Account; อย่าติดตั้งทั้งห้องพร้อมกันระหว่าง Lab |
+| **Instructor Fallback** | ใช้ Instructor completed project/recording หรือทำ Plan-only/manual team simulation แล้วอภิปราย architecture ต่อ |
 
-## Manus credits or queue unavailable
-
-| | |
-|---|---|
-| **Problem** | Credits ไม่พอ, task อยู่ใน queue นาน หรือระบบเสนอ upgrade |
-| **Likely Cause** | Task complexity, daily/monthly credit rules, concurrent demand หรือ Free-plan limit |
-| **Quick Fix** | หนึ่ง task ต่อทีม ใช้ dataset 4 rows, no web research และ compact prompt; อย่า run ซ้ำโดยไม่ตรวจผลเดิม |
-| **Instructor Fallback** | ใช้ recorded/completed Instructor run แล้วให้ทีม validate triage/report ด้วย source Request IDs |
-
-## Manus cannot read the uploaded dataset
+## Antigravity quota unavailable
 
 | | |
 |---|---|
-| **Problem** | Agent ไม่เห็นไฟล์, อ่านจำนวน records ผิด หรือข้าม Request IDs |
-| **Likely Cause** | Upload ไม่สมบูรณ์, file context ไม่ถูกแนบ, table parsing หรือ task เริ่มก่อน upload เสร็จ |
-| **Quick Fix** | ตรวจว่า `manus-lab-input.md` ปรากฏใน task และระบุให้ preserve 4 Request IDs โดยไม่เริ่ม task ใหม่ถ้าแก้ใน session เดิมได้ |
-| **Instructor Fallback** | Paste dataset บางส่วนหรือใช้ Instructor task; ให้ทีมตรวจ row count และ missing IDs ด้วยตนเอง |
+| **Problem** | Agent เริ่มไม่ได้, quota warning หรือระบบเสนอ plan upgrade |
+| **Likely Cause** | Weekly/model limit, task complexity, concurrent demand หรือ plan availability เปลี่ยน |
+| **Quick Fix** | หนึ่ง project/conversation ต่อทีม ใช้ dataset 4 rows, compact prompt และไม่ retry ก่อนตรวจผลเดิม; ไม่ซื้อ plan เพื่อผ่าน Lab |
+| **Instructor Fallback** | หยุดหลัง plan หรือใช้ Instructor project แล้วให้ทีม validate files ด้วย source Request IDs |
 
-## Manus proposes a workflow or external action
-
-| | |
-|---|---|
-| **Problem** | Agent เสนอสร้าง app, Workflow, schedule, integration, email หรือค้นเว็บ |
-| **Likely Cause** | Goal กว้างเกินไปหรือข้อห้ามไม่เด่นพอ |
-| **Quick Fix** | ใช้ [Boundary Correction Prompt](../06-manus-ai/prompts.md#boundary-correction-prompt) และหยุด task หากกำลังจะทำ external action |
-| **Instructor Fallback** | ใช้ prepared artifacts ที่ analysis-only แล้วอภิปรายว่าทำไม boundary เป็นส่วนหนึ่งของ Agent design |
-
-## Manus triage or HIGH reports fail validation
+## Antigravity project cannot read the dataset
 
 | | |
 |---|---|
-| **Problem** | Row count ไม่ใช่ 4, HIGH report count ไม่ตรง HIGH rows, report ซ้ำ/หาย, แต่ง facts หรืออ้างว่าทำ Action แล้ว |
-| **Likely Cause** | Agent ข้าม record, dataset context หาย, hallucination หรือ validation ไม่ถูกทำ |
-| **Quick Fix** | ตรวจด้วย checklist ใน Lab 4; ใช้ Validation Prompt เฉพาะเมื่อ credits พอ หรือแก้/annotate ด้วยมือ |
+| **Problem** | Agent ไม่เห็น `input/business-requests.md`, อ่านจำนวน records ผิด หรือข้าม Request IDs |
+| **Likely Cause** | เลือก project folder ผิด, file ไม่ได้ copy เข้า `input/`, permission block หรือ conversation อยู่คนละ project |
+| **Quick Fix** | ตรวจ Project Settings/folder, เปิดไฟล์จาก project view และยืนยัน 4 Request IDs ก่อน approve plan |
+| **Instructor Fallback** | ใช้ Instructor project หรือให้ทีมอ่าน [Antigravity Lab Input](../templates/antigravity-lab-input.md) และตรวจ row count ด้วยตนเอง |
+
+## Agent writes before approval or outside outputs
+
+| | |
+|---|---|
+| **Problem** | Agent เริ่มแก้ไฟล์ก่อน Human Proceed, แก้ input หรือสร้างไฟล์นอก `outputs/` |
+| **Likely Cause** | Agent Behaviour ไม่รอ review, project scope กว้าง, prompt/plan ไม่ระบุ output allowlist หรือผู้ใช้ approve เร็วเกิน |
+| **Quick Fix** | Stop execution, reject/revert changes, ตั้ง review-driven policy, ใช้ dedicated folder และส่ง [Boundary Correction Prompt](../06-antigravity/prompts.md#boundary-correction-prompt) |
+| **Instructor Fallback** | ใช้ prepared plan/file diff ให้ทีมระบุว่าจุดใดควรถูก reject ก่อนดำเนินการ |
+
+## Antigravity proposes prohibited tools or external action
+
+| | |
+|---|---|
+| **Problem** | Agent เสนอ app, browser, URL, MCP, Connector, schedule, package install, email หรือ access นอก project |
+| **Likely Cause** | Goal กว้าง, project permission กว้าง หรือข้อห้ามไม่อยู่ใน reviewed plan |
+| **Quick Fix** | Reject permission, กด Stop และใช้ [Boundary Correction Prompt](../06-antigravity/prompts.md#boundary-correction-prompt); อย่าเพิ่มสิทธิ์เพื่อให้ task ผ่าน |
+| **Instructor Fallback** | ใช้ prepared analysis-only artifacts แล้วอภิปราย Prompt guardrail เทียบกับ Permission guardrail |
+
+## Antigravity triage or HIGH reports fail validation
+
+| | |
+|---|---|
+| **Problem** | Row count ไม่ใช่ 4, HIGH report count ไม่ตรง HIGH rows, file ซ้ำ/หาย, แต่ง facts หรืออ้างว่าทำ Action แล้ว |
+| **Likely Cause** | Agent ข้าม record, input context หาย, hallucination, filename ไม่ตรง plan หรือ validation ไม่ถูกทำ |
+| **Quick Fix** | ตรวจ checklist ใน Lab 4 และใช้ [Validation Prompt](../06-antigravity/prompts.md#validation-prompt) โดยอนุญาตให้แก้เฉพาะ approved files ใน `outputs/` |
 | **Instructor Fallback** | ให้ทีมทำ reviewer role ระบุ fail points และเปรียบเทียบกับ deterministic validation ใน Make |
 
 ## Escalation Rule

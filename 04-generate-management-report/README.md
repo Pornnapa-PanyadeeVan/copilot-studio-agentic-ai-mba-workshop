@@ -346,7 +346,7 @@ HIGH Decision → Situation Report → Validate → PDF → OPEN Follow-up → H
 ## Bridge to LINE Demo and Lab 4
 
 - LINE Demo เปลี่ยน Channel ที่รับคำร้อง แต่ HIGH decision ยังต้องเข้า report/follow-up control เดียวกัน
-- Lab 4 ให้ Manus Agent triage dataset แล้วสร้าง draft report สำหรับ **ทุก case ที่จัดเป็น HIGH** โดยไม่ประกอบ Make Workflow และไม่ทำ external action
+- Lab 4 ให้ Antigravity Workspace Agent triage dataset แล้วสร้าง draft report files สำหรับ **ทุก case ที่จัดเป็น HIGH** ภายใน project scope โดยไม่ประกอบ Make Workflow และไม่ทำ external action
 
 ให้จดว่า Lab 2–3 ต้องกำหนด Router, document, PDF, Drive และ tracker update เอง เพื่อนำไปเปรียบเทียบ control, repeatability และ setup effort กับ Lab 4
 

@@ -20,7 +20,7 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 | ระยะเวลา | 3 ชั่วโมง รวมพัก 10 นาที |
 | รูปแบบ | Hands-on, business-oriented และเรียนตามคู่มือใน repository ได้ด้วยตนเอง |
 | กรณีศึกษา | Business Request Management |
-| เครื่องมือหลัก | Google AI Studio, Make, Gemini API, Google Workspace และ Manus AI |
+| เครื่องมือหลัก | Google AI Studio, Make, Gemini API, Google Workspace และ Google Antigravity |
 | ข้อมูล | ใช้ข้อมูลจำลองเท่านั้น ห้ามใช้ข้อมูลจริงหรือข้อมูลลับ |
 | ค่าใช้จ่าย | ออกแบบให้ใช้ free/free-tier; ไม่ต้องเปิด billing หรือซื้อ API credits เพื่อผ่าน Workshop |
 
@@ -35,7 +35,7 @@ Workshop เชิงปฏิบัติการ 3 ชั่วโมงส�
 5. ใช้ Business Rules เพื่อจัดลำดับ `HIGH`, `MEDIUM`, `LOW` จากผลกระทบจริง
 6. เชื่อม Google Form → Google Sheets → Gemini → Decision Router → Update Row/Alert ใน Make
 7. นำ HIGH route ไปสร้าง Situation & Follow-up PDF พร้อมสถานะ `OPEN` และ Human Review
-8. ให้ Manus Agent รับ Goal เดียวกับ Lab 2–3 แล้วทำ triage และสร้าง HIGH-case report โดยไม่ประกอบ Workflow
+8. ให้ Antigravity Workspace Agent รับ Goal เดียวกับ Lab 2–3 แล้ววาง plan ใช้ local file tools ทำ triage และสร้าง HIGH-case report โดยไม่ประกอบ Workflow
 9. เปรียบเทียบ Human-designed Workflow กับ Goal-based Autonomous Agent
 10. กำหนด Guardrails, Human-in-the-loop, permission, audit trail และ fallback ที่เหมาะสม
 
@@ -110,15 +110,15 @@ Business Request Data + Business Goal
                  │
         ┌────────┴────────┐
         │                 │
-Lab 2–3: Make       Lab 4: Manus Agent
+Lab 2–3: Make       Lab 4: Antigravity Agent
 Human designs       Human defines Goal,
-every module        Rules and Deliverables
+every module        Project Boundary + Rules
         │                 │
-Gemini → Router     Agent plans and executes
-→ HIGH PDF          triage + HIGH reports
+Gemini → Router     Plan → Human Proceed
+→ HIGH PDF          → files + validation
         │                 │
 Real Workflow       Triage + Follow-up Reports
-and Actions         without building Workflow
+and Actions         in a bounded local project
 ```
 
 Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใช้เปรียบเทียบ control, repeatability, autonomy, auditability และ effort ของสองแนวทาง
@@ -133,7 +133,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 | 01:30–01:40 | Break | พัก 10 นาที |
 | 01:40–02:05 | [Lab 3: Managerial AI](04-generate-management-report/README.md) | HIGH case → Situation & Follow-up PDF → OPEN tracker |
 | 02:05–02:15 | [LINE OA Demo](05-line-oa-demo/README.md) | เห็น Channel → Agentic Workflow |
-| 02:15–02:45 | [Lab 4: Manus AI](06-manus-ai/README.md) | Triage + HIGH reports แบบ Goal-based Agent โดยไม่สร้าง Workflow |
+| 02:15–02:45 | [Lab 4: Google Antigravity](06-antigravity/README.md) | Bounded Workspace Agent วาง plan ใช้ local tools และสร้าง HIGH reports โดยไม่สร้าง Workflow |
 | 02:45–03:00 | [Responsible Agentic AI](07-responsible-agentic-ai/README.md) + Compare + Wrap-up | Human oversight และเลือก architecture ให้เหมาะกับงาน |
 
 กิจกรรมหลังชั้นเรียน: [Optional MBA Agentic AI Challenge](08-optional-mba-challenge/README.md)
@@ -164,7 +164,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 
 - Google Account ที่เข้า Google AI Studio, Forms, Sheets, Drive, Docs และ Gmail ได้
 - Make account แบบ Free
-- Manus account แบบ Free หนึ่งบัญชีต่อทีมสำหรับ Lab 4 หรือใช้ Instructor run fallback
+- ติดตั้ง Google Antigravity 2.0 และมี Google Account หนึ่งชุดต่อทีมสำหรับ Lab 4 หรือใช้ Instructor project fallback
 - Browser รุ่นปัจจุบัน และอินเทอร์เน็ต
 - Gemini API key เฉพาะบุคคลสำหรับ Lab 2–3 หากบัญชีสร้างได้
 - ไม่ต้องมี API key ใน Lab 1
@@ -190,7 +190,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 | Google Docs / Drive | สร้างและเก็บรายงาน | Permission ต้องอนุญาตให้ Make ตามที่ใช้จริง |
 | Gmail | ส่งรายงานถึงอีเมลของผู้เรียนเอง | ใช้ `[Your Email]` ในคู่มือเสมอ |
 | LINE OA | Channel สำหรับ instructor demo | ผู้สอนเตรียมล่วงหน้า; ผู้เรียนไม่ต้องสร้างบัญชี |
-| [Manus](https://manus.im/) | Goal-based Agent สำหรับทำ triage + HIGH-case reports โดยไม่ประกอบ Workflow | Lab 4 ใช้ Agent Mode Lite เท่าที่ Free plan/credits เปิดให้ |
+| [Google Antigravity](https://antigravity.google/) | Goal-based Workspace Agent สำหรับวาง plan ใช้ local file tools และสร้าง artifacts | Lab 4 ใช้ Antigravity 2.0 แบบ project-scoped และ review-driven |
 
 ## Free-tier และความเป็นส่วนตัว
 
@@ -201,8 +201,8 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 - Google ระบุว่า free tier อาจใช้ข้อมูลที่ส่งเพื่อปรับปรุงผลิตภัณฑ์ จึงใช้เฉพาะ simulated data
 - ห้ามแชร์ API key, ใส่ key ใน screenshot, chat, Sheet หรือ GitHub
 - Make นับการทำงานของ module เป็น credits; ทดสอบสั้นและปิด schedule หลังจบ
-- Manus Agent Mode ใช้ credits ตามความซับซ้อนและระยะเวลาของ task; Free plan, model access และ queue เปลี่ยนได้ ให้ทำเป็นทีมและเตรียม recorded run
-- ดูข้อมูลล่าสุด: [Gemini API Pricing](https://ai.google.dev/gemini-api/docs/pricing), [Gemini Rate Limits](https://ai.google.dev/gemini-api/docs/rate-limits), [Make Pricing](https://www.make.com/en/pricing), [Manus Pricing](https://manus.im/pricing), [Manus Credit Rules](https://help.manus.im/en/articles/11711097-what-are-the-rules-for-credits-consumption-and-how-can-i-obtain-them)
+- Antigravity individual tier ราคา $0 มี basic weekly rate limits; model, limits และ UI เปลี่ยนได้ ให้ติดตั้งล่วงหน้า ทำเป็นทีม และเตรียม Instructor project fallback
+- ดูข้อมูลล่าสุด: [Gemini API Pricing](https://ai.google.dev/gemini-api/docs/pricing), [Gemini Rate Limits](https://ai.google.dev/gemini-api/docs/rate-limits), [Make Pricing](https://www.make.com/en/pricing), [Antigravity Pricing](https://antigravity.google/pricing), [Antigravity Docs](https://antigravity.google/docs/home)
 
 ## เริ่ม Workshop
 
@@ -213,7 +213,7 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 3. [Lab 2 — Make Agentic Workflow](03-build-agentic-workflow/README.md) · [Prompts](03-build-agentic-workflow/prompts.md)
 4. [Lab 3 — Managerial AI: HIGH Situation & Follow-up PDF](04-generate-management-report/README.md) · [Prompts](04-generate-management-report/prompts.md)
 5. [LINE OA Instructor Demo](05-line-oa-demo/README.md)
-6. [Lab 4 — Manus AI: Lab 2+3 without Workflow](06-manus-ai/README.md) · [Prompts](06-manus-ai/prompts.md)
+6. [Lab 4 — Google Antigravity: Lab 2+3 without Workflow](06-antigravity/README.md) · [Prompts](06-antigravity/prompts.md)
 7. [Responsible Agentic AI + Architecture Comparison](07-responsible-agentic-ai/README.md)
 8. [Optional MBA Challenge](08-optional-mba-challenge/README.md) · [Worksheet](08-optional-mba-challenge/worksheet.md)
 9. [Troubleshooting](troubleshooting/README.md)
@@ -228,8 +228,8 @@ Lab 4 ไม่ได้แทน Make ในทุกกรณี แต่ใ�
 - Request Log ที่มี HIGH, MEDIUM และ LOW อย่างน้อยประเภทละหนึ่งรายการ พร้อม Request ID และ follow-up fields
 - ร่าง HIGH Priority Situation & Follow-up Report ที่อ้าง source evidence
 - DRAFT PDF แบบ restricted และ HIGH row ที่มี `Follow-up Status = OPEN`
-- Manus task ที่สร้าง Request Triage และ HIGH-case reports จาก Goal เดียว โดยไม่สร้าง Workflow
-- ตารางเปรียบเทียบ Make Workflow กับ Manus Agent พร้อมข้อเสนอว่าเมื่อใดควรใช้แบบใด
+- Antigravity project ที่มี reviewed plan, Request Triage, HIGH-case report, follow-up index และ validation โดยไม่สร้าง Workflow
+- ตารางเปรียบเทียบ Make Workflow กับ Antigravity Agent พร้อมข้อเสนอว่าเมื่อใดควรใช้แบบใด
 
 ## คำถามสรุป
 

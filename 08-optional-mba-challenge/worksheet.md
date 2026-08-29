@@ -73,7 +73,7 @@ Management Insight
 
 ## 3A. Architecture Choice
 
-เลือกหนึ่ง: `Make Workflow` / `Manus Agent` / `Hybrid`
+เลือกหนึ่ง: `Make Workflow` / `Antigravity Agent` / `Hybrid`
 
 **เหตุผลด้าน setup, repeatability, control, external action และ audit:**
 

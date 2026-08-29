@@ -15,7 +15,7 @@
 | 0–4 | 1. Generative AI คืออะไร |
 | 4–8 | 2. AI Agent คืออะไร |
 | 8–12 | 3. Agentic AI คืออะไร + คำศัพท์ในระบบ |
-| 12–15 | Autonomy Spectrum และ Make vs Manus |
+| 12–15 | Autonomy Spectrum และ Make vs Antigravity |
 | 15–18 | Business Request Management + Managerial AI |
 | 18–20 | Discussion และ Checkpoint |
 
@@ -86,7 +86,7 @@ Validation → Human Review → Feedback → Data / Memory
 
 | คำศัพท์ใน Agentic AI System | อยู่ตรงไหนและทำอะไร | ตัวอย่าง Workshop |
 |---|---|---|
-| Workflow / Agent Plan | ประสานลำดับ execution | Make Scenario หรือ Manus execution plan |
+| Workflow / Agent Plan | ประสานลำดับ execution | Make Scenario หรือ Antigravity implementation plan/task list |
 | Tool | ความสามารถที่ระบบเรียกใช้ | Parse JSON, `Add a row`, create report |
 | Connector / API | เชื่อมระบบพร้อม authentication และ permission | Make เชื่อม Gemini หรือ Google Sheets |
 | MCP | มาตรฐานที่ Host ใช้ค้นพบ Resources, Prompts และ Tools จาก Server | แนวคิดประกอบ; Labs หลักไม่ติดตั้ง MCP Server |
@@ -102,7 +102,7 @@ Connector เป็นคำกว้างสำหรับ product integratio
 ใน Workshop นี้:
 
 - **Lab 2–3:** Make Workflow ประสาน Agent reasoning, native connectors, actions, data และ report
-- **Lab 4:** Manus Agent วางแผน execution และสร้าง artifacts โดยไม่ประกอบ Workflow หรือเชื่อมระบบภายนอก
+- **Lab 4:** Antigravity Workspace Agent วาง plan ใช้ local file tools และสร้าง artifacts ภายใน project scope โดยไม่ประกอบ Workflow หรือเชื่อมระบบภายนอก
 
 > **Agent decides. Skill guides. Tool does. Connector grants access. MCP standardizes access. Workflow coordinates. Guardrail limits and checks.**
 
@@ -121,12 +121,12 @@ Autonomy (ระดับความเป็นอิสระ) ควรม�
 | 0: Manual | คนทำทุกขั้นตอน | อ่านและจัด Priority เอง | ตัดสินใจทั้งหมด |
 | 1: Assist | AI สร้างคำแนะนำ | Lab 1 | คนตรวจและลงมือทำ |
 | 2: Conditional Action | Workflow ทำ Action ที่ความเสี่ยงต่ำ | Lab 2 บันทึก Sheet | คนตรวจ HIGH |
-| 3: Bounded Autonomy | ระบบเลือกและทำหลายขั้นตอนภายในขอบเขต | สร้าง HIGH follow-up draft + PDF | คนยืนยัน owner, target time และ status |
-| 4: Higher Autonomy | ระบบวางแผนและเลือก tools กว้างขึ้น | Optional agent comparison | ต้องมี guardrails และ monitoring เข้มขึ้น |
+| 3: Bounded Autonomy | ระบบเลือกและทำหลายขั้นตอนภายในขอบเขต | Lab 4: plan → local tools → HIGH artifacts → validation | คน approve plan/commands และ review files |
+| 4: Higher Autonomy | ระบบวางแผนและเลือก tools/agents กว้างขึ้น | Optional connector/MCP/schedule design | ต้องมี guardrails และ monitoring เข้มขึ้น |
 
 “อัตโนมัติมากกว่า” ไม่ได้แปลว่า “ดีกว่า” เสมอไป ระดับที่เหมาะสมขึ้นกับ impact, reversibility, data sensitivity และ accountability
 
-### Preview Lab 4 — Make Workflow vs Manus Agent
+### Preview Lab 4 — Make Workflow vs Antigravity Agent
 
 Workshop จะให้ผู้เรียนแก้โจทย์ Business Request Management สองวิธี:
 
@@ -137,7 +137,7 @@ Workshop จะให้ผู้เรียนแก้โจทย์ Busines
 | เปลี่ยน process ต้องแก้ workflow | Agent อาจปรับแผนตาม context |
 | เหมาะกับงานซ้ำและ policy ชัด | เหมาะกับงานสำรวจ/วางแผนที่ขอบเขตชัดและตรวจสอบได้ |
 
-ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ตั้งแต่ triage จนถึง HIGH Situation & Follow-up PDF ส่วน Lab 4 จะให้ Manus Agent รับ Goal และ dataset เดียวกันแล้วทำ triage กับ HIGH-case reports โดยไม่สร้าง Workflow ผู้เรียนต้องสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด boundary, approval, evidence และ validation เพิ่มขึ้นอย่างไร
+ใน Lab 2–3 ผู้เรียนจะประกอบ Workflow เอง ตั้งแต่ triage จนถึง HIGH Situation & Follow-up PDF ส่วน Lab 4 จะให้ Antigravity Agent รับ Goal และ dataset เดียวกัน สร้าง plan/task list ใช้ local file tools แล้วทำ triage กับ HIGH-case reports โดยไม่สร้าง Workflow ผู้เรียนต้อง review plan ก่อน execution และสังเกตว่า “ความเป็นอิสระมากขึ้น” ทำให้ต้องกำหนด project boundary, tool permission, approval, evidence และ validation เพิ่มขึ้นอย่างไร
 
 ## 5. Business Request Management
 

@@ -16,8 +16,9 @@
 - [ ] ตรวจว่าบัญชีตัวอย่างสร้าง Gemini API key แบบ free tier ได้โดยไม่เปิด billing
 - [ ] ตรวจ restrictions ของบัญชีโรงเรียน/องค์กรและประเทศ
 - [ ] ไม่ใช้ instructor API key ร่วมกันทั้งห้อง
-- [ ] ทดสอบ Manus Free account และยืนยันว่าเห็น Agent Mode Lite/agent mode ที่บัญชีเปิดให้
-- [ ] ตรวจ Manus credits/queue ด้วยบัญชี Free และเตรียมหนึ่งบัญชีต่อทีม ไม่ใช่หนึ่ง task ต่อคน
+- [ ] ตรวจเครื่องผู้เรียนว่า install [Google Antigravity 2.0](https://antigravity.google/download) ได้ตาม OS requirement และ Sign in ได้
+- [ ] ทดสอบ Antigravity individual tier, model/quota screen, New Project, Project Settings, plan review, local file changes และ walkthrough
+- [ ] เตรียมหนึ่งเครื่อง/หนึ่ง dedicated project ต่อทีม ไม่เปิดทั้ง Desktop หรือ Downloads เป็น project scope
 
 ### Make Connections
 
@@ -38,11 +39,11 @@
 - [ ] ตรวจ [Gemini API Pricing](https://ai.google.dev/gemini-api/docs/pricing)
 - [ ] ตรวจ [Gemini API Rate Limits](https://ai.google.dev/gemini-api/docs/rate-limits)
 - [ ] ตรวจ [Make Pricing/Credits](https://www.make.com/en/pricing)
-- [ ] ตรวจ [Manus Pricing](https://manus.im/pricing) และ [Credit Rules](https://help.manus.im/en/articles/11711097-what-are-the-rules-for-credits-consumption-and-how-can-i-obtain-them)
-- [ ] ยืนยันว่าไม่มี Lab บังคับ paid model, paid Make feature, Manus paid mode หรือ Cloud Billing
+- [ ] ตรวจ [Antigravity Pricing](https://antigravity.google/pricing), [Download](https://antigravity.google/download), [Docs](https://antigravity.google/docs/home) และ [Changelog](https://antigravity.google/changelog)
+- [ ] ยืนยันว่าไม่มี Lab บังคับ paid model, paid Make feature, Antigravity paid plan, multi-agent teamwork หรือ Cloud Billing
 - [ ] จำกัด Lab 2 คนละ 3–5 Gemini requests
 - [ ] Lab 3 ใช้ HIGH row จำลองเพียงหนึ่งรายการต่อทีม
-- [ ] Lab 4 ใช้ dataset 4 rows, ไม่ browse web และรันหนึ่ง Manus Agent task ต่อทีม
+- [ ] Lab 4 ใช้ dataset 4 rows, หนึ่ง Antigravity project/conversation ต่อทีม, ไม่ browse web, ไม่ใช้ MCP และไม่ install package
 - [ ] วางแผนกระจายเวลาสร้าง API keys ไม่ให้ 50 คนทำพร้อมกันวินาทีเดียว
 - [ ] เตรียม quota/rate-limit fallback
 
@@ -58,8 +59,8 @@
 - [ ] เตรียมสำเนา sample data ใน Sheet ของผู้สอน
 - [ ] เตรียม fallback JSON จาก [Lab 2 Prompts](../03-build-agentic-workflow/prompts.md#fallback-json)
 - [ ] เตรียม fallback HIGH case และ Situation Report จาก [Lab 3 Prompts](../04-generate-management-report/prompts.md)
-- [ ] เตรียม [Manus Lab Input](manus-lab-input.md) และ [Lab 4 Prompts](../06-manus-ai/prompts.md)
-- [ ] Run Manus task ล่วงหน้าและเก็บ Instructor fallback ที่เห็น plan, triage, HIGH reports, follow-up index และ validation
+- [ ] เตรียม [Antigravity Lab Input](antigravity-lab-input.md) และ [Lab 4 Prompts](../06-antigravity/prompts.md)
+- [ ] Run Antigravity project ล่วงหน้าและเก็บ Instructor fallback ที่เห็น plan, task list, human proceed, file changes, triage, HIGH report, follow-up index, validation และ walkthrough
 - [ ] เตรียม blank Google Doc และ Drive folders สำหรับ fallback
 - [ ] เตรียม PDF ตัวอย่างที่ไม่มีข้อมูลจริง
 - [ ] เตรียม architecture comparison สำหรับ 13–17 ทีม
@@ -75,8 +76,8 @@
 - [ ] บันทึกภาพหรือวิดีโอ fallback ของ run ที่สำเร็จ
 - [ ] หากสาธิต LINE OA ให้ใช้ demo account/channel เท่านั้น
 - [ ] เตรียม LINE architecture-only fallback
-- [ ] ถ่าย Manus Agent Mode, file upload และ artifacts โดยปิด account/credit details ที่ไม่จำเป็น
-- [ ] เตรียม Manus recorded/instructor run fallback หาก queue หรือ credits ไม่พอ
+- [ ] ถ่าย Antigravity Project Settings, plan review, output files และ walkthrough โดยปิด account/path details ที่ไม่จำเป็น
+- [ ] เตรียม Antigravity recorded/instructor project fallback หาก install, quota หรือ sign-in ไม่พร้อม
 
 ### Room and Network
 
@@ -98,8 +99,8 @@
 - [ ] เปิด PDF จาก Drive
 - [ ] ส่ง Gmail ถึงตนเองและเปิด attachment
 - [ ] ตรวจ Make credit/quota dashboard
-- [ ] เปิด Manus และตรวจว่า Instructor fallback task ยังเข้าถึงได้
-- [ ] เปิด browser tabs: repository, AI Studio, Forms, Make, Sheets, Drive, Gmail, Manus
+- [ ] เปิด Antigravity และตรวจว่า Instructor fallback project/conversation ยังเข้าถึงได้
+- [ ] เปิด browser tabs: repository, AI Studio, Forms, Make, Sheets, Drive, Gmail และเปิด Antigravity desktop แยกไว้
 - [ ] เปิด troubleshooting และ fallback files
 - [ ] ลบผล demo เก่าที่อาจทำให้ผู้เรียนสับสน แต่ไม่ลบ audit ที่ต้องเก็บ
 
@@ -110,7 +111,7 @@
 - [ ] ให้ผู้เรียนทำ Lab 1 รายบุคคลหรือคู่
 - [ ] Lab 2–3 อนุญาตจับคู่เพื่อช่วยเรื่อง connection/quota
 - [ ] กำหนดตัวแทนทีมเพียงหนึ่งคนกด Run ใน Make
-- [ ] Lab 4 ทีมละ 3–4 คนและมี Operator เพียงหนึ่งคน run Manus task
+- [ ] Lab 4 ทีมละ 3–4 คนและมี Operator เพียงหนึ่งคนควบคุม Antigravity project/approval
 - [ ] MBA Challenge เป็น Optional Assignment ไม่อยู่ใน core 3 ชั่วโมง
 
 ### Timing Guardrails
@@ -122,8 +123,8 @@
 - [ ] 01:40 เริ่ม Lab 3 ด้วย HIGH row จาก Lab 2 หรือ fallback Request ID `BR-001` ทันที
 - [ ] 01:55 ผู้ที่ PDF connector ไม่ผ่านใช้ manual document fallback
 - [ ] 02:05 เริ่ม LINE OA Instructor Demo
-- [ ] 02:15 เริ่ม Lab 4 Manus พร้อมกันเป็นทีม
-- [ ] 02:20 ทีมที่ Agent Mode/credits ไม่พร้อมใช้ Instructor fallback
+- [ ] 02:15 เริ่ม Lab 4 Antigravity พร้อมกันเป็นทีม
+- [ ] 02:20 ทีมที่ installation/sign-in/quota ไม่พร้อมใช้ Instructor project fallback
 - [ ] 02:45 เริ่ม Responsible AI + Architecture Comparison + Wrap-up
 
 ## Risk Register
@@ -144,9 +145,10 @@
 | Gmail authorization fail | OAuth denied | ใช้ email ตนเอง/ตรวจ permission | Save Drive link only |
 | PDF generation fail | ได้ text/link ไม่ใช่ PDF | ตรวจ export/binary path | Google Docs manual export |
 | 50 API keys พร้อมกัน | throttling/verification delay | stagger 5 กลุ่ม | แชร์ผลผ่าน projector ไม่แชร์ key |
-| Manus credits ไม่พอ | Task start ไม่ได้/credit warning | หนึ่ง task ต่อทีม, dataset 4 rows, no web research | Instructor completed run |
-| Manus queue ยาว | Estimated wait เกิน Lab time | ตรวจล่วงหน้าและ stagger teams | Recorded run + manual validation |
-| Manus ทำงานนอกขอบเขต | เสนอ app/workflow/external action | ใช้ boundary correction prompt และหยุด task หากจำเป็น | วิเคราะห์ artifacts ที่เตรียมไว้ |
+| Antigravity install/sign-in ไม่พร้อม | App เปิดไม่ได้, OS ไม่รองรับ หรือ account blocked | ติดตั้ง/ทดสอบล่วงหน้าและจับทีม | Instructor completed project/recording |
+| Antigravity quota ไม่พอ | Agent start ไม่ได้หรือ usage warning | หนึ่ง project/conversation ต่อทีม, dataset 4 rows, compact prompt | Plan-only หรือ Instructor project |
+| Project scope/permission กว้างเกิน | เลือก Desktop/Downloads หรือ Agent ขอ access นอก folder | dedicated folder + review-driven settings + reject permission | สร้าง project ใหม่หรือใช้ recorded run |
+| Antigravity ทำงานนอกขอบเขต | เสนอ app, browser, MCP, schedule, package install หรือ external action | Stop, ใช้ boundary correction prompt และ review plan ใหม่ | วิเคราะห์ prepared artifacts |
 | Sensitive data ถูก paste | พบชื่อ/email จริง | หยุด run และลบจาก workspace/history ตาม policy | ใช้ sample dataset ใหม่ |
 
 ## Fallback Ladder
@@ -182,19 +184,19 @@ Input card → Team applies AI rules → Decision card → Action card
 
 > Workshop ต้องสำเร็จได้แม้ automation connectors fail ผู้เรียนยังต้องอธิบาย Goal, Reasoning, Decision, Action, Data และ Human Oversight
 
-### Manus Lab Fallback
+### Antigravity Lab Fallback
 
 ```text
-Student Agent task
+Student project + reviewed plan
 ↓ unavailable
-Instructor completed Agent task
+Instructor completed project
 ↓ unavailable
-Chat Mode comparison
+Plan-only / Chat comparison
 ↓ unavailable
-Team simulates Planner → Triage → HIGH Report Analyst → Reviewer
+Team simulates Goal Owner → Planner → Tool Operator → Reviewer
 ```
 
-Learning Objective คือการเปรียบเทียบ orchestration ไม่ใช่การใช้ credits ให้หมด
+Learning Objective คือการเปรียบเทียบ orchestration, bounded tool use และ approval ไม่ใช่การใช้ quota ให้หมด
 
 ## Security Checklist
 
@@ -208,7 +210,8 @@ Learning Objective คือการเปรียบเทียบ orchestra
 - [ ] Rotate/revoke demo key หลัง class หากไม่ใช้ต่อ
 - [ ] ไม่บันทึกหน้าจอที่มี secret
 - [ ] ไม่สาธิต high-impact automatic action
-- [ ] Manus ใช้เฉพาะ `manus-lab-input.md`; ไม่เปิด connectors, schedule, web research หรือ external action
+- [ ] Antigravity ใช้ dedicated project และ `antigravity-lab-input.md`; ไม่เปิด browser, Connector, MCP, schedule, package install หรือ external action
+- [ ] Review plan/file changes/terminal command ก่อนอนุมัติ และ reject access นอก project
 
 ## หลังสอน
 
@@ -216,7 +219,7 @@ Learning Objective คือการเปรียบเทียบ orchestra
 - [ ] ลบหรือ anonymize test data ตาม retention plan
 - [ ] Rotate/revoke workshop API keys ที่ไม่ใช้
 - [ ] ตรวจ Make credits/quota
-- [ ] ตรวจ Manus task privacy/retention และลบ demo artifacts ตามแผนเมื่อไม่ใช้
+- [ ] ตรวจ Antigravity project/conversation/artifact retention และลบ local demo project ตามแผนเมื่อไม่ใช้
 - [ ] เก็บ feedback ว่า issue ใดเกิดบ่อย
 - [ ] Update troubleshooting และ screenshots
 - [ ] ตรวจลิงก์ free-tier/pricing ก่อนรอบถัดไป

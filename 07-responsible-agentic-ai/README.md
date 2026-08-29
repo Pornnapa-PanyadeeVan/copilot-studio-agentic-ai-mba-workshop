@@ -1,6 +1,6 @@
 # 07 — Responsible Agentic AI + Architecture Choice
 
-[← Previous: Lab 4 Manus AI](../06-manus-ai/README.md) · [Home](../README.md) · [Optional MBA Challenge →](../08-optional-mba-challenge/README.md)
+[← Previous: Lab 4 Google Antigravity](../06-antigravity/README.md) · [Home](../README.md) · [Optional MBA Challenge →](../08-optional-mba-challenge/README.md)
 
 🎯 **Goal**  กำหนดขอบเขตที่ AI ทำเองได้ สิ่งที่ต้องให้คนอนุมัติ และ controls ที่ทำให้ระบบรับผิดชอบได้
 
@@ -56,7 +56,7 @@ Human-in-the-loop (การให้มนุษย์ตรวจหรือ�
 - เก็บข้อมูลเท่าที่จำเป็นต่อ Goal
 - แยก identifier ออกจากข้อความเมื่อทำได้
 - กำหนด retention และผู้เข้าถึง Sheet/Drive/Make run history
-- ตรวจสิทธิ์และ retention ของไฟล์/task ใน Manus workspace เช่นเดียวกับระบบอื่น
+- ตรวจ project scope, local file permissions, conversation/artifact retention และ account policy ของ Antigravity เช่นเดียวกับระบบอื่น
 - ห้ามส่ง confidential, personal, financial, health หรือ employee-sensitive data เข้า free-tier model โดยไม่มีการประเมินนโยบายองค์กร
 - ตรวจ terms/data-use ของผู้ให้บริการก่อน production
 
@@ -114,6 +114,7 @@ Automation bias คือการเชื่อ AI มากเกินไป
 | Google Drive | เก็บ DRAFT report ใน restricted folder | แชร์สาธารณะอัตโนมัติ |
 | Gmail | ส่งอีเมลทดสอบถึงตนเอง | อ่าน/ส่งแทน mailbox องค์กรวงกว้าง |
 | LINE OA demo | รับ/ตอบข้อความ demo | production customer channel |
+| Antigravity Project | อ่าน input และเขียนเฉพาะ dedicated local project | Desktop/Downloads ทั้งหมด, external URL, MCP, schedule หรือ terminal แบบไม่ review |
 
 ## 8. Audit Trail
 
@@ -124,7 +125,7 @@ Automation bias คือการเชื่อ AI มากเกินไป
 - Prompt/rule/model version
 - AI summary, priority, reason และ recommendation
 - Route และ Action ที่ทำจริง
-- สำหรับ Manus: execution plan, source Request IDs, HIGH report/index count, artifact version และ validation summary
+- สำหรับ Antigravity: implementation plan, task list, human proceed, file changes, source Request IDs, HIGH report/index count, validation summary และ walkthrough
 - Error/retry
 - Human approver, override และเหตุผล
 
@@ -155,12 +156,12 @@ Audit trail ไม่ควรกลายเป็นที่เก็บข�
 - Request มี legal, compliance, finance, employment หรือ sensitive data
 - Confidence/impact อยู่นอกขอบเขตที่อนุญาต
 
-## 11. เลือก Make, Manus หรือ Hybrid
+## 11. เลือก Make, Antigravity หรือ Hybrid
 
 | สถานการณ์ | ตัวเลือกที่เหมาะเป็นจุดเริ่ม | เหตุผล |
 |---|---|---|
 | คำร้องเข้าทุก 5 นาที ต้องบันทึกและแจ้งเตือนซ้ำได้ | Make Workflow | เส้นทางและ Action ต้องคาดการณ์/monitor ได้ |
-| Triage dataset one-off และสร้าง HIGH-case reports | Manus Agent | Goal-based multi-step analysis ลด setup ของ Workflow |
+| Triage dataset one-off และสร้าง HIGH-case report files | Antigravity Agent | Goal-based workspace execution พร้อม plan, local tools, artifact review และ validation |
 | งานมี financial/legal/employee decision | Assist + Human Approval | ไม่ควรให้ระบบใดตัดสินขั้นสุดท้ายเอง |
 | ต้องรับข้อมูลอัตโนมัติ แล้วให้ Agent วิเคราะห์เคสซับซ้อน | Hybrid | Workflow คุม Trigger/permissions; Agent ทำ bounded reasoning |
 
@@ -200,7 +201,7 @@ Make performs approved action
 2. “Action ที่ AI ทำอัตโนมัติได้ใน use case ของฉันคือ…”
 3. “Action ที่ต้องมี Human Approval คือ…”
 4. “ข้อมูลที่ Manager ต้องยืนยันก่อนเปลี่ยน HIGH case จาก OPEN คือ…”
-5. “โจทย์ของฉันควรใช้ Make, Manus หรือ Hybrid เพราะ…”
+5. “โจทย์ของฉันควรใช้ Make, Antigravity หรือ Hybrid เพราะ…”
 
 ## 🏁 Completed
 
@@ -209,8 +210,8 @@ Make performs approved action
 - [ ] มี audit trail และ override
 - [ ] มี stop condition/fallback
 - [ ] แยก recommendation ออกจาก final high-impact decision
-- [ ] เลือก Make, Manus หรือ Hybrid พร้อมเหตุผลได้
+- [ ] เลือก Make, Antigravity หรือ Hybrid พร้อมเหตุผลได้
 
 ---
 
-[← Previous: Lab 4 Manus AI](../06-manus-ai/README.md) · [Home](../README.md) · [Optional MBA Challenge →](../08-optional-mba-challenge/README.md)
+[← Previous: Lab 4 Google Antigravity](../06-antigravity/README.md) · [Home](../README.md) · [Optional MBA Challenge →](../08-optional-mba-challenge/README.md)

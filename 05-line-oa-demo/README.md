@@ -1,6 +1,6 @@
 # 05 — Instructor Demo: LINE OA → Make → Gemini
 
-[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Lab 4 Manus AI →](../06-manus-ai/README.md)
+[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Lab 4 Google Antigravity →](../06-antigravity/README.md)
 
 > **INSTRUCTOR-LED DEMO** อยู่ในเส้นทางหลัก 10 นาที แต่ผู้เรียนไม่ต้องสร้าง LINE Official Account, Messaging API channel หรือ webhook เอง
 
@@ -138,4 +138,4 @@ Channel เปลี่ยนได้ แต่ Agentic AI architecture ยั�
 
 ---
 
-[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Lab 4 Manus AI →](../06-manus-ai/README.md)
+[← Previous: Lab 3](../04-generate-management-report/README.md) · [Home](../README.md) · [Next: Lab 4 Google Antigravity →](../06-antigravity/README.md)

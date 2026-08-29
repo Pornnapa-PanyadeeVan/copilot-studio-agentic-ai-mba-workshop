@@ -103,7 +103,7 @@ Management Insight:
 3. Action ใด reversible และ action ใด high-impact?
 4. ต้องเก็บ audit trail อะไร?
 5. ใครเป็น accountable owner?
-6. Use case นี้ควรใช้ Make Workflow, Manus Agent หรือ Hybrid เพราะอะไร?
+6. Use case นี้ควรใช้ Make Workflow, Antigravity Agent หรือ Hybrid เพราะอะไร?
 
 ### Risk Prompts
 
@@ -144,7 +144,7 @@ We measure value by...
 ## 💬 Discussion
 
 - Use case นี้เป็น automation, AI-assisted workflow หรือ Agentic AI ระดับใดบน autonomy spectrum?
-- ถ้าใช้ Make กับ Manus ต่างกันตรง setup, control, repeatability และ audit อย่างไร?
+- ถ้าใช้ Make กับ Antigravity ต่างกันตรง setup, planning, tool permission, repeatability และ audit อย่างไร?
 - การเพิ่ม autonomy อีกหนึ่งระดับให้ value เพิ่มจริงหรือแค่เพิ่ม risk?
 - Data สะสมจะสร้าง Management Insight อะไรที่คำร้องเดี่ยวให้ไม่ได้?
 
