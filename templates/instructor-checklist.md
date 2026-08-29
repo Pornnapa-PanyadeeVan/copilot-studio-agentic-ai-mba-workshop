@@ -27,10 +27,11 @@
 - [ ] ทดสอบ Form → response sheet → `Watch New Rows` และเห็น `Row number`
 - [ ] ทดสอบ `Update a Row` ทั้ง HIGH และ MEDIUM/LOW โดยไม่เกิดแถวซ้ำ
 - [ ] ทดสอบ Router/filters ด้วย exact Priority values
-- [ ] ทดสอบค้นหา/update HIGH row ด้วย Request ID และ follow-up fields
-- [ ] ทดสอบ document generation path ที่บัญชีปัจจุบันรองรับ
-- [ ] ทดสอบ PDF export/conversion
-- [ ] ทดสอบ Google Drive upload/save
+- [ ] ทดสอบ `Search Rows` แบบมาตรฐานด้วย Request ID `BR-001` + Priority `HIGH` และยืนยันว่า output มี `Row number` (ไม่ใช้ Advanced)
+- [ ] ทดสอบ `Create a File from Text` → Convert to Google Docs ด้วยบัญชีปัจจุบัน
+- [ ] ทดสอบ `Download a File` → PDF หรือเตรียมทางเลือก `Google Docs — Download a Document`
+- [ ] ทดสอบ `Upload a File` ว่าได้รับ binary PDF มากกว่า 0 bytes และ link ยัง Restricted
+- [ ] ทดสอบ Update HIGH row เดิมด้วย Row number, Report Status/Link และ Follow-up = OPEN
 - [ ] ทดสอบ Gmail ส่งถึงอีเมลทดสอบของผู้สอนเอง
 - [ ] ปิด schedule ของ scenario หลังทดสอบ
 
@@ -70,6 +71,7 @@
 ### Screenshots and Demo
 
 - [ ] ถ่าย screenshot ตาม [Screenshot Guide](../images/README.md)
+- [ ] ถ่าย Lab 2 ให้ครบ `L2-01` ถึง `L2-17` และ Lab 3 ให้ครบ `L3-01` ถึง `L3-13`
 - [ ] ปิด API key, email, IDs และ webhook URLs ในทุกภาพ
 - [ ] ใส่ `UI MAY VARY` และวันที่ถ่าย
 - [ ] ทดสอบ flow สดหนึ่งรอบ HIGH/MEDIUM/LOW
@@ -95,7 +97,9 @@
 - [ ] Run Lab 1 test case หนึ่งรายการ
 - [ ] Submit Google Form แล้ว Run Lab 2 HIGH request end-to-end
 - [ ] ตรวจว่า response row ใน Business Request Log ถูกอัปเดตโดยไม่สร้างแถวซ้ำ
-- [ ] Run Lab 3 ต่อด้วย HIGH sample Request ID `BR-001` และตรวจว่า PDF ยังเป็น DRAFT
+- [ ] Run Lab 3 ต่อด้วย standard Search Rows หา `BR-001` และตรวจว่า output มี Row number
+- [ ] ตรวจ Lab 3 path `Create text → Google Doc → Download PDF → Upload PDF → Update same row`
+- [ ] ตรวจว่า PDF ยังเป็น DRAFT และ Scheduling ยัง OFF
 - [ ] เปิด PDF จาก Drive
 - [ ] ส่ง Gmail ถึงตนเองและเปิด attachment
 - [ ] ตรวจ Make credit/quota dashboard

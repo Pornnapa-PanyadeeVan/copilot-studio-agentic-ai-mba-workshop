@@ -1,334 +1,408 @@
-# 04 — Lab 3: Managerial AI — HIGH Priority Situation & Follow-up PDF
+# 04 — Lab 3: Managerial AI — HIGH Priority Situation & Follow-up PDF — Step by Step
 
 [← Previous: Lab 2](../03-build-agentic-workflow/README.md) · [Home](../README.md) · [Next: LINE OA Demo →](../05-line-oa-demo/README.md)
 
-🎯 **Goal**  นำคำร้องที่ Lab 2 ตัดสินเป็น `HIGH` มาสร้างร่างรายงานสถานการณ์เร่งด่วนและรายการติดตามสำหรับ Manager แล้วแปลงเป็น PDF โดยยังคง Human Review
+🎯 **Goal**  ค้นหา `BR-001` ที่ Lab 2 ตัดสินเป็น `HIGH` แล้วสร้างร่างรายงานสถานการณ์เร่งด่วนสำหรับ Manager, แปลงเป็น PDF, เก็บแบบ restricted และเขียนสถานะกลับแถวเดิม โดยยังต้องมี Human Review
 
 ⏱ **Estimated Time**  25 นาที
 
-🧰 **Tools**  Make + Google Sheets + Gemini + Google Docs/Drive; Gmail เป็น optional delivery
+🧰 **Tools**  Make + Google Sheets + Gemini + Google Drive; Gmail เป็น optional delivery
+
+## วิธีใช้คู่มือนี้
+
+แต่ละ Step บอกให้ครบว่า **คลิกที่ไหน → map อะไร → ต้องเห็นอะไร → ถ่ายภาพตรงไหน** รหัส `L3-xx` เป็นตำแหน่งภาพที่ผู้สอนนำ screenshot จริงมาใส่ภายหลังได้ ดูชื่อไฟล์ทั้งหมดที่ [Screenshot Guide](../images/README.md)
+
+Lab นี้สร้าง Scenario แยกแบบ **run-on-demand** เพื่อค้นหา HIGH row ที่มีอยู่แล้ว ไม่ต้อง Submit Form ซ้ำ และไม่ต่อ module เพิ่มหลัง Lab 2 ระหว่างเรียน
 
 ## Continuity from Lab 2
 
 ```text
 Lab 2
-Business Request → Gemini → Priority = HIGH → HIGH Route → Business Request Log
+Business Request → Gemini → Priority = HIGH → BR-001 ใน Business Request Log
                                                         ↓
 Lab 3
-HIGH Case → Situation Report Draft → Validate → PDF → Follow-up Status → Human Review
+Search BR-001 → Draft Report → Validate → Google Doc → PDF
+             → Update BR-001 → Follow-up Status = OPEN → Human Review
 ```
 
 Lab 3 ไม่สรุปยอดรายสัปดาห์และไม่วิเคราะห์หลายคำร้อง แต่ขยาย **HIGH case หนึ่งรายการ** ให้เป็น management artifact ที่ตอบว่า:
 
-1. เกิดสถานการณ์อะไร?
-2. มีหลักฐานของผลกระทบอะไร?
-3. เหตุใดจึงเป็น HIGH?
-4. เรื่องใดต้องได้รับ attention ทันที?
-5. ใครต้องรับไปติดตาม และต้องยืนยันอะไร?
-6. ข้อมูลใดยังขาด?
+1. เกิดสถานการณ์อะไรและกระทบอะไร?
+2. เหตุใดจึงจัดเป็น HIGH จากหลักฐานใด?
+3. เรื่องใดต้องได้รับ attention ทันที?
+4. ใครต้องรับไปติดตามและต้องยืนยันอะไร?
+5. ข้อมูลใดยังขาด?
 
 > รายงานคือ **Decision Support + Follow-up Artifact** ไม่ใช่คำสั่งอนุมัติ ไม่ใช่หลักฐานว่าสาเหตุได้รับการยืนยัน และไม่ใช่การแก้สถานการณ์อัตโนมัติ
 
-## Architecture
+## Completed Flow
 
 ```text
-HIGH Row from Lab 2
+Google Sheets — Search Rows (Request ID = BR-001 AND Priority = HIGH)
 ↓
-Prepare Case Payload
+Google Gemini AI — Simple Text Prompt
 ↓
-Gemini Drafts Situation & Follow-up Report
+Human inspects first draft in Run once
 ↓
-Validate Evidence + Required Sections
+Filter — Draft Report Passed
 ↓
-Create Document → Export PDF → Restricted Drive Folder
+Google Drive — Create a File from Text → convert to Google Docs
 ↓
-Update Report Link + Follow-up Status = OPEN
+Google Drive — Download a File → convert to PDF
 ↓
-Optional Email to Self
+Google Drive — Upload a File
+↓
+Google Sheets — Update a Row (same Row number)
+↓
+Optional Gmail — Send an Email to self
 ↓
 Human Review / Assign Owner / Confirm Target Time
 ```
+
+> ใช้ `Google Sheets — Search Rows` แบบมาตรฐาน เพราะ output มี `Row number` สำหรับอัปเดตแถวเดิม อย่าเลือก `Search Rows (Advanced)` ใน Lab นี้ เพราะ module แบบ Advanced ไม่คืน row number
 
 ## Timebox
 
 | นาที | งาน |
 |---:|---|
-| 0–3 | เลือก HIGH case จาก Lab 2 |
-| 3–7 | เตรียม Case Payload |
-| 7–12 | ให้ Gemini สร้างร่างรายงาน |
-| 12–16 | Validate evidence และ required sections |
-| 16–21 | สร้าง Document/PDF และบันทึก Drive |
-| 21–23 | อัปเดต Report Link + Follow-up Status |
-| 23–25 | ส่งถึงตนเองหรือใช้ fallback แล้วสรุป |
+| 0–3 | สร้าง restricted folder และ Scenario ใหม่ |
+| 3–6 | ค้นหา BR-001 HIGH row |
+| 6–11 | สร้างและตรวจ draft report |
+| 11–13 | ตั้ง validation filter |
+| 13–19 | สร้าง Google Doc, download PDF และ upload PDF |
+| 19–22 | อัปเดต BR-001 row เดิม |
+| 22–25 | Run once, เปิด PDF และตรวจ tracker |
 
-> **UI MAY VARY:** ชื่อ action สำหรับค้นหา row, สร้าง document, export PDF, upload Drive, update row และ Gmail อาจต่างตาม Make version/connection ให้เลือกตาม function ที่ต้องการ ไม่ต้องอัปเกรด paid plan เพื่อจบ Lab
+> **UI MAY VARY:** ชื่อช่องของ Google Drive/Docs, ตำแหน่ง connection และชื่อ output อาจเปลี่ยนตาม Make version และบัญชี ให้ยึดหน้าที่ `create text document → download as PDF → upload PDF` และใช้ [Manual Document Fallback](#manual-document-fallback) หากบัญชีไม่มี module ที่ต้องการ ไม่ต้องซื้อ paid feature เพื่อจบ Lab
 
 ## ก่อนเริ่ม
 
-- [ ] มี `Business Request Log` จาก Lab 2
-- [ ] มีคำร้องอย่างน้อยหนึ่งรายการที่ `Priority = HIGH`
-- [ ] HIGH row มี `Request ID`, `Request`, `Summary`, `Reason` และ `Recommended Action`
-- [ ] Google Drive เป็นบัญชีของตนเองและ folder ตั้งเป็น private/restricted
-- [ ] เปิด [Lab 3 Prompts](prompts.md)
+- [ ] Lab 2 มี Spreadsheet `Business Request Log`
+- [ ] แถว `BR-001` มี `Priority = HIGH`
+- [ ] BR-001 มี Request, Summary, Reason และ Recommended Action
+- [ ] Google Drive เป็นบัญชีของตนเอง
+- [ ] เปิด [Lab 3 Prompts](prompts.md) อีก tab
 - [ ] ใช้ข้อมูลจำลองเท่านั้น
+- [ ] Lab 2 และ Lab 3 Scheduling เป็น `OFF`
 
-## 📌 Step 1 — Select One HIGH Case
+## 📌 Step 1 — Prepare a Restricted Drive Folder
 
-เลือก HIGH row ที่ผ่าน HIGH route ใน Lab 2 โดยแนะนำ test case ที่มีผลกระทบชัด เช่น:
+### Click
 
-```text
-Request ID: BR-001
-Department: Sales
-Request: ลูกค้ารายใหญ่ไม่สามารถชำระเงินผ่านระบบได้และอาจยกเลิกคำสั่งซื้อ
-Context: ต้องแก้ภายในวันนี้; order มีมูลค่าสำคัญ
-Priority: HIGH
-```
+1. เปิด [Google Drive](https://drive.google.com/)
+2. กด `New` → `New folder`
+3. ตั้งชื่อ folder แรก `Agentic-AI-Reports`
+4. เปิด folder แล้วสร้าง folder ย่อย `HIGH-Follow-up`
+5. คลิกขวาที่ `HIGH-Follow-up` → `Share`
 
-ตรวจว่า `HIGH` มาจาก business impact ไม่ใช่เพียงคำว่า “ด่วน”, “ASAP” หรือ “ทันที”
+### Configure
 
-💡 **Why This Matters**  Lab 3 ต้องเริ่มจาก Decision ที่ Lab 2 สร้างไว้ จึงเห็นว่า AI classification เปลี่ยนเส้นทางและสร้าง artifact สำหรับการจัดการอย่างไร
+1. ตรวจ `General access`
+2. ต้องเป็น `Restricted`
+3. ไม่เลือก `Anyone with the link`
+4. ไม่เพิ่มผู้รับจริงใน Workshop
 
-✅ **Checkpoint**  เลือกหนึ่ง row ที่ `Priority = HIGH` และมี evidence ของ customer, financial, operational, compliance, reputation หรือ time impact
+> 📷 **L3-01 — Restricted Drive folder**: ให้เห็น path `Agentic-AI-Reports/HIGH-Follow-up` และ General access = Restricted โดยปิดชื่อบัญชี
 
-⚠️ **Common Problem**  หากไม่มี HIGH row ให้ใช้ [Fallback HIGH Case](prompts.md#fallback-high-case) หรือ run HIGH test จาก Lab 2 อีกครั้ง ห้ามเปลี่ยน MEDIUM เป็น HIGH เพียงเพื่อให้ผ่าน Lab
+✅ **Checkpoint**  folder อยู่ใน Drive ของตนเองและ permission เป็น Restricted
 
-## 📌 Step 2 — Prepare the Case Payload
+⚠️ **Common Problem**  ถ้าเป็น Shared Drive และเปลี่ยน permission ไม่ได้ ให้ใช้ My Drive ของตนเองหรือบันทึก PDF local ตาม fallback
 
-ใน HIGH route หรือ Scenario แยกแบบ run-on-demand ให้ map ข้อมูลเป็นข้อความที่มี labels ชัดเจน:
+## 📌 Step 2 — Create a Separate Report Scenario
 
-```text
-Report Generated At: {{TIMESTAMP}}
-Request ID: {{REQUEST_ID}}
-Requester: {{REQUESTER}}
-Department: {{DEPARTMENT}}
-Original Request: {{REQUEST}}
-AI Summary: {{SUMMARY}}
-Priority: {{PRIORITY}}
-Priority Reason: {{REASON}}
-Recommended Action: {{RECOMMENDED_ACTION}}
-Current Follow-up Status: {{FOLLOW_UP_STATUS_OR_OPEN}}
-```
+### Click
 
-ข้อมูลที่ไม่มีให้ส่งคำว่า `NOT PROVIDED` อย่าให้ AI เดาชื่อ owner, จำนวนเงิน, จำนวนลูกค้า, root cause หรือเวลาที่จะแก้เสร็จ
+1. เปิด Make → `Scenarios`
+2. กด `Create a new scenario`
+3. คลิกชื่อ Scenario ด้านบน
 
-💡 **Why This Matters**  Structured payload ทำให้รายงานอ้างกลับไปยัง source row ได้และลด hallucination
+### Configure
 
-✅ **Checkpoint**  Payload มี Request ID และ `Priority: HIGH`; ไม่มี API key, email จริง หรือข้อมูลลับ
+1. ตั้งชื่อ `Lab 3 — HIGH Situation Follow-up`
+2. ตรวจ Scheduling = `OFF`
+3. กด `Save`
 
-⚠️ **Common Problem**  หาก field ว่าง ให้ map จาก trigger/Sheet ใหม่หรือใช้ `NOT PROVIDED` อย่ากรอกข้อมูลสมมติเพิ่มเอง
+> 📷 **L3-02 — New report scenario**: ให้เห็นชื่อ Scenario, canvas ว่าง และ Scheduling = OFF
 
-## 📌 Step 3 — Generate the HIGH Situation Report
+✅ **Checkpoint**  Scenario ใหม่แยกจาก Lab 2 และยังไม่มี trigger ที่รันตามเวลา
 
-เพิ่ม Gemini step แล้ว map payload ไปยัง `{{HIGH_CASE_DATA}}` ใช้ Prompt ฉบับเต็มจาก [prompts.md](prompts.md#high-priority-situation-report-prompt)
+## 📌 Step 3 — Search the Existing HIGH Row
 
-### 📋 Copy This Prompt
+### Click
 
-```text
-You are a managerial incident-reporting assistant.
+1. คลิกวงกลม `+` กลาง canvas
+2. ค้นหา `Google Sheets`
+3. เลือก **`Search Rows` แบบมาตรฐาน**
+4. อย่าเลือก `Search Rows (Advanced)`
 
-Create a concise Thai draft report for ONE simulated business request
-that has already been classified as HIGH.
+### Configure
 
-If the supplied Priority is not exactly HIGH, stop and return:
-"STOP — Source Priority is not HIGH; no report created."
-
-Use only the supplied case data. Do not invent facts, counts, monetary values,
-root causes, owner names, deadlines, resolution status, policies, or SLAs.
-If information is unavailable, write "ไม่พบในข้อมูลต้นทาง".
-
-Do not approve, authorize, compensate, discipline, contact external parties,
-or claim that any corrective action has already occurred.
-
-Title:
-# ร่างรายงานสถานการณ์เร่งด่วนและรายการติดตาม
-
-Required sections:
-
-## สถานะรายงาน
-- DRAFT — HIGH PRIORITY — HUMAN REVIEW REQUIRED
-
-## ข้อมูลอ้างอิง
-- Report Generated At
-- Request ID
-- Department
-- Source Priority
-
-## ภาพรวมสถานการณ์
-- What happened
-- What is affected
-- What is known now
-
-## ผลกระทบที่มีหลักฐาน
-- Customer
-- Financial / Revenue
-- Operations
-- Compliance / Reputation
-- Time Sensitivity
-Mark unsupported dimensions as "ไม่พบในข้อมูลต้นทาง".
-
-## เหตุผลที่จัดเป็น HIGH
-- Explain using evidence from the source only
-
-## สิ่งที่ต้องได้รับ Attention ทันที
-- Provide proposed checks, containment, or escalation steps
-- Label every item as a recommendation pending human confirmation
-
-## รายการติดตาม
-Create a table with:
-Follow-up Item | Proposed Owner | Target Time | Status | Evidence / Source
-Use "Manager to assign" and "Manager to confirm" when not provided.
-Use OPEN or PENDING VALIDATION as status; never write RESOLVED.
-
-## การตัดสินใจหรือการอนุมัติที่ต้องการ
-
-## ข้อมูลที่ยังขาด
-
-## Human Review Sign-off
-- Reviewer
-- Decision / Changes
-- Owner Confirmed
-- Target Time Confirmed
-- Review Date
-
-End with:
-"รายงานนี้สร้างจากข้อมูลจำลองเพื่อการเรียนรู้ ต้องตรวจสอบข้อเท็จจริง
-และได้รับการยืนยันจากผู้รับผิดชอบก่อนดำเนินการหรือเผยแพร่"
-
-HIGH Case Data:
-{{HIGH_CASE_DATA}}
-```
-
-💡 **Why This Matters**  Managerial AI ใน Lab นี้เปลี่ยน operational decision หนึ่งรายการให้เป็นสถานการณ์ที่ติดตามได้ ไม่ได้สร้างสถิติรายสัปดาห์
-
-🧪 **Test**  ค้นหาคำว่า `ไม่พบในข้อมูลต้นทาง`, `Manager to assign`, `Manager to confirm` และตรวจว่า AI ไม่แต่งข้อเท็จจริงแทนช่องว่าง
-
-✅ **Checkpoint**  รายงานมี Request ID, evidence, HIGH reason, immediate attention, follow-up table, missing information และ Human Review Sign-off
-
-⚠️ **Common Problem**  หากรายงานเขียนว่า “แก้ไขแล้ว” หรือสร้าง owner/deadline เอง ให้ใช้ [Correction Prompt](prompts.md#correction-prompt) และคงสถานะเป็น DRAFT
-
-## 📌 Step 4 — Validate Before Creating the PDF
-
-ตรวจอย่างน้อย:
-
-- [ ] ใช้ข้อมูลเพียงหนึ่ง Request ID
-- [ ] Source Priority เป็น `HIGH`
-- [ ] เหตุผล HIGH มี evidence ไม่อาศัย urgent keyword อย่างเดียว
-- [ ] ไม่มี root cause, count, amount, SLA, owner หรือ deadline ที่ไม่มี source
-- [ ] ทุก proposed action ระบุว่า pending human confirmation
-- [ ] Follow-up status เป็น `OPEN` หรือ `PENDING VALIDATION`
-- [ ] มี missing information และ Human Review Sign-off
-- [ ] ไม่มีข้อมูลจริงหรือ confidential data
-
-หากข้อใดไม่ผ่าน ให้หยุดก่อนสร้าง PDF
-
-💡 **Why This Matters**  PDF ดูเป็นทางการและอาจเพิ่ม automation bias จึงต้อง validate เนื้อหาก่อนสร้าง artifact
-
-✅ **Checkpoint**  Reviewer ในทีมยืนยัน checklist ครบและยังเห็นคำว่า `DRAFT — HUMAN REVIEW REQUIRED`
-
-## 📌 Step 5 — Create the Document and PDF
-
-1. ใช้ Google Docs หรือ document action ที่บัญชี Make รองรับ
-2. สร้าง document จาก report text
-3. ตั้งชื่อ:
-
-```text
-DRAFT HIGH Situation Report — {{REQUEST_ID}} — YYYY-MM-DD
-```
-
-4. Export/convert เป็น PDF ชื่อ:
-
-```text
-DRAFT-HIGH-Situation-Report-{{REQUEST_ID}}-YYYY-MM-DD.pdf
-```
-
-5. ตรวจว่าเปิด PDF ได้และขนาดมากกว่า 0 bytes
-
-> หาก Make ไม่มี document/PDF action ให้ใช้ [Manual Document Fallback](#manual-document-fallback) ไม่ต้องซื้อ feature เพิ่ม
-
-💡 **Why This Matters**  PDF เป็น artifact สำหรับ review และติดตาม แต่ยังไม่ใช่ final approval
-
-✅ **Checkpoint**  PDF เปิดได้ ชื่อไฟล์มี Request ID และทุกหน้าระบุว่าเป็น DRAFT/Human Review
-
-⚠️ **Common Problem**  หากได้ URL หรือ text แทน PDF ให้เพิ่มขั้นตอน export/download binary ก่อน upload หรือใช้ manual fallback
-
-## 📌 Step 6 — Save to Google Drive
-
-สร้าง folder แบบ restricted:
-
-```text
-Agentic-AI-Reports/
-└── HIGH-Follow-up/
-```
-
-บันทึก PDF ใน `HIGH-Follow-up` และห้ามเปิด `Anyone with the link`
-
-✅ **Checkpoint**  เห็นไฟล์ PDF ใน folder ของตนเองและ permission เป็น private/restricted
-
-⚠️ **Common Problem**  หาก Make หา folder ไม่พบ ให้ตรวจ account/ownership หรือเก็บ PDF local แล้วบันทึก intended path ใน Sheet
-
-## 📌 Step 7 — Update the Follow-up Tracker
-
-อัปเดต HIGH row เดิมใน `Business Request Log`:
-
-| Column | Value |
+| Field | Value |
 |---|---|
+| Connection | บัญชีเดียวกับ Lab 2 |
+| Spreadsheet | `Business Request Log` |
+| Sheet | `Form Responses 1` หรือชื่อ tab จริง |
+| Table contains headers | `Yes` |
+| Range | `A:M` หรือ range ที่ครอบคลุม 13 columns |
+| Filter 1 | `Request ID` Equal to `BR-001` |
+| Filter 2 | `Priority` Equal to `HIGH` |
+| Filter relationship | `AND` |
+| Limit | `1` |
+
+ถ้า UI ให้ sort ให้เรียง Timestamp ล่าสุดก่อน แต่ Request ID ใน Workshop ต้องไม่ซ้ำอยู่แล้ว
+
+### Test This Module First
+
+1. กด `OK`
+2. คลิกขวาที่ module แล้วเลือก `Run this module only` ถ้ามี หรือกด `Run once`
+3. คลิก operation bubble เหนือ module
+4. ขยาย `Bundle 1`
+5. ต้องเห็น `Row number`, Request ID = BR-001, Priority = HIGH และข้อมูลต้นทางครบ
+
+> 📷 **L3-03 — Search HIGH row**: ให้เห็น filter BR-001 + HIGH, Limit 1 และ output Row number
+
+✅ **Checkpoint**  Search คืน 1 bundle พร้อม `Row number`
+
+⚠️ **Common Problem**  ถ้าได้ 0 bundles ให้ตรวจตัวสะกด `BR-001`, ค่า `HIGH`, ชื่อ tab และ header row ถ้าไม่มี Row number แปลว่าเลือก Advanced module ให้เปลี่ยนเป็น Search Rows แบบมาตรฐาน
+
+## 📌 Step 4 — Generate and Inspect the Draft Report
+
+### Click
+
+1. คลิก `+` หลัง Search Rows
+2. เลือก `Google Gemini AI`
+3. เลือก `Simple Text Prompt` หรือ text-generation action ที่ทำหน้าที่เดียวกัน
+
+### Configure
+
+1. เลือก Gemini connection เดียวกับ Lab 2
+2. เลือก model ที่บัญชีใช้ได้ใน Free Tier
+3. Copy prompt ฉบับเต็มจาก [HIGH Priority Situation Report Prompt](prompts.md#high-priority-situation-report-prompt)
+4. ในส่วน `HIGH Case Data` map tokens จาก Search Rows ตามโครงนี้:
+
+```text
+Report Generated At: {{current run time}}
+Request ID: {{Request ID}}
+Requester: {{Requester}}
+Department: {{Department}}
+Original Request: {{Request}}
+AI Summary: {{Summary}}
+Priority: {{Priority}}
+Priority Reason: {{Reason}}
+Recommended Action: {{Recommended Action}}
+Current Follow-up Status: {{Follow-up Status}}
+```
+
+5. ช่องที่ไม่มีข้อมูลให้ใส่ `NOT PROVIDED` อย่าให้ AI เดา
+6. กด `OK` และ `Save`
+
+> 📷 **L3-04 — Report prompt mapping**: ให้เห็น prompt และ tokens จาก Search Rows โดยไม่เห็น secret
+
+### Run a Draft-only Test
+
+ก่อนต่อ Drive modules ให้ทดสอบเพียง Search Rows + Gemini:
+
+1. กด `Run once`
+2. คลิก bubble ของ Gemini
+3. เปิด text output และอ่านเนื้อหา
+4. ตรวจว่ามีข้อความต่อไปนี้:
+   - `DRAFT — HIGH PRIORITY — HUMAN REVIEW REQUIRED`
+   - `Request ID: BR-001`
+   - เหตุผลที่จัดเป็น HIGH จาก source
+   - ข้อมูลที่ยังขาด
+   - Human Review Sign-off
+5. ตรวจว่าไม่มี owner, deadline, amount หรือ root cause ที่ source ไม่ได้ให้
+6. ตรวจว่าไม่มีคำว่า `RESOLVED`
+7. ถ้าไม่ผ่าน ใช้ [Correction Prompt](prompts.md#correction-prompt) แล้ว Run once ใหม่
+
+> 📷 **L3-05 — Draft report output**: ให้เห็น DRAFT banner, Request ID, missing information และ Human Review section
+
+✅ **Checkpoint**  Draft อ่านได้และอ้างอิงแค่ BR-001 โดยไม่แต่งข้อเท็จจริง
+
+## 📌 Step 5 — Add a Structural Validation Filter
+
+Filter นี้ช่วยกัน output ที่ผิดโครงสร้าง แต่ **ไม่แทนการอ่านและอนุมัติของคน**
+
+### Click
+
+1. คลิกเส้นด้านขวาหลัง Gemini หรือเพิ่ม module ถัดไปก่อนแล้วคลิกเส้นเชื่อม
+2. เลือก `Set up a filter`
+3. ตั้งชื่อ `Draft report passed`
+
+### Configure
+
+ตั้ง condition แบบ `AND`:
+
+| Check | Condition |
+|---|---|
+| Source priority | Priority จาก Search Rows `Equal to` `HIGH` |
+| Draft label | Gemini text `Contains` `DRAFT — HIGH PRIORITY — HUMAN REVIEW REQUIRED` |
+| Traceability | Gemini text `Contains` Request ID จาก Search Rows |
+| Open status | Gemini text `Does not contain` `RESOLVED` |
+
+> Filter ตรวจรูปแบบและ traceability เท่านั้น คนยังต้องตรวจ evidence, unsupported claims และความเหมาะสมของ action
+
+> 📷 **L3-06 — Report validation filter**: ให้เห็นชื่อ filter และเงื่อนไขทั้ง 4 ข้อ
+
+✅ **Checkpoint**  Draft ที่ไม่มี label หรือเขียน RESOLVED จะไม่ผ่านไปสร้าง PDF
+
+## 📌 Step 6 — Create a Google Document from the Draft
+
+### Click
+
+1. คลิก `+` หลัง validation filter
+2. เลือก `Google Drive`
+3. เลือก `Create a File from Text`
+
+### Configure
+
+| Field | Value |
+|---|---|
+| Connection | บัญชี Google Drive ของตนเอง |
+| Drive | `My Drive` |
+| Folder/Location | `Agentic-AI-Reports/HIGH-Follow-up` |
+| File name | `DRAFT HIGH Situation Report — {{Request ID}} — {{YYYY-MM-DD}}` |
+| Content/Data | text output จาก Gemini |
+| Convert to Google Docs | `Yes` |
+
+ใช้วันที่จาก Make date function หากทำได้ หรือพิมพ์วันที่ Workshop สำหรับการทดลองหนึ่งครั้ง
+
+> 📷 **L3-07 — Create a File from Text**: ให้เห็น folder, filename tokens, content mapping และ Convert to Google Docs = Yes
+
+✅ **Checkpoint**  Run once แล้ว Drive มี Google Document เปิดอ่านได้และชื่อมี BR-001
+
+⚠️ **Common Problem**  ถ้าได้ไฟล์ `.txt` ให้ตรวจ `Convert to Google Docs = Yes` ถ้าบัญชีไม่มีตัวเลือกนี้ ใช้ Google Docs `Create a Document` หรือ [Manual Document Fallback](#manual-document-fallback)
+
+## 📌 Step 7 — Convert to PDF and Upload It
+
+### 7.1 Download the Google Document as PDF
+
+1. คลิก `+` หลัง Create a File from Text
+2. เลือก Google Drive → `Download a File`
+3. ที่ File ID map ID จาก module ที่สร้าง Google Document
+4. ที่ conversion/export format เลือก `PDF`
+5. กด `OK`
+
+> 📷 **L3-08 — Download as PDF**: ให้เห็น File ID token และ PDF export format
+
+### 7.2 Upload the PDF
+
+1. คลิก `+` หลัง Download a File
+2. เลือก Google Drive → `Upload a File`
+3. เลือก folder `Agentic-AI-Reports/HIGH-Follow-up`
+4. ตั้งชื่อ `DRAFT-HIGH-Situation-Report-{{Request ID}}-{{YYYY-MM-DD}}.pdf`
+5. ที่ File/Data map binary data จาก Download a File
+6. ถ้ามีช่อง MIME type ให้ใช้ `application/pdf`
+7. กด `OK`
+
+> 📷 **L3-09 — Upload PDF**: ให้เห็น restricted folder, PDF filename และ binary data mapping
+
+### Check the Artifact
+
+1. Run once
+2. เปิด Drive folder
+3. เปิด PDF และเลื่อนดูทุกหน้า
+4. ตรวจว่าขนาดไฟล์มากกว่า 0 bytes
+5. เปิด Share dialog ตรวจว่ายัง Restricted
+
+✅ **Checkpoint**  PDF เปิดได้ ชื่อไฟล์มี BR-001 และเนื้อหายังมี DRAFT/Human Review label
+
+⚠️ **Alternative module path**  ถ้า Google Drive `Download a File` ในบัญชีไม่ให้เลือก PDF ให้ใช้ `Google Docs → Download a Document` แล้วเลือก PDF จากนั้น map binary output เข้า Upload a File
+
+## 📌 Step 8 — Update the Original BR-001 Row
+
+### Click
+
+1. คลิก `+` หลัง Upload a File
+2. เลือก Google Sheets → `Update a Row`
+3. เลือก Spreadsheet และ Sheet เดียวกับ Lab 2
+
+### Configure
+
+| Field | Mapping / Value |
+|---|---|
+| Row number | `Row number` จาก Search Rows |
+| Timestamp ถึง Recommended Action | map ค่าเดิมจาก Search Rows กลับทุกช่อง |
+| Processing Status | map ค่าเดิมจาก Search Rows |
 | Report Status | `DRAFT — HUMAN REVIEW REQUIRED` |
-| Report Link | Restricted Drive link หรือ local filename |
+| Report Link | restricted web-view link จาก Upload a File |
 | Follow-up Status | `OPEN` |
 
-ห้ามสร้าง row ใหม่สำหรับคำร้องเดิม เพราะจะทำให้ audit trail ซ้ำ ให้ค้นหาด้วย `Request ID`
+> ถ้า Upload module ไม่คืน web-view link ให้เปิด Drive แล้ว copy restricted link มาใส่ใน Sheet ด้วยตนเองสำหรับ Workshop
 
-💡 **Why This Matters**  วงจรไม่ได้จบที่ PDF; Manager ต้องเห็นว่างานยัง OPEN และต้อง assign owner/confirm target time
+> ต้องใช้ `Update a Row` และ Row number จาก **standard Search Rows** ห้ามใช้ `Add a Row` เพราะ BR-001 ต้องมี audit trail อยู่แถวเดียว
 
-✅ **Checkpoint**  HIGH row เดิมมี report link และ `Follow-up Status = OPEN`
+> 📷 **L3-10 — Update follow-up row**: ให้เห็น Row number token, Report Status, Report Link mapping และ Follow-up Status = OPEN
 
-⚠️ **Common Problem**  หาก update row ไม่สำเร็จ ให้กรอกสาม field ด้วยตนเองและอภิปราย idempotency/Request ID
+✅ **Checkpoint**  BR-001 แถวเดิมมี report link และ OPEN โดยไม่มีแถวใหม่
 
-## 📌 Step 8 — Optional Email to Self
+⚠️ **Common Problem**  ถ้าข้อมูลเดิมหาย แปลว่า module เขียนทั้งแถวและไม่ได้ map source values กลับ ให้ map A–J จาก Search Rows แล้ว Run once ใหม่กับแถวเดิม
 
-ส่งถึงอีเมลของผู้เรียนเองเท่านั้น
+## 📌 Step 9 — Optional Gmail to Self
 
-**Subject**
+ข้ามขั้นนี้ได้หาก Gmail connection ไม่พร้อม PDF + tracker ที่อัปเดตแล้วถือว่าผ่าน Lab
+
+### Click and Configure
+
+1. คลิก `+` หลัง Update a Row
+2. เลือก Gmail → `Send an Email`
+3. ใส่ To เป็นอีเมลของตนเองเท่านั้น
+4. ตั้ง Subject:
 
 ```text
-[DRAFT][HIGH][Human Review] {{REQUEST_ID}} — โปรดติดตามสถานการณ์เร่งด่วน
+[DRAFT][HIGH][Human Review] {{Request ID}} — โปรดติดตามสถานการณ์เร่งด่วน
 ```
 
-**Body**
+5. Copy body จาก [Lab 3 Email Template](prompts.md#email-template) แล้ว map Request ID, Department, Summary และ restricted link
+6. ถ้าต้องการแนบ PDF ให้ map File name และ Data จาก Download a File
+7. ถ้า attachment mapping ไม่พร้อม ให้ใส่ restricted Drive link แทน
 
-```text
-พบคำร้องจำลองที่ถูกจัดเป็น HIGH และสร้างร่างรายงานเพื่อ Human Review แล้ว
+> 📷 **L3-11 — Optional report email**: ให้เห็น subject, body tokens และ PDF attachment mapping โดยปิด email address
 
-Request ID: {{REQUEST_ID}}
-Department: {{DEPARTMENT}}
-Situation: {{SUMMARY}}
-Follow-up Status: OPEN
+✅ **Checkpoint**  ได้รับอีเมล DRAFT หนึ่งฉบับที่ inbox ของตนเอง ไม่มีผู้รับภายนอก
 
-สิ่งที่ต้องทำต่อ:
-1. ตรวจสอบข้อเท็จจริงและผลกระทบ
-2. ยืนยันหรือแก้ไข Priority
-3. มอบหมาย Owner
-4. ยืนยัน Target Time
-5. บันทึกการตัดสินใจและสถานะล่าสุด
+## 📌 Step 10 — Save and Run the Complete Scenario Once
 
-ไฟล์แนบเป็น DRAFT และไม่ใช่การอนุมัติให้ดำเนินการ
-```
+1. กด `Save`
+2. ตรวจ Scheduling = `OFF`
+3. กด `Run once`
+4. ไล่คลิก operation bubble จาก Search Rows ถึง Update a Row
+5. Search Rows ต้องคืน 1 bundle
+6. Validation filter ต้องผ่าน 1 bundle
+7. PDF download/upload ต้องมี file data และขนาดมากกว่า 0
+8. เปิด PDF จาก Drive และตรวจทุกหน้า
+9. เปิด Business Request Log ตรวจ BR-001 row เดิม
+10. ตรวจว่าไม่มี row ซ้ำและ Gmail ส่งไม่เกินหนึ่งฉบับ
 
-Attach PDF หรือใส่ restricted Drive link หาก attachment path ไม่พร้อม
+> 📷 **L3-12 — Complete report scenario**: ให้เห็น flow ครบจาก Search Rows ถึง Update Row/Gmail และ Scheduling = OFF
 
-✅ **Checkpoint**  ได้รับ email ที่ inbox ของตนเอง หรือบันทึก draft text เป็น fallback
+> 📷 **L3-13 — Final PDF and tracker**: ให้เห็น PDF แบบ DRAFT และ BR-001 row ที่ Report Status/Link/Follow-up ถูกอัปเดต โดยปิดข้อมูลบัญชี
 
-⚠️ **Common Problem**  หาก Gmail authorization ไม่ผ่าน ให้ข้าม email; PDF + updated follow-up tracker ถือว่าผ่าน Lab
+### Final Validation Checklist
+
+- [ ] Source เป็น Request ID เดียวและ Priority = HIGH
+- [ ] รายงานมี DRAFT — HUMAN REVIEW REQUIRED
+- [ ] ไม่มี root cause, amount, owner, deadline หรือ SLA ที่ source ไม่ได้ให้
+- [ ] ทุก proposed action ระบุว่า pending human confirmation
+- [ ] Follow-up status เป็น OPEN หรือ PENDING VALIDATION ไม่ใช่ RESOLVED
+- [ ] PDF เปิดได้และ permission เป็น Restricted
+- [ ] BR-001 row เดิมถูกอัปเดต ไม่มี row ซ้ำ
+- [ ] Scenario schedule ยังปิด
+
+✅ **Checkpoint**  Manager เปิด PDF ตรวจเหตุการณ์ได้ และ tracker ยังบอกชัดว่างานต้องติดตามต่อ
 
 ## Manual Document Fallback
 
-1. ใช้ [Fallback HIGH Case](prompts.md#fallback-high-case) กับ Prompt ใน Google AI Studio
-2. ตรวจ report ด้วย Step 4 checklist
-3. Copy ไป Google Docs ด้วยตนเอง
-4. Download/export เป็น PDF
-5. เก็บใน Drive folder ของตนเองหรือ local folder
-6. อัปเดต `Report Status`, `Report Link`, `Follow-up Status` ด้วยตนเอง
-7. อธิบายว่า Make จะ automate จุดใด
+หาก Create/Download/Upload module ไม่พร้อม:
+
+1. Run Search Rows + Gemini ใน Make
+2. ตรวจ report ด้วย Final Validation Checklist
+3. Copy text ไป Google Docs ด้วยตนเอง
+4. เลือก `File` → `Download` → `PDF Document (.pdf)`
+5. Upload PDF ไป restricted folder
+6. Copy restricted link
+7. อัปเดต Report Status, Report Link และ Follow-up Status ใน BR-001 row ด้วยตนเอง
+8. อธิบายว่าในระบบจริง Make จะ automate จุดใด
 
 Fallback ยังคง Learning Path:
 
@@ -340,25 +414,28 @@ HIGH Decision → Situation Report → Validate → PDF → OPEN Follow-up → H
 
 1. เหตุใด PDF ของ HIGH case ต้องติดป้าย DRAFT?
 2. หาก AI แต่ง owner หรือ deadline เอง จะเกิดความเสี่ยงอะไร?
-3. เมื่อใด `OPEN` จึงเปลี่ยนเป็น `RESOLVED` และใครมีสิทธิ์เปลี่ยน?
-4. รายงานควรส่งอัตโนมัติถึงใครบ้าง หรือควรรอ approval ก่อน?
+3. เหตุใด Lab นี้ใช้ Search Rows แล้ว Update Row แทน Add Row?
+4. เมื่อใด OPEN จึงเปลี่ยนเป็น RESOLVED และใครมีสิทธิ์เปลี่ยน?
+5. Filter ตรวจโครงสร้างได้ แต่เหตุใดจึงยังแทน Human Review ไม่ได้?
 
 ## Bridge to LINE Demo and Lab 4
 
 - LINE Demo เปลี่ยน Channel ที่รับคำร้อง แต่ HIGH decision ยังต้องเข้า report/follow-up control เดียวกัน
-- Lab 4 ให้ Antigravity Workspace Agent triage dataset แล้วสร้าง draft report files สำหรับ **ทุก case ที่จัดเป็น HIGH** ภายใน project scope โดยไม่ประกอบ Make Workflow และไม่ทำ external action
+- Lab 4 ให้ Antigravity Workspace Agent triage dataset แล้วสร้าง draft report files สำหรับทุก HIGH case ภายใน project scope โดยไม่ประกอบ Make Workflow และไม่ทำ external action
 
-ให้จดว่า Lab 2–3 ต้องกำหนด Router, document, PDF, Drive และ tracker update เอง เพื่อนำไปเปรียบเทียบ control, repeatability และ setup effort กับ Lab 4
+ให้จดว่า Lab 2–3 ต้องกำหนด Trigger/Search, Router, document, PDF, Drive และ tracker update เอง เพื่อนำไปเปรียบเทียบ control, repeatability และ setup effort กับ Lab 4
 
 ## 🏁 Completed
 
-- [ ] รับ HIGH case ต่อจาก Lab 2
+- [ ] ค้นหา BR-001 HIGH row ด้วย standard Search Rows
 - [ ] สร้าง Situation & Follow-up Report จาก source evidence เท่านั้น
-- [ ] Validate ก่อนสร้าง PDF
-- [ ] สร้าง PDF แบบ DRAFT หรือใช้ manual fallback
+- [ ] ตรวจ draft ก่อนเปิดเส้นทางสร้าง PDF
+- [ ] ใช้ validation filter เป็น structural guardrail
+- [ ] สร้าง Google Document และ PDF หรือใช้ manual fallback
 - [ ] เก็บไฟล์แบบ restricted
-- [ ] อัปเดต HIGH row เป็น `Follow-up Status = OPEN`
-- [ ] ระบุ Human Review, Owner และ Target Time ที่ยังต้องยืนยัน
+- [ ] อัปเดต BR-001 row เดิมเป็น Report Status = DRAFT และ Follow-up Status = OPEN
+- [ ] ส่งอีเมลถึงตนเองหรือข้าม optional delivery
+- [ ] เปิดตรวจ PDF และปิด Scenario schedule
 
 ---
 

@@ -128,9 +128,18 @@
 | | |
 |---|---|
 | **Problem** | สร้าง PDF ได้แต่ Report Link/Follow-up Status ไม่อัปเดตใน row เดิม |
-| **Likely Cause** | Request ID ว่าง/ซ้ำ, ค้นหาผิด Sheet, ใช้ add-row แทน update-row หรือ row number mapping หาย |
-| **Quick Fix** | ค้นด้วย exact Request ID, ตรวจว่า Priority = HIGH แล้ว map `Report Status`, `Report Link`, `Follow-up Status` ไปยัง update action |
+| **Likely Cause** | Request ID ว่าง/ซ้ำ, ค้นหาผิด Sheet, เลือก `Search Rows (Advanced)` ซึ่งไม่คืน row number, ใช้ add-row หรือ row number mapping หาย |
+| **Quick Fix** | ใช้ `Search Rows` แบบมาตรฐาน, filter exact Request ID + Priority = HIGH, Limit 1; ตรวจ output ว่ามี `Row number` แล้ว map ไป `Update a Row` พร้อม Report Status/Link/Follow-up |
 | **Instructor Fallback** | อัปเดตสาม fields ด้วยตนเองเป็น `DRAFT — HUMAN REVIEW REQUIRED`, filename/link และ `OPEN`; ห้ามสร้าง duplicate row |
+
+## Google Drive text file does not become a Google Document
+
+| | |
+|---|---|
+| **Problem** | `Create a File from Text` สร้าง `.txt`, ไม่ได้ Document ID หรือเปิดเป็น Google Docs ไม่ได้ |
+| **Likely Cause** | ไม่ได้เปิด Convert to Google Docs, เลือก folder/account ผิด หรือ module UI ของบัญชีต่างกัน |
+| **Quick Fix** | เปิด `Convert to Google Docs = Yes`, ตรวจ My Drive/folder และ Run module เดียว; ถ้าไม่มีตัวเลือกให้ใช้ Google Docs create action ที่ทำหน้าที่เทียบเท่า |
+| **Instructor Fallback** | Copy draft ไป Google Docs ด้วยตนเอง แล้วทำ validation/export PDF ต่อ |
 
 ## Gmail connection unavailable
 
@@ -147,7 +156,7 @@
 |---|---|
 | **Problem** | ได้ text/link แทน PDF, file 0 bytes หรือเปิดไม่ได้ |
 | **Likely Cause** | ยังไม่ได้ export binary, document ID ผิด, conversion action/format ไม่รองรับ |
-| **Quick Fix** | ตรวจ document ก่อน แล้วเลือก function export/convert เป็น PDF; ตรวจ filename และ file data mapping |
+| **Quick Fix** | ตรวจ Document ID ก่อน แล้วใช้ Drive `Download a File` พร้อม PDF conversion หรือ Docs `Download a Document`; ตรวจ output ว่ามี binary data ก่อน map ไป Upload a File |
 | **Instructor Fallback** | Copy report ไป Google Docs แล้ว download/export PDF ด้วยตนเองตาม UI ปัจจุบัน |
 
 ## Google Drive permission issue
